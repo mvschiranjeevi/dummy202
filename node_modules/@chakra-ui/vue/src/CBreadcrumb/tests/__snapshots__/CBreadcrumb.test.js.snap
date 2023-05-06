@@ -1,0 +1,227 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should display custom seperator  1`] = `
+<DocumentFragment>
+  .emotion-1 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.emotion-2 {
+  -webkit-transition: all 0.15s ease-out;
+  transition: all 0.15s ease-out;
+  cursor: pointer;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.emotion-2:focus,
+.emotion-2[data-focus] {
+  box-shadow: var(--chakra-shadows-outline);
+}
+
+.emotion-2:hover,
+.emotion-2[data-hover] {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.emotion-2[disabled],
+.emotion-2[aria-disabled=true],
+.emotion-2[data-disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.emotion-4 {
+  -webkit-margin-start: var(--chakra-space-2);
+  margin-inline-start: var(--chakra-space-2);
+  -webkit-margin-end: var(--chakra-space-2);
+  margin-inline-end: var(--chakra-space-2);
+}
+
+<nav
+    aria-label="breadcrumb"
+    class="emotion-0"
+    data-chakra-component="CBreadcrumb"
+  >
+    <ol>
+      <li
+        class="emotion-1"
+        data-chakra-component="CBreadcrumbItem"
+      >
+        <a
+          class="emotion-2 emotion-0"
+          data-chakra-component="CBreadcrumbLink"
+          href="/"
+        >
+          Home
+        </a>
+        <span
+          class="emotion-4"
+          data-chakra-component="CBreadcrumbSeparator"
+          role="presentation"
+        >
+          -
+        </span>
+      </li>
+      <li
+        class="emotion-1"
+        data-chakra-component="CBreadcrumbItem"
+      >
+        <a
+          class="emotion-2 emotion-0"
+          data-chakra-component="CBreadcrumbLink"
+          href="/about"
+        >
+          About
+        </a>
+        <span
+          class="emotion-4"
+          data-chakra-component="CBreadcrumbSeparator"
+          role="presentation"
+        >
+          -
+        </span>
+      </li>
+      <li
+        class="emotion-1"
+        data-chakra-component="CBreadcrumbItem"
+      >
+        <span
+          aria-current="page"
+          class="emotion-0"
+          data-chakra-component="CBreadcrumbLink"
+          href="/contact"
+        >
+          Contact
+        </span>
+      </li>
+    </ol>
+  </nav>
+</DocumentFragment>
+`;
+
+exports[`should render correctly 1`] = `
+<DocumentFragment>
+  .emotion-1 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.emotion-2 {
+  -webkit-transition: all 0.15s ease-out;
+  transition: all 0.15s ease-out;
+  cursor: pointer;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.emotion-2:focus,
+.emotion-2[data-focus] {
+  box-shadow: var(--chakra-shadows-outline);
+}
+
+.emotion-2:hover,
+.emotion-2[data-hover] {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.emotion-2[disabled],
+.emotion-2[aria-disabled=true],
+.emotion-2[data-disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.emotion-4 {
+  -webkit-margin-start: var(--chakra-space-2);
+  margin-inline-start: var(--chakra-space-2);
+  -webkit-margin-end: var(--chakra-space-2);
+  margin-inline-end: var(--chakra-space-2);
+  color: tomato;
+  font-size: 10px;
+  font-weight: var(--chakra-fontWeights-bold);
+}
+
+.emotion-8 {
+  -webkit-margin-start: var(--chakra-space-2);
+  margin-inline-start: var(--chakra-space-2);
+  -webkit-margin-end: var(--chakra-space-2);
+  margin-inline-end: var(--chakra-space-2);
+  color: firebrick;
+  font-size: 20px;
+  font-weight: var(--chakra-fontWeights-bold);
+}
+
+<div>
+    <nav
+      aria-label="breadcrumb"
+      class="emotion-0"
+      data-chakra-component="CBreadcrumb"
+    >
+      <ol>
+        <li
+          class="emotion-1"
+          data-chakra-component="CBreadcrumbItem"
+        >
+          <a
+            class="emotion-2 emotion-0"
+            data-chakra-component="CBreadcrumbLink"
+            href="#"
+          >
+            Breadcrumb 1
+          </a>
+          <span
+            class="emotion-4"
+            data-chakra-component="CBreadcrumbSeparator"
+            role="presentation"
+          >
+            /
+          </span>
+        </li>
+        <li
+          class="emotion-1"
+          data-chakra-component="CBreadcrumbItem"
+        >
+          <a
+            class="emotion-2 emotion-0"
+            data-chakra-component="CBreadcrumbLink"
+            href="#"
+          >
+            Breadcrumb 2
+          </a>
+          <span
+            class="emotion-8"
+            data-chakra-component="CBreadcrumbSeparator"
+            role="presentation"
+          >
+            /
+          </span>
+        </li>
+      </ol>
+    </nav>
+  </div>
+</DocumentFragment>
+`;

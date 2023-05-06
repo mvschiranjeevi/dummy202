@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should change the style 1`] = `
+<DocumentFragment>
+  .emotion-0 {
+  font-family: var(--chakra-fonts-body);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+<p
+    class="emotion-0"
+    data-chakra-component="CText"
+    data-testid="text"
+  >
+    Text Works
+  </p>
+</DocumentFragment>
+`;
+
+exports[`should render correctly 1`] = `
+<DocumentFragment>
+  .emotion-0 {
+  font-family: var(--chakra-fonts-body);
+}
+
+<p
+    class="emotion-0"
+    data-chakra-component="CText"
+    data-testid="text"
+  >
+    Text Works
+  </p>
+</DocumentFragment>
+`;

@@ -1,0 +1,378 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should override icon if set explicitly 1`] = `
+<DocumentFragment>
+  .emotion-0 {
+  font-family: var(--chakra-fonts-body);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding-left: var(--chakra-space-4);
+  padding-right: var(--chakra-space-4);
+  padding-top: var(--chakra-space-3);
+  padding-bottom: var(--chakra-space-3);
+  background: var(--chakra-colors-red-100);
+}
+
+.emotion-1 {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.emotion-1:not(:root) {
+  overflow: hidden;
+}
+
+.emotion-2 {
+  width: var(--chakra-sizes-5);
+  height: var(--chakra-sizes-5);
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.emotion-3 {
+  margin-right: var(--chakra-space-3);
+  color: var(--chakra-colors-red-500);
+}
+
+<div
+    class="emotion-0"
+    data-chakra-component="CAlert"
+    role="alert"
+  >
+    <svg
+      class="emotion-1 emotion-2 emotion-3"
+      data-chakra-component="CAlertIcon"
+      role="presentation"
+      viewBox="0 0 24 24"
+    >
+      
+    
+      <path
+        d="M0,12a1.5,1.5,0,0,0,1.5,1.5h8.75a.25.25,0,0,1,.25.25V22.5a1.5,1.5,0,0,0,3,0V13.75a.25.25,0,0,1,.25-.25H22.5a1.5,1.5,0,0,0,0-3H13.75a.25.25,0,0,1-.25-.25V1.5a1.5,1.5,0,0,0-3,0v8.75a.25.25,0,0,1-.25.25H1.5A1.5,1.5,0,0,0,0,12Z"
+        fill="currentColor"
+      />
+      
+    
+    </svg>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`should render correct variant styles 1`] = `
+<DocumentFragment>
+  .emotion-0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.emotion-2 {
+  font-family: var(--chakra-fonts-body);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding-left: var(--chakra-space-4);
+  padding-right: var(--chakra-space-4);
+  padding-top: var(--chakra-space-3);
+  padding-bottom: var(--chakra-space-3);
+  background: var(--chakra-colors-green-100);
+  margin-bottom: var(--chakra-space-2);
+}
+
+.emotion-3 {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.emotion-3:not(:root) {
+  overflow: hidden;
+}
+
+.emotion-4 {
+  width: var(--chakra-sizes-5);
+  height: var(--chakra-sizes-5);
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.emotion-5 {
+  margin-right: var(--chakra-space-3);
+  color: var(--chakra-colors-green-500);
+}
+
+.emotion-6 {
+  font-family: var(--chakra-fonts-body);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding-left: var(--chakra-space-4);
+  padding-right: var(--chakra-space-4);
+  padding-top: var(--chakra-space-3);
+  padding-bottom: var(--chakra-space-3);
+  background: var(--chakra-colors-green-500);
+  color: var(--chakra-colors-white);
+  margin-bottom: var(--chakra-space-2);
+}
+
+.emotion-9 {
+  margin-right: var(--chakra-space-3);
+}
+
+.emotion-10 {
+  font-family: var(--chakra-fonts-body);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding-left: var(--chakra-space-3);
+  padding-right: var(--chakra-space-4);
+  padding-top: var(--chakra-space-3);
+  padding-bottom: var(--chakra-space-3);
+  background: var(--chakra-colors-green-100);
+  border-left: var(--chakra-borders-4px);
+  border-color: var(--chakra-colors-green-500);
+  margin-bottom: var(--chakra-space-2);
+}
+
+.emotion-14 {
+  font-family: var(--chakra-fonts-body);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding-left: var(--chakra-space-4);
+  padding-right: var(--chakra-space-4);
+  padding-top: var(--chakra-space-2);
+  padding-bottom: var(--chakra-space-3);
+  background: var(--chakra-colors-green-100);
+  border-top: var(--chakra-borders-4px);
+  border-color: var(--chakra-colors-green-500);
+}
+
+<div
+    class="emotion-0 emotion-1"
+    data-chakra-component="CStack"
+  >
+    <div
+      class="emotion-2"
+      data-chakra-component="CAlert"
+      role="alert"
+    >
+      <svg
+        class="emotion-3 emotion-4 emotion-5"
+        data-chakra-component="CAlertIcon"
+        role="presentation"
+        viewBox="0 0 24 24"
+      >
+        
+      
+        <path
+          d="M12,0A12,12,0,1,0,24,12,12.014,12.014,0,0,0,12,0Zm6.927,8.2-6.845,9.289a1.011,1.011,0,0,1-1.43.188L5.764,13.769a1,1,0,1,1,1.25-1.562l4.076,3.261,6.227-8.451A1,1,0,1,1,18.927,8.2Z"
+          fill="currentColor"
+        />
+      </svg>
+      
+        Data uploaded to the server. Fire on!
+      
+    </div>
+    <div
+      class="emotion-6"
+      data-chakra-component="CAlert"
+      role="alert"
+    >
+      <svg
+        class="emotion-3 emotion-4 emotion-9"
+        data-chakra-component="CAlertIcon"
+        role="presentation"
+        viewBox="0 0 24 24"
+      >
+        
+      
+        <path
+          d="M12,0A12,12,0,1,0,24,12,12.014,12.014,0,0,0,12,0Zm6.927,8.2-6.845,9.289a1.011,1.011,0,0,1-1.43.188L5.764,13.769a1,1,0,1,1,1.25-1.562l4.076,3.261,6.227-8.451A1,1,0,1,1,18.927,8.2Z"
+          fill="currentColor"
+        />
+      </svg>
+      
+        Data uploaded to the server. Fire on!
+      
+    </div>
+    <div
+      class="emotion-10"
+      data-chakra-component="CAlert"
+      role="alert"
+    >
+      <svg
+        class="emotion-3 emotion-4 emotion-5"
+        data-chakra-component="CAlertIcon"
+        role="presentation"
+        viewBox="0 0 24 24"
+      >
+        
+      
+        <path
+          d="M12,0A12,12,0,1,0,24,12,12.014,12.014,0,0,0,12,0Zm6.927,8.2-6.845,9.289a1.011,1.011,0,0,1-1.43.188L5.764,13.769a1,1,0,1,1,1.25-1.562l4.076,3.261,6.227-8.451A1,1,0,1,1,18.927,8.2Z"
+          fill="currentColor"
+        />
+      </svg>
+      
+        Data uploaded to the server. Fire on!
+      
+    </div>
+    <div
+      class="emotion-14"
+      data-chakra-component="CAlert"
+      role="alert"
+    >
+      <svg
+        class="emotion-3 emotion-4 emotion-5"
+        data-chakra-component="CAlertIcon"
+        role="presentation"
+        viewBox="0 0 24 24"
+      >
+        
+      
+        <path
+          d="M12,0A12,12,0,1,0,24,12,12.014,12.014,0,0,0,12,0Zm6.927,8.2-6.845,9.289a1.011,1.011,0,0,1-1.43.188L5.764,13.769a1,1,0,1,1,1.25-1.562l4.076,3.261,6.227-8.451A1,1,0,1,1,18.927,8.2Z"
+          fill="currentColor"
+        />
+      </svg>
+      
+        Data uploaded to the server. Fire on!
+      
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`should render correctly 1`] = `
+<DocumentFragment>
+  .emotion-0 {
+  font-family: var(--chakra-fonts-body);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding-left: var(--chakra-space-4);
+  padding-right: var(--chakra-space-4);
+  padding-top: var(--chakra-space-3);
+  padding-bottom: var(--chakra-space-3);
+  background: var(--chakra-colors-blue-100);
+}
+
+.emotion-1 {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.emotion-1:not(:root) {
+  overflow: hidden;
+}
+
+.emotion-2 {
+  width: var(--chakra-sizes-5);
+  height: var(--chakra-sizes-5);
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.emotion-3 {
+  margin-right: var(--chakra-space-3);
+  color: var(--chakra-colors-blue-500);
+}
+
+.emotion-4 {
+  font-weight: var(--chakra-fontWeights-bold);
+  line-height: var(--chakra-lineHeights-normal);
+}
+
+<div
+    class="emotion-0"
+    data-chakra-component="CAlert"
+    role="alert"
+  >
+    <svg
+      class="emotion-1 emotion-2 emotion-3"
+      data-chakra-component="CAlertIcon"
+      role="presentation"
+      viewBox="0 0 24 24"
+    >
+      
+    
+      <path
+        d="M0,12a1.5,1.5,0,0,0,1.5,1.5h8.75a.25.25,0,0,1,.25.25V22.5a1.5,1.5,0,0,0,3,0V13.75a.25.25,0,0,1,.25-.25H22.5a1.5,1.5,0,0,0,0-3H13.75a.25.25,0,0,1-.25-.25V1.5a1.5,1.5,0,0,0-3,0v8.75a.25.25,0,0,1-.25.25H1.5A1.5,1.5,0,0,0,0,12Z"
+        fill="currentColor"
+      />
+      
+    
+    </svg>
+     
+    <div
+      class="emotion-4 emotion-5"
+      data-chakra-component="CAlertTitle"
+    >
+      alert title
+    </div>
+     
+    <div
+      class="emotion-5 emotion-5"
+      data-chakra-component="CAlertDescription"
+    >
+      alert description
+    </div>
+  </div>
+</DocumentFragment>
+`;

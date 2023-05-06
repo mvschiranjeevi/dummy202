@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly 1`] = `
+<DocumentFragment>
+  .emotion-0 {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  height: 32px;
+  width: 32px;
+  cursor: pointer;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  border-radius: var(--chakra-radii-md);
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  -webkit-flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  border: var(--chakra-borders-none);
+  background: var(--chakra-colors-blackAlpha-50);
+}
+
+.emotion-0:hover,
+.emotion-0[data-hover] {
+  background: var(--chakra-colors-blackAlpha-100);
+}
+
+.emotion-0:active,
+.emotion-0[data-active] {
+  background: var(--chakra-colors-blackAlpha-200);
+}
+
+.emotion-0[disabled],
+.emotion-0[aria-disabled=true],
+.emotion-0[data-disabled] {
+  cursor: not-allowed;
+}
+
+.emotion-0:focus,
+.emotion-0[data-focus] {
+  box-shadow: var(--chakra-shadows-outline);
+}
+
+.emotion-1 {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.emotion-1:not(:root) {
+  overflow: hidden;
+}
+
+.emotion-2 {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+<button
+    aria-label="Close"
+    class="emotion-0"
+    data-chakra-component="CCloseButton"
+  >
+    <svg
+      aria-hidden="true"
+      class="emotion-1 emotion-2 emotion-3"
+      data-chakra-component="CIcon"
+      role="presentation"
+      viewBox="0 0 24 24"
+    >
+      
+      
+      <path
+        d="M.439,21.44a1.5,1.5,0,0,0,2.122,2.121L11.823,14.3a.25.25,0,0,1,.354,0l9.262,9.263a1.5,1.5,0,1,0,2.122-2.121L14.3,12.177a.25.25,0,0,1,0-.354l9.263-9.262A1.5,1.5,0,0,0,21.439.44L12.177,9.7a.25.25,0,0,1-.354,0L2.561.44A1.5,1.5,0,0,0,.439,2.561L9.7,11.823a.25.25,0,0,1,0,.354Z"
+        fill="currentColor"
+      />
+    </svg>
+  </button>
+</DocumentFragment>
+`;

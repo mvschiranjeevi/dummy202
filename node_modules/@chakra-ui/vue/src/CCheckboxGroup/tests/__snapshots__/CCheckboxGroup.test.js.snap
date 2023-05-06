@@ -1,0 +1,337 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly 1`] = `
+<DocumentFragment>
+  .emotion-0 {
+  width: 300px;
+}
+
+.emotion-2 {
+  display: block;
+  margin-bottom: var(--chakra-space-2);
+}
+
+.emotion-3 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  vertical-align: top;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.emotion-4 {
+  border: 0px;
+  clip: rect(0px, 0px, 0px, 0px);
+  height: 1px;
+  width: 1px;
+  margin: -1px;
+  padding: 0px;
+  overflow: hidden;
+  white-space: nowrap;
+  position: absolute;
+}
+
+.emotion-5 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-transition: background-color 120ms,box-shadow 250ms;
+  transition: background-color 120ms,box-shadow 250ms;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  width: var(--chakra-sizes-4);
+  height: var(--chakra-sizes-4);
+  opacity: 1;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: var(--chakra-borders-2px);
+  border-radius: var(--chakra-radii-sm);
+  border-color: inherit;
+  color: var(--chakra-colors-white);
+}
+
+.emotion-5[aria-checked=true],
+.emotion-5[data-checked] {
+  background: var(--chakra-colors-green-500);
+  border-color: var(--chakra-colors-green-500);
+}
+
+.emotion-5[disabled],
+.emotion-5[aria-disabled=true],
+.emotion-5[data-disabled] {
+  background: var(--chakra-colors-gray-100);
+  border-color: var(--chakra-colors-gray-100);
+}
+
+.emotion-5:focus,
+.emotion-5[data-focus] {
+  box-shadow: var(--chakra-shadows-outline);
+}
+
+.emotion-5[aria-invalid=true],
+.emotion-5[data-invalid] {
+  border-color: var(--chakra-colors-red-500);
+}
+
+input[type=checkbox]:focus+.emotion-6 {
+  box-shadow: var(--chakra-shadows-outline);
+}
+
+input[type=checkbox]:disabled+.emotion-6 {
+  background: var(--chakra-colors-gray-100);
+  border-color: var(--chakra-colors-gray-100);
+}
+
+input[type=checkbox][aria-invalid=true]+.emotion-6 {
+  border-color: var(--chakra-colors-red-500);
+}
+
+input[type=checkbox]:checked:disabled+.emotion-6,
+input[type=checkbox][aria-checked=mixed]:disabled+.emotion-6 {
+  border-color: var(--chakra-colors-gray-200);
+  background: var(--chakra-colors-gray-200);
+  color: var(--chakra-colors-gray-500);
+}
+
+.emotion-6>* {
+  opacity: 0;
+}
+
+input[type=checkbox]:checked+.emotion-6,
+input[type=checkbox][aria-checked=mixed]+.emotion-6 {
+  background: var(--chakra-colors-green-500);
+  border-color: var(--chakra-colors-green-500);
+}
+
+input[type=checkbox]:checked+.emotion-6>*,
+input[type=checkbox][aria-checked=mixed]+.emotion-6>* {
+  opacity: 1;
+}
+
+.emotion-7 {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.emotion-7:not(:root) {
+  overflow: hidden;
+}
+
+.emotion-8 {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.emotion-10 {
+  margin-left: var(--chakra-space-2);
+  font-size: var(--chakra-fontSizes-md);
+  font-family: var(--chakra-fonts-body);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  opacity: 1;
+}
+
+.emotion-20 {
+  display: block;
+}
+
+<div
+    class="emotion-0"
+    data-chakra-component="CBox"
+  >
+    <div
+      class="emotion-1"
+      data-chakra-component="CCheckboxGroup"
+      role="group"
+    >
+      <div
+        class="emotion-2"
+        data-chakra-component="CBox"
+      >
+        <label
+          class="emotion-3"
+          data-chakra-component="CCheckbox"
+          data-testid="one"
+          for="checkbox-1"
+        >
+          <input
+            class="emotion-4"
+            data-chakra-component="CVisuallyHidden"
+            id="checkbox-1"
+            name="numbers-0"
+            type="checkbox"
+            value="one"
+          />
+          <div
+            aria-hidden="true"
+            class="emotion-5 emotion-6"
+            data-chakra-component="CControlBox"
+          >
+            <svg
+              class="emotion-7 emotion-8 emotion-1"
+              data-chakra-component="CIcon"
+              role="presentation"
+              viewBox="0 0 14 14"
+            >
+              
+      
+              <g
+                fill="currentColor"
+              >
+                
+        
+                <polygon
+                  points="5.5 11.9993304 14 3.49933039 12.5 2 5.5 8.99933039 1.5 4.9968652 0 6.49933039"
+                />
+                
+      
+              </g>
+              
+    
+            </svg>
+          </div>
+          <div
+            class="emotion-10"
+            data-chakra-component="CBox"
+          >
+            One
+          </div>
+        </label>
+      </div>
+      <div
+        class="emotion-2"
+        data-chakra-component="CBox"
+      >
+        <label
+          class="emotion-3"
+          data-chakra-component="CCheckbox"
+          data-testid="two"
+          for="checkbox-2"
+        >
+          <input
+            aria-checked="true"
+            class="emotion-4"
+            data-chakra-component="CVisuallyHidden"
+            id="checkbox-2"
+            name="numbers-1"
+            type="checkbox"
+            value="two"
+          />
+          <div
+            aria-hidden="true"
+            class="emotion-5 emotion-6"
+            data-chakra-component="CControlBox"
+          >
+            <svg
+              class="emotion-7 emotion-8 emotion-1"
+              data-chakra-component="CIcon"
+              role="presentation"
+              viewBox="0 0 14 14"
+            >
+              
+      
+              <g
+                fill="currentColor"
+              >
+                
+        
+                <polygon
+                  points="5.5 11.9993304 14 3.49933039 12.5 2 5.5 8.99933039 1.5 4.9968652 0 6.49933039"
+                />
+                
+      
+              </g>
+              
+    
+            </svg>
+          </div>
+          <div
+            class="emotion-10"
+            data-chakra-component="CBox"
+          >
+            Two
+          </div>
+        </label>
+      </div>
+      <div
+        class="emotion-20"
+        data-chakra-component="CBox"
+      >
+        <label
+          class="emotion-3"
+          data-chakra-component="CCheckbox"
+          data-testid="three"
+          for="checkbox-3"
+        >
+          <input
+            class="emotion-4"
+            data-chakra-component="CVisuallyHidden"
+            id="checkbox-3"
+            name="numbers-2"
+            type="checkbox"
+            value="three"
+          />
+          <div
+            aria-hidden="true"
+            class="emotion-5 emotion-6"
+            data-chakra-component="CControlBox"
+          >
+            <svg
+              class="emotion-7 emotion-8 emotion-1"
+              data-chakra-component="CIcon"
+              role="presentation"
+              viewBox="0 0 14 14"
+            >
+              
+      
+              <g
+                fill="currentColor"
+              >
+                
+        
+                <polygon
+                  points="5.5 11.9993304 14 3.49933039 12.5 2 5.5 8.99933039 1.5 4.9968652 0 6.49933039"
+                />
+                
+      
+              </g>
+              
+    
+            </svg>
+          </div>
+          <div
+            class="emotion-10"
+            data-chakra-component="CBox"
+          >
+            Three
+          </div>
+        </label>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

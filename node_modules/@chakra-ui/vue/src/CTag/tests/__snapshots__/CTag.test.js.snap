@@ -1,0 +1,318 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should display tag with custom element 1`] = `
+<DocumentFragment>
+  .emotion-0 {
+  margin-bottom: var(--chakra-space-3);
+}
+
+.emotion-1 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  min-height: var(--chakra-sizes-8);
+  max-width: 100%;
+  border-radius: var(--chakra-radii-full);
+  font-weight: var(--chakra-fontWeights-medium);
+  min-width: var(--chakra-sizes-8);
+  -webkit-padding-start: var(--chakra-space-3);
+  padding-inline-start: var(--chakra-space-3);
+  -webkit-padding-end: var(--chakra-space-3);
+  padding-inline-end: var(--chakra-space-3);
+  background-color: var(--chakra-colors-red-100);
+  color: var(--chakra-colors-red-800);
+}
+
+.emotion-2 {
+  width: var(--chakra-sizes-6);
+  height: var(--chakra-sizes-6);
+  font-size: calc(1.5rem / 2.5);
+  line-height: 1.5rem;
+  vertical-align: top;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  border-radius: var(--chakra-radii-full);
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  position: relative;
+  background: #a8eb4f;
+  color: var(--chakra-colors-gray-800);
+  border: var(--chakra-borders-2px);
+  border-color: #fff;
+}
+
+.emotion-3 {
+  width: 1.5rem;
+  height: 1.5rem;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: var(--chakra-fontWeights-medium);
+}
+
+.emotion-4 {
+  font-family: var(--chakra-fonts-body);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+<div
+    class="emotion-0"
+    data-chakra-component="CBox"
+  >
+    <div
+      class="emotion-1"
+      data-chakra-component="CTag"
+    >
+      <div
+        class="emotion-2"
+        data-chakra-component="CAvatar"
+      >
+        <div
+          aria-label="Mesut Koca"
+          class="emotion-3"
+          data-chakra-component="CAvatarName"
+        >
+          MK
+        </div>
+      </div>
+       
+      <span
+        class="emotion-4"
+        data-chakra-component="CTagLabel"
+      >
+        Mesut
+      </span>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`should display tag with right icon 1`] = `
+<DocumentFragment>
+  .emotion-0 {
+  margin-bottom: var(--chakra-space-3);
+}
+
+.emotion-1 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  min-height: var(--chakra-sizes-6);
+  max-width: 100%;
+  border-radius: var(--chakra-radii-md);
+  font-weight: var(--chakra-fontWeights-medium);
+  min-width: var(--chakra-sizes-6);
+  font-size: var(--chakra-fontSizes-sm);
+  -webkit-padding-start: var(--chakra-space-2);
+  padding-inline-start: var(--chakra-space-2);
+  -webkit-padding-end: var(--chakra-space-2);
+  padding-inline-end: var(--chakra-space-2);
+  background-color: var(--chakra-colors-green-100);
+  color: var(--chakra-colors-green-800);
+}
+
+.emotion-2 {
+  font-family: var(--chakra-fonts-body);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.emotion-3 {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.emotion-3:not(:root) {
+  overflow: hidden;
+}
+
+.emotion-4 {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.emotion-5 {
+  -webkit-margin-start: 0.5rem;
+  margin-inline-start: 0.5rem;
+  -webkit-margin-end: 0.5rem;
+  margin-inline-end: 0.5rem;
+}
+
+.emotion-6:first-child {
+  margin-left: 0;
+}
+
+.emotion-6:last-child {
+  margin-right: 0;
+}
+
+<div
+    class="emotion-0"
+    data-chakra-component="CBox"
+  >
+    <div
+      class="emotion-1"
+      data-chakra-component="CTag"
+    >
+      <span
+        class="emotion-2"
+        data-chakra-component="CTagLabel"
+      >
+        Green
+      </span>
+       
+      <svg
+        class="emotion-3 emotion-4 emotion-5 emotion-6"
+        data-chakra-component="CTagIcon"
+        role="presentation"
+        viewBox="0 0 24 24"
+      >
+        
+    
+        <path
+          d="M0,12a1.5,1.5,0,0,0,1.5,1.5h8.75a.25.25,0,0,1,.25.25V22.5a1.5,1.5,0,0,0,3,0V13.75a.25.25,0,0,1,.25-.25H22.5a1.5,1.5,0,0,0,0-3H13.75a.25.25,0,0,1-.25-.25V1.5a1.5,1.5,0,0,0-3,0v8.75a.25.25,0,0,1-.25.25H1.5A1.5,1.5,0,0,0,0,12Z"
+          fill="currentColor"
+        />
+        
+    
+      </svg>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`should render correctly 1`] = `
+<DocumentFragment>
+  .emotion-0 {
+  margin-bottom: var(--chakra-space-3);
+}
+
+.emotion-1 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  min-height: var(--chakra-sizes-6);
+  max-width: 100%;
+  border-radius: var(--chakra-radii-md);
+  font-weight: var(--chakra-fontWeights-medium);
+  min-width: var(--chakra-sizes-6);
+  font-size: var(--chakra-fontSizes-sm);
+  -webkit-padding-start: var(--chakra-space-2);
+  padding-inline-start: var(--chakra-space-2);
+  -webkit-padding-end: var(--chakra-space-2);
+  padding-inline-end: var(--chakra-space-2);
+  background-color: var(--chakra-colors-green-100);
+  color: var(--chakra-colors-green-800);
+}
+
+.emotion-2 {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.emotion-2:not(:root) {
+  overflow: hidden;
+}
+
+.emotion-3 {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.emotion-4 {
+  -webkit-margin-start: 0.5rem;
+  margin-inline-start: 0.5rem;
+  -webkit-margin-end: 0.5rem;
+  margin-inline-end: 0.5rem;
+}
+
+.emotion-5:first-child {
+  margin-left: 0;
+}
+
+.emotion-5:last-child {
+  margin-right: 0;
+}
+
+.emotion-6 {
+  font-family: var(--chakra-fonts-body);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+<div
+    class="emotion-0"
+    data-chakra-component="CBox"
+  >
+    <div
+      class="emotion-1"
+      data-chakra-component="CTag"
+    >
+      <svg
+        class="emotion-2 emotion-3 emotion-4 emotion-5"
+        data-chakra-component="CTagIcon"
+        role="presentation"
+        viewBox="0 0 24 24"
+      >
+        
+    
+        <path
+          d="M0,12a1.5,1.5,0,0,0,1.5,1.5h8.75a.25.25,0,0,1,.25.25V22.5a1.5,1.5,0,0,0,3,0V13.75a.25.25,0,0,1,.25-.25H22.5a1.5,1.5,0,0,0,0-3H13.75a.25.25,0,0,1-.25-.25V1.5a1.5,1.5,0,0,0-3,0v8.75a.25.25,0,0,1-.25.25H1.5A1.5,1.5,0,0,0,0,12Z"
+          fill="currentColor"
+        />
+        
+    
+      </svg>
+       
+      <span
+        class="emotion-6"
+        data-chakra-component="CTagLabel"
+      >
+        Green
+      </span>
+    </div>
+  </div>
+</DocumentFragment>
+`;

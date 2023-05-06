@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should change the style 1`] = `
+<DocumentFragment>
+  .emotion-0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: auto;
+  -webkit-padding-start: var(--chakra-space-5);
+  padding-inline-start: var(--chakra-space-5);
+  -webkit-padding-end: var(--chakra-space-5);
+  padding-inline-end: var(--chakra-space-5);
+  padding-top: var(--chakra-space-5);
+  padding-bottom: var(--chakra-space-5);
+  box-shadow: var(--chakra-shadows-lg);
+  margin-top: var(--chakra-space-5);
+  margin-bottom: var(--chakra-space-5);
+  border-radius: var(--chakra-radii-sm);
+  font-family: var(--chakra-fonts-body);
+  background-color: var(--chakra-colors-blue-200);
+  color: var(--chakra-colors-blue-700);
+}
+
+<div
+    class="emotion-0"
+    data-chakra-component="CBox"
+    data-testid="box"
+  >
+    Box Works
+  </div>
+</DocumentFragment>
+`;
+
+exports[`should display CBox with type as header 1`] = `
+<DocumentFragment>
+  <header
+    class="emotion-0"
+    data-chakra-component="CBox"
+    data-testid="box"
+  >
+    Box Works
+  </header>
+</DocumentFragment>
+`;
+
+exports[`should display CBox with type as p 1`] = `
+<DocumentFragment>
+  <p
+    class="emotion-0"
+    data-chakra-component="CBox"
+    data-testid="box"
+  >
+    Box Works
+  </p>
+</DocumentFragment>
+`;
+
+exports[`should render correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="emotion-0"
+    data-chakra-component="CBox"
+    data-testid="box"
+  >
+    Box Works
+  </div>
+</DocumentFragment>
+`;

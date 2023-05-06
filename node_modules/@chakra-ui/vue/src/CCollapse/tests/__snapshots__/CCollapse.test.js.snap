@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly 1`] = `
+<DocumentFragment>
+  <div
+    data-chakra-component="CCollapse"
+    style="overflow: hidden;"
+  >
+    <div
+      class="emotion-0"
+      data-chakra-component="CBox"
+    >
+      content
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -1,0 +1,329 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should attach buttons when \`is-attached\` is passed 1`] = `
+<DocumentFragment>
+  .emotion-0 {
+  display: inline-block;
+}
+
+.emotion-1 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-transition: all 250ms;
+  transition: all 250ms;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  position: relative;
+  white-space: nowrap;
+  vertical-align: middle;
+  line-height: 1.2;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  font-weight: var(--chakra-fontWeights-bold);
+  border-radius: var(--chakra-radii-md);
+  height: var(--chakra-sizes-10);
+  min-width: var(--chakra-sizes-10);
+  font-size: var(--chakra-fontSizes-md);
+  -webkit-padding-start: var(--chakra-space-4);
+  padding-inline-start: var(--chakra-space-4);
+  -webkit-padding-end: var(--chakra-space-4);
+  padding-inline-end: var(--chakra-space-4);
+  background: var(--chakra-colors-gray-100);
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-right: 0;
+}
+
+.emotion-1:focus,
+.emotion-1[data-focus] {
+  box-shadow: var(--chakra-shadows-outline);
+  z-index: 1;
+}
+
+.emotion-1:hover,
+.emotion-1[data-hover] {
+  background: var(--chakra-colors-gray-200);
+}
+
+.emotion-1:active,
+.emotion-1[data-active] {
+  background: var(--chakra-colors-gray-300);
+}
+
+.emotion-1[disabled],
+.emotion-1[aria-disabled=true],
+.emotion-1[data-disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: var(--chakra-shadows-none);
+}
+
+.emotion-2 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-transition: all 250ms;
+  transition: all 250ms;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  position: relative;
+  white-space: nowrap;
+  vertical-align: middle;
+  line-height: 1.2;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  font-weight: var(--chakra-fontWeights-bold);
+  border-radius: var(--chakra-radii-md);
+  height: var(--chakra-sizes-10);
+  min-width: var(--chakra-sizes-10);
+  font-size: var(--chakra-fontSizes-md);
+  -webkit-padding-start: var(--chakra-space-4);
+  padding-inline-start: var(--chakra-space-4);
+  -webkit-padding-end: var(--chakra-space-4);
+  padding-inline-end: var(--chakra-space-4);
+  background: var(--chakra-colors-gray-100);
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+.emotion-2:focus,
+.emotion-2[data-focus] {
+  box-shadow: var(--chakra-shadows-outline);
+  z-index: 1;
+}
+
+.emotion-2:hover,
+.emotion-2[data-hover] {
+  background: var(--chakra-colors-gray-200);
+}
+
+.emotion-2:active,
+.emotion-2[data-active] {
+  background: var(--chakra-colors-gray-300);
+}
+
+.emotion-2[disabled],
+.emotion-2[aria-disabled=true],
+.emotion-2[data-disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: var(--chakra-shadows-none);
+}
+
+<div
+    class="emotion-0"
+    data-chakra-component="CButtonGroup"
+    role="group"
+  >
+    <button
+      class="emotion-1"
+      data-chakra-component="CButton"
+      tabindex="0"
+      type="button"
+    >
+      Button1
+    </button>
+    <button
+      class="emotion-2"
+      data-chakra-component="CButton"
+      tabindex="0"
+      type="button"
+    >
+      Button2
+    </button>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`should render correctly 1`] = `
+<DocumentFragment>
+  .emotion-0 {
+  display: inline-block;
+}
+
+.emotion-1 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-transition: all 250ms;
+  transition: all 250ms;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  position: relative;
+  white-space: nowrap;
+  vertical-align: middle;
+  line-height: 1.2;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  font-weight: var(--chakra-fontWeights-bold);
+  border-radius: var(--chakra-radii-md);
+  height: var(--chakra-sizes-10);
+  min-width: var(--chakra-sizes-10);
+  font-size: var(--chakra-fontSizes-md);
+  -webkit-padding-start: var(--chakra-space-4);
+  padding-inline-start: var(--chakra-space-4);
+  -webkit-padding-end: var(--chakra-space-4);
+  padding-inline-end: var(--chakra-space-4);
+  background: var(--chakra-colors-gray-100);
+  margin-right: var(--chakra-space-2);
+}
+
+.emotion-1:focus,
+.emotion-1[data-focus] {
+  box-shadow: var(--chakra-shadows-outline);
+  z-index: 1;
+}
+
+.emotion-1:hover,
+.emotion-1[data-hover] {
+  background: var(--chakra-colors-gray-200);
+}
+
+.emotion-1:active,
+.emotion-1[data-active] {
+  background: var(--chakra-colors-gray-300);
+}
+
+.emotion-1[disabled],
+.emotion-1[aria-disabled=true],
+.emotion-1[data-disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: var(--chakra-shadows-none);
+}
+
+.emotion-2 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-transition: all 250ms;
+  transition: all 250ms;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  position: relative;
+  white-space: nowrap;
+  vertical-align: middle;
+  line-height: 1.2;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  font-weight: var(--chakra-fontWeights-bold);
+  border-radius: var(--chakra-radii-md);
+  height: var(--chakra-sizes-10);
+  min-width: var(--chakra-sizes-10);
+  font-size: var(--chakra-fontSizes-md);
+  -webkit-padding-start: var(--chakra-space-4);
+  padding-inline-start: var(--chakra-space-4);
+  -webkit-padding-end: var(--chakra-space-4);
+  padding-inline-end: var(--chakra-space-4);
+  background: var(--chakra-colors-gray-100);
+}
+
+.emotion-2:focus,
+.emotion-2[data-focus] {
+  box-shadow: var(--chakra-shadows-outline);
+  z-index: 1;
+}
+
+.emotion-2:hover,
+.emotion-2[data-hover] {
+  background: var(--chakra-colors-gray-200);
+}
+
+.emotion-2:active,
+.emotion-2[data-active] {
+  background: var(--chakra-colors-gray-300);
+}
+
+.emotion-2[disabled],
+.emotion-2[aria-disabled=true],
+.emotion-2[data-disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  box-shadow: var(--chakra-shadows-none);
+}
+
+<div
+    class="emotion-0"
+    data-chakra-component="CButtonGroup"
+    role="group"
+  >
+    <button
+      class="emotion-1"
+      data-chakra-component="CButton"
+      tabindex="0"
+      type="button"
+    >
+      Button1
+    </button>
+    <button
+      class="emotion-2"
+      data-chakra-component="CButton"
+      tabindex="0"
+      type="button"
+    >
+      Button2
+    </button>
+  </div>
+</DocumentFragment>
+`;

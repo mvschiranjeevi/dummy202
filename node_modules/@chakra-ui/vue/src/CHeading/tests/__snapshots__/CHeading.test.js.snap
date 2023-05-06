@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render correctly 1`] = `
+<DocumentFragment>
+  .emotion-0 {
+  font-size: var(--chakra-fontSizes-3xl);
+  line-height: var(--chakra-lineHeights-shorter);
+  font-weight: var(--chakra-fontWeights-bold);
+  font-family: var(--chakra-fonts-heading);
+}
+
+@media screen and (min-width: 48em) {
+  .emotion-0 {
+    font-size: var(--chakra-fontSizes-4xl);
+  }
+}
+
+<h2
+    class="emotion-0"
+    data-chakra-component="CHeading"
+  >
+    Header
+  </h2>
+</DocumentFragment>
+`;

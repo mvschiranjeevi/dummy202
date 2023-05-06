@@ -1,0 +1,36 @@
+{
+  "version": "0.0.1",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "start": "yarn workspaces foreach -pv run start",
+    "start:frontend": "yarn workspace @gym/frontend start",
+    "start:backend": "yarn workspace @gym/backend start"
+  },
+  "packageManager": "yarn@3.3.0",
+  "dependencies": {
+    "@chakra-ui/icons": "^2.0.18",
+    "@chakra-ui/react": "^2.6.0",
+    "@chakra-ui/vue": "^0.13.1",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "cors": "^2.8.5",
+    "express-validator": "^6.15.0",
+    "framer-motion": "^10.12.4",
+    "joi": "^17.9.2",
+    "joi-password-complexity": "^5.1.0",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
+    "nodemon": "^2.0.22",
+    "react-dom": "^18.2.0",
+    "react-icons": "^4.8.0",
+    "react-router-dom": "^6.10.0",
+    "react-scroll": "^1.8.9",
+    "vue": "^3.2.47"
+  },
+  "volta": {
+    "node": "16.20.0",
+    "yarn": "4.0.0-rc.42"
+  }
+}
