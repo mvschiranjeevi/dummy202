@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 
 router.post("/", async (req, res) => {
   try {
-    console.log(req.body["64555b8b8648824c963e1707"]);
+    // console.log(req.body["64555b8b8648824c963e1707"]);
     // const { error } = validate(req.body);
     // if (error)
     //   return res.status(400).send({ message: error.details[0].message });
@@ -14,7 +14,7 @@ router.post("/", async (req, res) => {
       userId: req.body.userId,
     });
 
-    console.log(req.body.date);
+    // console.log(req.body.date);
 
     if (checkinDetails) {
       await new Checkin({
@@ -61,7 +61,7 @@ router.get("/", async (req, res) => {
       .limit(1)
       .sort({ $natural: -1 });
 
-    console.log(info);
+    // console.log(info);
     res.status(201).send({ data: info, message: "Success" });
   } catch (error) {
     console.log(error);

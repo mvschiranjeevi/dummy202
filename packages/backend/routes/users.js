@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 
 router.post("/", async (req, res) => {
   try {
-    console.log(req.body);
+    // console.log(req.body);
     const { error } = validate(req.body);
     if (error)
       return res.status(400).send({ message: error.details[0].message });
@@ -28,7 +28,7 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const user = await User.find();
-    console.log(user);
+    // console.log(user);
     res.status(201).send({ data: user, message: "Fetched all details" });
   } catch (error) {
     console.log(error);

@@ -11,7 +11,10 @@ function Navbar() {
       setNav(false);
     }
   };
-  const token = JSON.parse(localStorage.getItem("token")).data.isEmployee;
+  let token = localStorage.getItem("token");
+  token = token
+    ? JSON.parse(localStorage.getItem("token")).data.isEmployee
+    : undefined;
   console.log(token);
   window.addEventListener("scroll", changeBackground);
   return (

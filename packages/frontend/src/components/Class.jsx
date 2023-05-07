@@ -52,9 +52,7 @@ function Schedule() {
 
   const getClass = async () => {
     const { data } = await axios.get(uri);
-    console.log(data);
     const expandClass = data.map((el, i) => {
-      console.log(images[el.name], el._id);
       return {
         id: el._id,
         name: el.name,
@@ -75,8 +73,8 @@ function Schedule() {
     setStartdate(expandClass[0].startDate);
     setEnddate(expandClass[0].endDate);
     setName(expandClass[0].name);
-    setClassid(expandClass[0].name);
-    console.log();
+    setClassid(expandClass[0].id);
+    // console.log();
   };
   const firstSchedule = schedule.slice(0, 4);
   const secondSchedule = schedule.slice(4, 7);
@@ -85,11 +83,13 @@ function Schedule() {
   }, []);
 
   const [location, setLocation] = useState([]);
+  const [locvalue, setLocalvalue] = React.useState(null);
+  //   console.log(locvalue);
 
   const getLocation = async () => {
     const url = "http://localhost:8080/api/location";
     const { data } = await axios.get(url);
-    console.log(data);
+    // console.log(data);
     setLocation(data);
   };
 
@@ -97,31 +97,54 @@ function Schedule() {
     getLocation();
   }, []);
 
-  const [data, setData] = useState({
-    userId: memberIds,
-    classId: classid,
-    Schedule: [],
-    fromDate: "",
-    toDate: "",
-    locationId: "",
-  });
+  const [data, setData] = useState({});
+  const [bool, setBool] = useState({});
+
+  const getSchedule = async () => {
+    const url =
+      "http://localhost:8080/api/schedule?userId=" +
+      memberIds +
+      "&classId=" +
+      routeParams.id;
+    const { data } = await axios.get(url);
+    console.log(data);
+    if (data.length != 0) {
+      setData(data);
+      console.log(data);
+      setBool(false);
+    } else {
+      setData({
+        userId: memberIds,
+        classId: classid,
+        schedule: [],
+        fromDate: "",
+        toDate: "",
+        locationId: "",
+      });
+      setBool(true);
+    }
+
+    console.log(bool);
+  };
+
+  useEffect(() => {
+    getSchedule();
+  }, []);
+
   const [error, setError] = useState("");
   //   const navigate = useNavigate();
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
 
-  console.log(data);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "http://localhost:8080/api/users";
+      const url = "http://localhost:8080/api/schedule";
       const { data: res } = await axios.post(url, {
         ...data,
-        isEmployee: true,
-      });
-      navigate("/employeehome");
-      // console.log(res.message);
+      }); //   navigate("/employeehome");
+      //   console.log("111", res.message);
     } catch (error) {
       if (
         error.response &&
@@ -132,9 +155,10 @@ function Schedule() {
       }
     }
   };
+
   return (
     <Stack spacing={0}>
-      <form>
+      <form onSubmit={handleSubmit}>
         <Stack
           // padding={100}
           bgImage="url(/gym2.jpg)"
@@ -149,129 +173,197 @@ function Schedule() {
           </Heading>
         </Stack>
 
-        <Stack
-          padding={50}
-          maxWidth="full"
-          // bgColor={variant.color}
-          paddingLeft={100}
-          borderWidth={1}
-          // boxShadow="dark-lg"
-          border="2px"
-          borderColor="white"
-        >
-          <Stack paddingBottom={10}>
-            <Heading
-              size="3xl"
-              color="Orange"
-              textAlign={"center"}
-              paddingBottom={10}
+        {bool && (
+          <>
+            <Stack
+              padding={50}
+              maxWidth="full"
+              paddingLeft={100}
+              borderWidth={1}
+              border="2px"
+              borderColor="white"
             >
-              Available Classes - {name}
-            </Heading>
-            <HStack justifyContent={"center"}>
-              <Text as="b" textAlign={"center"} fontSize={"1xl"}>
-                From Date - {startdate} ---
-              </Text>
-              <Text as="b" textAlign={"center"} fontSize={"1xl"}>
-                To Date - {enddate}
-              </Text>
-            </HStack>
-          </Stack>
+              <Stack paddingBottom={10}>
+                <Heading
+                  size="3xl"
+                  color="Orange"
+                  textAlign={"center"}
+                  paddingBottom={10}
+                >
+                  Available Classes - {name}
+                </Heading>
+                <HStack justifyContent={"center"}>
+                  <Text as="b" textAlign={"center"} fontSize={"1xl"}>
+                    From Date - {startdate} ---
+                  </Text>
+                  <Text as="b" textAlign={"center"} fontSize={"1xl"}>
+                    To Date - {enddate}
+                  </Text>
+                </HStack>
+              </Stack>
 
-          <HStack spacing={85}>
-            <VStack>
-              {firstSchedule.map((variant, i) => (
-                <HStack
-                  width="full"
-                  padding={5}
-                  maxWidth="full"
-                  borderWidth={1}
-                  border="2px"
-                  borderColor="gray"
-                >
-                  <Box>
-                    <Checkbox size="md" colorScheme="green">
-                      {days[i]} :- {variant} AM
-                    </Checkbox>
-                  </Box>
-                </HStack>
-              ))}
-            </VStack>
-            <VStack>
-              {secondSchedule.map((variant, i) => (
-                <HStack
-                  width="full"
-                  padding={5}
-                  maxWidth="full"
-                  // bgColor={variant.color}
-                  borderWidth={1}
-                  border="2px"
-                  borderColor="gray"
-                >
-                  <Box>
-                    <Checkbox size="md" colorScheme="green" onClick={""}>
-                      {days[4 + i]} :- {variant} AM
-                    </Checkbox>
-                  </Box>
-                </HStack>
-              ))}
-            </VStack>
-            <Stack paddingLeft={100}>
-              <Image src={image} width="30rem"></Image>
+              <HStack spacing={85}>
+                <VStack>
+                  {firstSchedule.map((variant, i) => (
+                    <HStack
+                      width="full"
+                      padding={5}
+                      maxWidth="full"
+                      borderWidth={1}
+                      border="2px"
+                      borderColor="gray"
+                    >
+                      <Box>
+                        <Checkbox
+                          size="md"
+                          colorScheme="green"
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              setData((data) => {
+                                const schedule = data.schedule;
+                                schedule[i] = days[i] + " " + variant;
+                                data.schedule = schedule;
+                                return data;
+                              });
+                            } else {
+                              setData((data) => {
+                                const schedule = data.schedule;
+                                schedule[i] = "";
+                                data.schedule = schedule;
+                                return data;
+                              });
+                            }
+                          }}
+                        >
+                          {days[i]} :- {variant} AM
+                        </Checkbox>
+                      </Box>
+                    </HStack>
+                  ))}
+                </VStack>
+                <VStack>
+                  {secondSchedule.map((variant, i) => (
+                    <HStack
+                      width="full"
+                      padding={5}
+                      maxWidth="full"
+                      borderWidth={1}
+                      border="2px"
+                      borderColor="gray"
+                    >
+                      <Box>
+                        <Checkbox
+                          size="md"
+                          colorScheme="green"
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              setData((data) => {
+                                const schedule = data.schedule;
+                                schedule[4 + i] = days[4 + i] + " " + variant;
+                                data.schedule = schedule;
+                                return data;
+                              });
+                            } else {
+                              setData((data) => {
+                                const schedule = data.schedule;
+                                schedule[i] = "";
+                                data.schedule = schedule;
+                                return data;
+                              });
+                            }
+                          }}
+                        >
+                          {days[4 + i]} :- {variant} AM
+                        </Checkbox>
+                      </Box>
+                    </HStack>
+                  ))}
+                </VStack>
+                <Stack paddingLeft={100}>
+                  <Image src={image} width="30rem"></Image>
+                </Stack>
+              </HStack>
             </Stack>
-          </HStack>
-        </Stack>
-        <Divider />
-        <Stack padding={10} alignItems={"center"} width={"100%"}>
-          <Heading color={"orange"} textAlign={"center"}>
-            Enter Details
-          </Heading>
-          <HStack>
-            <FormLabel>Location</FormLabel>
+            <Divider />
+            <Stack padding={10} alignItems={"center"} width={"100%"}>
+              <Heading color={"orange"} textAlign={"center"}>
+                Enter Details
+              </Heading>
+              <HStack>
+                <FormLabel>Location</FormLabel>
 
-            <Select isRequired onChange={handleChange}>
-              <option value={""}></option>
-              {location.map((loc) => (
-                <option value={loc._id}>{loc.location}</option>
-              ))}
-            </Select>
-            <FormLabel>From Date</FormLabel>
-            <FormControl isRequired>
-              <Input
-                placeholder="From Date"
-                name="formDate"
-                onChange={handleChange}
-                value={data.fromDate}
-                required
-                type="date"
-                // size="lg"
-              />
-            </FormControl>
-            <FormLabel>To Date</FormLabel>
-            <FormControl isRequired>
-              <Input
-                placeholder="To Date"
-                name="toDate"
-                onChange={handleChange}
-                value={data.fromDate}
-                required
-                type="date"
-                // size="lg"
-              />
-            </FormControl>
-            <Button
-              bg="#ffa500"
-              type="submit"
-              width="60"
-              onSubmit={""}
-              mt={4}
-              color={"white"}
-            >
-              Submit
-            </Button>
-          </HStack>
-        </Stack>
+                <Select
+                  isRequired
+                  value={location._id}
+                  onChange={(e) => {
+                    setData({
+                      ...data,
+                      locationId: e.target.value,
+                      classId: classid,
+                    });
+                  }}
+                >
+                  <option value={""}></option>
+                  {location.map((loc) => (
+                    <option value={loc._id}>{loc.location}</option>
+                  ))}
+                </Select>
+                <FormLabel>From Date</FormLabel>
+                <FormControl isRequired>
+                  <Input
+                    placeholder="From Date"
+                    name="formDate"
+                    onChange={(e) => {
+                      setData({
+                        ...data,
+                        fromDate: e.target.value,
+                      });
+                    }}
+                    value={data.fromDate}
+                    required
+                    type="date"
+                    // size="lg"
+                  />
+                </FormControl>
+                <FormLabel>To Date</FormLabel>
+                <FormControl isRequired>
+                  <Input
+                    placeholder="To Date"
+                    name="toDate"
+                    onChange={(e) => {
+                      setData({
+                        ...data,
+                        toDate: e.target.value,
+                      });
+                    }}
+                    value={data.toDate}
+                    required
+                    type="date"
+                    // size="lg"
+                  />
+                </FormControl>
+                <Button
+                  bg="#ffa500"
+                  type="submit"
+                  width="60"
+                  mt={4}
+                  color={"white"}
+                >
+                  Submit
+                </Button>
+              </HStack>
+            </Stack>
+          </>
+        )}
+
+        {!bool && (
+          <Stack alignItems={"center"}>
+            <Heading color={"orange"}>Your Class Schedule</Heading>
+            <Text>{data[0].schedule}</Text>
+          </Stack>
+        )}
       </form>
+      )
     </Stack>
   );
 }

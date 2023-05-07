@@ -4,7 +4,7 @@ const { Location } = require("../models/location");
 router.get("/", async (req, res) => {
   try {
     const location = await Location.find();
-    console.log(location);
+    // console.log(location);
     res.status(201).send(location);
   } catch (error) {
     console.log(error);

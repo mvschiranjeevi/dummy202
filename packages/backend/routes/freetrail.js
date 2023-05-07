@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 
 router.post("/", async (req, res) => {
   try {
-    console.log(req.body);
+    // console.log(req.body);
     const { error } = validate(req.body);
     if (error)
       return res.status(400).send({ message: error.details[0].message });
