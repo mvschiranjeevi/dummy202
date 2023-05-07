@@ -16,6 +16,10 @@ import EmployeeHome from "./components/Employeehomepage";
 import Freetrail from "./components/freeTrail";
 import CheckIn from "./components/Checkin";
 import Class from "./components/Classschedule";
+import MyClasses from "./components/MyClasses";
+import MyEquipments from "./components/MyEquipments"
+import MyEquipment from "./components/MyEquipment";
+import MyActivities from "./components/MyActivities";
 
 function App() {
   return (
@@ -36,6 +40,10 @@ function App() {
         <Route path="/membership" element={<Membership />} />
         <Route path="/checkin" element={<CheckIn />} />
         <Route path="/class" element={<Class />} />
+        <Route path="/myclasses" element={<MyClasses/>}/>
+        <Route path="/myequipments" element ={<MyEquipments/>}/>
+        <Route path="/myequipment" element ={<MyEquipment/>}/>
+        <Route path="/myactivities" element ={<MyActivities/>}/>
       </Routes>
 
       <Footer></Footer>
