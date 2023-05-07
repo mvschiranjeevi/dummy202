@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter, useParams } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Login from "./components/Login";
@@ -20,6 +20,7 @@ import MyClasses from "./components/MyClasses";
 import MyEquipments from "./components/MyEquipments"
 import MyEquipment from "./components/MyEquipment";
 import MyActivities from "./components/MyActivities";
+import Schedule from "./components/Class";
 
 function App() {
   return (
@@ -44,6 +45,8 @@ function App() {
         <Route path="/myequipments" element ={<MyEquipments/>}/>
         <Route path="/myequipment" element ={<MyEquipment/>}/>
         <Route path="/myactivities" element ={<MyActivities/>}/>
+        <Route path="/schedule/:id" element={<Schedule />} />
+        {/* <Route path="/schedule/" element={<Schedule />} /> */}
       </Routes>
 
       <Footer></Footer>

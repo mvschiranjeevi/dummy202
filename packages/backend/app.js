@@ -8,6 +8,10 @@
 var usersRouter = require("./routes/users");
 var authRoutes = require("./routes/auth");
 var freeRoutes = require("./routes/freeTrail");
+var locationRoutes = require("./routes/location");
+var checkinRoutes = require("./routes/checkin");
+var classRoutes = require("./routes/class");
+var scheduleRoutes = require("./routes/userschedule");
 
 // var app = express();
 
@@ -71,6 +75,10 @@ app.use(cors());
 app.use("/api/users", usersRouter);
 app.use("/api/auth", authRoutes);
 app.use("/api/freeTrail", freeRoutes);
+app.use("/api/location", locationRoutes);
+app.use("/api/checkin", checkinRoutes);
+app.use("/api/class", classRoutes);
+app.use("/api/schedule", scheduleRoutes);
 
 const port = 8080;
 app.listen(port, console.log(`Listening on port ${port}...`));

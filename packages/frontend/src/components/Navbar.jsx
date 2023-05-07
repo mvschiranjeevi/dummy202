@@ -11,6 +11,11 @@ function Navbar() {
       setNav(false);
     }
   };
+  let token = localStorage.getItem("token");
+  token = token
+    ? JSON.parse(localStorage.getItem("token")).data.isEmployee
+    : undefined;
+  console.log(token);
   window.addEventListener("scroll", changeBackground);
   return (
     <div>
@@ -23,19 +28,27 @@ function Navbar() {
           <span className="nav-icon"></span>
         </label>
         <ul className="menu">
-          <li>
-            <a href="/membership">Memberships</a>
-          </li>
+          {!token && (
+            <li>
+              <a href="/membership">Memberships</a>
+            </li>
+          )}
+          {token && (
+            <li>
+              <a href="/">View Members</a>
+            </li>
+          )}
+          {token && (
+            <li>
+              <a href="/">Analytics Dashboard</a>
+            </li>
+          )}
+          {!token && (
+            <li>
+              <a href="/">Profile</a>
+            </li>
+          )}
 
-          <li>
-            <a href="/">View Members</a>
-          </li>
-          <li>
-            <a href="/">Analytics Dashboard</a>
-          </li>
-          <li>
-            <a href="/">Profile</a>
-          </li>
           <li>
             <a href="/login">Login</a>
           </li>
