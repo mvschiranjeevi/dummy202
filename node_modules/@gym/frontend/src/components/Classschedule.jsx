@@ -1,6 +1,11 @@
 import { HStack, Heading, Stack, Button, Image, Box } from "@chakra-ui/react";
-import React from "react";
 import { BsFillCalendarCheckFill } from "react-icons/bs";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
+import axios from "axios";
+
+const images = ["./gym7.jpg", "./gym4.jpg", "./gym5.jpg", "./gym6.jpg"];
 
 const Classschedule = [
   {
@@ -46,6 +51,31 @@ const Classschedule = [
   },
 ];
 function Class() {
+  const [classes, setClasses] = useState([]);
+
+  const getClass = async () => {
+    const url = "http://localhost:8080/api/class";
+    const { data } = await axios.get(url);
+    console.log(data);
+    const expandClass = data.map((el, i) => ({
+      id: el._id,
+      name: el.name,
+      startDate: el.startDate,
+      endDate: el.endDate,
+      color: el.color,
+      description: el.description,
+      schedule: el.schedule,
+      image: images[i],
+    }));
+    console.log(expandClass);
+    // setData(members);
+    // console.log(data);
+    setClasses(expandClass);
+  };
+
+  useEffect(() => {
+    getClass();
+  }, []);
   return (
     <Stack spacing={0}>
       <Stack
@@ -61,7 +91,7 @@ function Class() {
           Available Classes
         </Heading>
       </Stack>
-      {Classschedule.map((variant, i) => (
+      {classes.map((variant, i) => (
         <Stack
           padding={100}
           maxWidth="full"
@@ -89,7 +119,9 @@ function Class() {
                     <p> {variant.endDate}</p>
                   </HStack>
                 </HStack>
-                <Button colorScheme="orange">Register</Button>
+                <Link to={"/schedule/" + variant.id}>
+                  <Button colorScheme="orange">See Schedule</Button>
+                </Link>
               </Box>
               <Image
                 src={variant.image}

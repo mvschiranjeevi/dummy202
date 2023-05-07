@@ -21,14 +21,33 @@ import {
   Text,
   Stack,
   Input,
+  Select,
 } from "@chakra-ui/react";
 // import { Button } from "react-scroll";
 import ErrorMessage from "./ErrorMessage";
+import SuccessMessage from "./Success";
+
 import { useState, useEffect } from "react";
 import axios from "axios";
 function CheckIn() {
+  const d = new Date();
+
+  var dd = String(d.getDate()).padStart(2, "0");
+  var mm = String(d.getMonth() + 1).padStart(2, "0");
+  var yyyy = d.getFullYear();
+
+  var today = mm + "/" + dd + "/" + yyyy;
   const [search, setSearch] = useState("");
   const [button, setButton] = useState("");
+  const [error, setError] = useState("");
+
+  const [checkin, setCheckin] = useState({});
+  const [checkinfo, setCheckinfo] = useState({});
+  const [checkbutton, setCheckbutton] = useState(false);
+
+  const handleChange = ({ currentTarget: input }) => {
+    setData({ ...checkin, [input.name]: input.value });
+  };
 
   const [data, setData] = useState([]);
   const getData = async () => {
@@ -36,17 +55,98 @@ function CheckIn() {
     const { data } = await axios.get(url);
     console.log(data);
     const members = data.data.map((el) => ({
+      userId: el._id,
       firstName: el.firstName,
       lastName: el.lastName,
       email: el.email,
       phoneNumber: el.phoneNumber,
     }));
+    console.log(members);
     setData(members);
+
+    // Create Chekin Object
+    const defaultCheckin = {
+      userId: "",
+      checkinTime: "",
+      checkoutTime: "",
+      date: "",
+      locationId: "",
+    };
+    members.forEach((member) => {
+      setCheckin((checkin) => ({
+        ...checkin,
+        [member.userId]: defaultCheckin,
+      }));
+    });
   };
   useEffect(() => {
     getData();
   }, []);
 
+  //checkin info
+
+  const getCheckin = async () => {
+    const url = "http://localhost:8080/api/checkin";
+    const res = await axios.get(url);
+    const resp = res.data;
+    console.log(res.data);
+    if (resp.data === null) {
+      setCheckinfo(true);
+    } else {
+      setCheckinfo(false);
+    }
+
+    // console.log(members);
+    // setData(members);
+  };
+  useEffect(() => {
+    getCheckin();
+  }, []);
+
+  const [location, setLocation] = useState([]);
+
+  const getLocation = async () => {
+    const url = "http://localhost:8080/api/location";
+    const { data } = await axios.get(url);
+    console.log(data);
+    setLocation(data);
+  };
+
+  useEffect(() => {
+    getLocation();
+  }, []);
+  const [value, setValue] = useState("");
+
+  const getLocationName = (id) => {
+    var result = location?.find((loc) => {
+      return loc._id === id;
+    });
+    return result?.location ?? "Unknown Location";
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const url = "http://localhost:8080/api/checkin";
+      const res = await axios.post(url, { ...checkin });
+      const resp = res.data;
+      console.log(res.data);
+      if (resp.data === null) {
+        // setCheckin(true);
+      } else {
+        // setCheckin(false);
+      }
+      // navigate("/employeehome");
+      // console.log(res.message);
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.status >= 400 &&
+        error.response.status <= 500
+      ) {
+        setError(error.response.data.message);
+      }
+    }
+  };
   // const result = data.items.map((el) => ({
   //   firstName: el.firstName,
   //   lastName: el.lastName,
@@ -127,64 +227,144 @@ function CheckIn() {
             <Button onClick={() => console.log(search)}>Search</Button>
           </HStack>
           {true ? (
-            <Box my={4}>
-              <Alert status="success" borderRadius={4}>
-                <AlertIcon />
-                <AlertDescription>{getInfo(button)}</AlertDescription>
-              </Alert>
-            </Box>
+            <SuccessMessage message={getInfo(button)} />
           ) : (
             <ErrorMessage message={"User Already Checked-In Today"} />
           )}
-          <TableContainer>
-            <Table variant="simple">
-              <Thead>
-                <Tr>
-                  <Th>First Name</Th>
-                  <Th>Last Name</Th>
-                  <Th>Email</Th>
-                  <Th isNumeric>Phone Number</Th>
-                  <Th></Th>
-                  <Th></Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {data.map((member) => (
+          <form onSubmit={handleSubmit}>
+            <TableContainer>
+              <Table variant="simple">
+                <Thead>
                   <Tr>
-                    <Td>{member.firstName}</Td>
-                    <Td>{member.lastName}</Td>
-                    <Td>{member.email}</Td>
-                    <Td>{member.phoneNumber}</Td>
-                    <Td>
-                      <Button
-                        colorScheme="orange"
-                        size="sm"
-                        onClick={() => setButton("checkIn")}
-                      >
-                        Check-In
-                      </Button>
-                    </Td>
-                    <Td>
-                      <Button
-                        colorScheme="orange"
-                        size="sm"
-                        onClick={() => setButton("checkOut")}
-                      >
-                        Check-Out
-                      </Button>
-                    </Td>
+                    <Th>First Name</Th>
+                    <Th>Last Name</Th>
+                    <Th>Email</Th>
+                    <Th isNumeric>Phone Number</Th>
+                    <Th>Location</Th>
+
+                    <Th></Th>
+                    <Th></Th>
                   </Tr>
-                ))}
-              </Tbody>
-              {/* <Tfoot>
+                </Thead>
+                <Tbody>
+                  {data.map((member) => (
+                    <Tr>
+                      <Td>{member.firstName}</Td>
+                      <Td>{member.lastName}</Td>
+                      <Td>{member.email}</Td>
+                      <Td>{member.phoneNumber}</Td>
+                      <Td>
+                        <Select
+                          isRequired
+                          value={checkin[member.userId].locationId}
+                          onChange={(e) => {
+                            let memberCheckin = checkin[member.userId];
+                            memberCheckin = {
+                              ...memberCheckin,
+                              locationId: e.target.value,
+                            };
+                            setCheckin((checkin) => ({
+                              ...checkin,
+                              [member.userId]: memberCheckin,
+                            }));
+                          }}
+                        >
+                          <option value={""}></option>
+                          {location.map((loc) => (
+                            <option value={loc._id}>{loc.location}</option>
+                          ))}
+                        </Select>
+                      </Td>
+                      {setCheckin && (
+                        <Td>
+                          <Button
+                            colorScheme="orange"
+                            size="sm"
+                            onClick={() => {
+                              let memberCheckin = checkin[member.userId];
+                              memberCheckin = {
+                                ...memberCheckin,
+                                date: today,
+                                checkinTime:
+                                  d.getHours() +
+                                  ":" +
+                                  d.getMinutes() +
+                                  ":" +
+                                  d.getSeconds(),
+                                userId: member.userId,
+                              };
+                              setCheckin((checkin) => {
+                                console.log({
+                                  ...checkin,
+                                  [member.userId]: memberCheckin,
+                                });
+                                return {
+                                  ...checkin,
+                                  [member.userId]: memberCheckin,
+                                };
+                              });
+                              setCheckbutton(true);
+                            }}
+                          >
+                            Check-In
+                          </Button>
+                        </Td>
+                      )}
+                      {!setCheckinfo && (
+                        <Td>
+                          <Button
+                            colorScheme="orange"
+                            size="sm"
+                            onClick={() => {
+                              let memberCheckin = checkin[member.userId];
+                              memberCheckin = {
+                                ...memberCheckin,
+                                date: today,
+                                checkoutTime:
+                                  d.getHours() +
+                                  ":" +
+                                  d.getMinutes() +
+                                  ":" +
+                                  d.getSeconds(),
+                                userId: member.userId,
+                              };
+                              setCheckin((checkin) => {
+                                console.log({
+                                  ...checkin,
+                                  [member.userId]: memberCheckin,
+                                });
+                                return {
+                                  ...checkin,
+                                  [member.userId]: memberCheckin,
+                                };
+                              });
+                              setCheckbutton(true);
+                            }}
+                          >
+                            Check-Out
+                          </Button>
+                        </Td>
+                      )}
+                    </Tr>
+                  ))}
+                </Tbody>
+                {/* <Tfoot>
                 <Tr>
                   <Th>To convert</Th>
                   <Th>into</Th>
                   <Th isNumeric>multiply by</Th>
                 </Tr>
               </Tfoot> */}
-            </Table>
-          </TableContainer>
+              </Table>
+            </TableContainer>
+            {checkbutton && (
+              <Stack width={"full"} alignItems={"flex-end"} paddingTop={10}>
+                <Button colorScheme={"orange"} type="submit">
+                  Save
+                </Button>
+              </Stack>
+            )}
+          </form>
         </>
       </Stack>
     </Flex>

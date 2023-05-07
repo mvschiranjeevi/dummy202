@@ -1,15 +1,13 @@
 const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
-const Joi = require("joi");
-const passwordComplexity = require("joi-password-complexity");
 
 const checkinSchmena = new mongoose.Schema({
-  userId: { type: String, required: true },
-  checkinTime: { type: String, required: true },
-  checkoutTime: { type: String, required: true },
+  userId: { type: [mongoose.Schema.Types.ObjectId], required: true },
+  checkinTime: { type: String },
+  checkoutTime: { type: String },
   date: { type: String, required: true },
+  locationId: { type: [mongoose.Schema.Types.ObjectId], required: true },
 });
 
-const User = mongoose.model("user", checkinSchmena);
+const Checkin = mongoose.model("checkin", checkinSchmena);
 
-module.exports = User;
+module.exports = Checkin;

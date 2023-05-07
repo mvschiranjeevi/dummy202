@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route, BrowserRouter, useParams } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Login from "./components/Login";
@@ -16,6 +16,7 @@ import EmployeeHome from "./components/Employeehomepage";
 import Freetrail from "./components/freeTrail";
 import CheckIn from "./components/Checkin";
 import Class from "./components/Classschedule";
+import Schedule from "./components/Class";
 
 function App() {
   return (
@@ -36,6 +37,8 @@ function App() {
         <Route path="/membership" element={<Membership />} />
         <Route path="/checkin" element={<CheckIn />} />
         <Route path="/class" element={<Class />} />
+        <Route path="/schedule/:id" element={<Schedule />} />
+        {/* <Route path="/schedule/" element={<Schedule />} /> */}
       </Routes>
 
       <Footer></Footer>
