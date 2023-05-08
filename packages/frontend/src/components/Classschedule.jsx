@@ -7,50 +7,11 @@ import axios from "axios";
 
 const images = ["./gym7.jpg", "./gym4.jpg", "./gym5.jpg", "./gym6.jpg"];
 
-const Classschedule = [
-  {
-    name: "Rowing",
-    description:
-      "Every stroke on the rower activates 85% of your body’s muscles. This low impact workout helps you improve endurance, strength and power.",
-    startDate: "05/20/2023",
-    endDate: "10/20/2023",
-    people: 5,
-    color: "#f2f2f2",
-    image: "./gym7.jpg",
-  },
-  {
-    name: "Boxing",
-    description:
-      "We intend to teach you real techniques that real fighters use and to help you achieve your health and fitness goals using metrically-driven improvement for targeted results,whether they be inside or outside of the ring",
-    startDate: "05/20/2023",
-    endDate: "10/20/2023",
-    people: 6,
-    color: "white",
-    image: "./gym4.jpg",
-  },
-
-  {
-    name: "Strength Training",
-    description:
-      "Our weight and floor exercises change daily so you can focus on different muscles. Your coach can provide options for any movement if you have injuries or limitations.",
-    startDate: "05/20/2023",
-    endDate: "10/20/2023",
-    people: 6,
-    color: "#f2f2f2",
-    image: "./gym5.jpg",
-  },
-  {
-    name: "Cardio",
-    description:
-      "Whether you walk, jog or run, you’ll go at your own pace based on your fitness level. We also have bikes and striders available as alternates to the treadmill.",
-    startDate: "05/20/2023",
-    endDate: "10/20/2023",
-    people: 6,
-    color: "white",
-    image: "./gym6.jpg",
-  },
-];
 function Class() {
+  let token = localStorage.getItem("token");
+  token = token
+    ? JSON.parse(localStorage.getItem("token")).data.isEmployee
+    : null;
   const [classes, setClasses] = useState([]);
 
   const getClass = async () => {
@@ -119,9 +80,18 @@ function Class() {
                     <p> {variant.endDate}</p>
                   </HStack>
                 </HStack>
-                <Link to={"/schedule/" + variant.id}>
-                  <Button colorScheme="orange">See Schedule</Button>
-                </Link>
+
+                {!token && token != null && (
+                  <Link to={"/schedule/" + variant.id}>
+                    <Button colorScheme="orange">See Schedule</Button>
+                  </Link>
+                )}
+
+                {token == null && (
+                  <Link to={"/schedules/" + variant.id}>
+                    <Button colorScheme="orange">See Schedule</Button>
+                  </Link>
+                )}
               </Box>
               <Image
                 src={variant.image}

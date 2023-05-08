@@ -7,6 +7,7 @@ const userclassSchema = new mongoose.Schema({
   fromDate: { type: String, required: true },
   toDate: { type: String, required: true },
   locationId: { type: mongoose.Schema.Types.ObjectId, required: true },
+  isDeleted: { type: Boolean, required: true },
 });
 
 const Schedule = mongoose.model("userSchedule", userclassSchema);

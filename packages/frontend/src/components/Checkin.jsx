@@ -42,7 +42,7 @@ function CheckIn() {
   const [error, setError] = useState("");
 
   const [checkin, setCheckin] = useState({});
-  const [checkinfo, setCheckinfo] = useState({});
+  const [checkInfo, setCheckInfo] = useState([]);
   const [checkbutton, setCheckbutton] = useState(false);
 
   const handleChange = ({ currentTarget: input }) => {
@@ -60,6 +60,7 @@ function CheckIn() {
       lastName: el.lastName,
       email: el.email,
       phoneNumber: el.phoneNumber,
+      isRequired: true,
     }));
     console.log(members);
     setData(members);
@@ -69,7 +70,7 @@ function CheckIn() {
       userId: "",
       checkinTime: "",
       checkoutTime: "",
-      date: "",
+      date: { today },
       locationId: "",
     };
     members.forEach((member) => {
@@ -83,25 +84,67 @@ function CheckIn() {
     getData();
   }, []);
 
+  const [refresh, setRefresh] = useState(true);
+
+  const getLocationNames = async (locationId) => {
+    const url =
+      "http://localhost:8080/api/location/getName?classId=" + locationId;
+    const { data } = await axios.get(url);
+    console.log("---", data[0].location);
+    return data[0].location;
+  };
   //checkin info
 
-  const getCheckin = async () => {
-    const url = "http://localhost:8080/api/checkin";
-    const res = await axios.get(url);
-    const resp = res.data;
-    console.log(res.data);
-    if (resp.data === null) {
-      setCheckinfo(true);
-    } else {
-      setCheckinfo(false);
+  const showLocation = async (userId) => {
+    const checko = checkInfo.find((info) => info.userId === userId);
+    return checko.locationId;
+    // const x = await Promise.all(getLocationNames(checko["locationId"]));
+
+    // console.log("ppo", x);
+    // return checko[0].lo;
+  };
+
+  const showCheckInButton = (userId) => {
+    const checkInData = checkInfo.find((info) => info.userId === userId);
+    if (!checkInData) {
+      return true;
     }
+    if (checkInData["isCompleted"] == undefined) {
+      return true;
+    }
+    return !!checkInData["isCompleted"];
+  };
+
+  const getCheckin = async () => {
+    let url =
+      "http://localhost:8080/api/checkin/?userId=64555b8b8648824c963e1707&date=05/07/2023";
+
+    const checkInfos = {};
+    const promises = data.map(async (member) => {
+      url = `http://localhost:8080/api/checkin/?userId=${member.userId}&date=05/07/2023`;
+      const res = await axios.get(url);
+      const resp = res.data;
+      return await resp.data;
+    });
+    console.log("***", await Promise.all(promises));
+    setCheckInfo(await Promise.all(promises));
+    // const res = await axios.get(url);
+    // const resp = res.data;
+    // console.log(resp.data === null);
+    // if (resp.data === null) {
+    //   setCheckinfo(true);
+    // } else if (resp.data.isCompleted) {
+    //   setCheckinfo(true);
+    // } else {
+    //   setCheckinfo(false);
+    // }
 
     // console.log(members);
     // setData(members);
   };
   useEffect(() => {
     getCheckin();
-  }, []);
+  }, [data]);
 
   const [location, setLocation] = useState([]);
 
@@ -127,9 +170,15 @@ function CheckIn() {
     e.preventDefault();
     try {
       const url = "http://localhost:8080/api/checkin";
-      const res = await axios.post(url, { ...checkin });
+      let payload = Object.values(checkin);
+      payload = payload.filter((member) => !!member.userId);
+      console.log("**", payload);
+      const res = await axios.post(url, payload);
+
+      setRefresh(!refresh);
       const resp = res.data;
       console.log(res.data);
+      getCheckin();
       if (resp.data === null) {
         // setCheckin(true);
       } else {
@@ -254,28 +303,40 @@ function CheckIn() {
                       <Td>{member.email}</Td>
                       <Td>{member.phoneNumber}</Td>
                       <Td>
-                        <Select
-                          isRequired
-                          value={checkin[member.userId].locationId}
-                          onChange={(e) => {
-                            let memberCheckin = checkin[member.userId];
-                            memberCheckin = {
-                              ...memberCheckin,
-                              locationId: e.target.value,
-                            };
-                            setCheckin((checkin) => ({
-                              ...checkin,
-                              [member.userId]: memberCheckin,
-                            }));
-                          }}
-                        >
-                          <option value={""}></option>
-                          {location.map((loc) => (
-                            <option value={loc._id}>{loc.location}</option>
-                          ))}
-                        </Select>
+                        {showCheckInButton(member.userId) && (
+                          <Select
+                            value={checkin[member.userId].locationId}
+                            onChange={(e) => {
+                              let memberCheckin = checkin[member.userId];
+                              memberCheckin = {
+                                ...memberCheckin,
+                                locationId: e.target.value,
+                              };
+                              setCheckin((checkin) => ({
+                                ...checkin,
+                                [member.userId]: memberCheckin,
+                              }));
+
+                              const updateRequired = data.map((member) => {
+                                return {
+                                  ...member,
+                                  isRequired: false,
+                                };
+                              });
+                              setData(updateRequired);
+                            }}
+                            isRequired={member.isRequired}
+                          >
+                            <option value={""}></option>
+                            {location.map((loc) => (
+                              <option value={loc._id}>{loc.location}</option>
+                            ))}
+                          </Select>
+                        )}
+                        {!showCheckInButton(member.userId) && <Text>hi</Text>}
                       </Td>
-                      {setCheckin && (
+                      {console.log("**", showCheckInButton(member.userId))}
+                      {showCheckInButton(member.userId) && (
                         <Td>
                           <Button
                             colorScheme="orange"
@@ -292,6 +353,7 @@ function CheckIn() {
                                   ":" +
                                   d.getSeconds(),
                                 userId: member.userId,
+                                isCompleted: false,
                               };
                               setCheckin((checkin) => {
                                 console.log({
@@ -310,7 +372,7 @@ function CheckIn() {
                           </Button>
                         </Td>
                       )}
-                      {!setCheckinfo && (
+                      {!showCheckInButton(member.userId) && (
                         <Td>
                           <Button
                             colorScheme="orange"
@@ -327,6 +389,7 @@ function CheckIn() {
                                   ":" +
                                   d.getSeconds(),
                                 userId: member.userId,
+                                isCompleted: true,
                               };
                               setCheckin((checkin) => {
                                 console.log({

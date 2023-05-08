@@ -17,6 +17,10 @@ import Freetrail from "./components/freeTrail";
 import CheckIn from "./components/Checkin";
 import Class from "./components/Classschedule";
 import Schedule from "./components/Class";
+import Schedules from "./components/schedule";
+import Location from "./components/location";
+import Members from "./components/members";
+import ClassAnalytics from "./components/ClassAnalytics";
 
 function App() {
   return (
@@ -37,7 +41,13 @@ function App() {
         <Route path="/membership" element={<Membership />} />
         <Route path="/checkin" element={<CheckIn />} />
         <Route path="/class" element={<Class />} />
+        <Route path="/location" element={<Location />} />
+        <Route path="/members" element={<Members />} />
+        <Route path="/classAnalytics" element={<ClassAnalytics />} />
+
         <Route path="/schedule/:id" element={<Schedule />} />
+        <Route path="/schedules/:id" element={<Schedules />} />
+
         {/* <Route path="/schedule/" element={<Schedule />} /> */}
       </Routes>
 
