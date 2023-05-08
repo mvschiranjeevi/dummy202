@@ -3,6 +3,7 @@ import { Flex,Image,Box, Button, Heading, List, ListItem, Select, Text,Badge } f
 import axios from "axios"
 
 function MyActivities() {
+  // const [equipmentMap, setEquipmentMap] = useState({});
   const [equipments, setEquipments] = useState([]);
   const [activities, setActivities] = useState([
     // { name: 'Activity 1', startTime: '1 hour', date: '2023-05-01',image: "./gym1.png" },

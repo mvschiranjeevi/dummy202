@@ -20,6 +20,21 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/all", async (req,res) => {
+  try {
+    const userId = req.query.userId;
+    console.log(userId)
+    const schedule = await Userschedule.find({
+      userId: userId,
+    });
+    console.log(schedule);
+    res.status(201).send(schedule);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: "Internal Server Error" });
+  }
+});
+
 router.post("/", async (req, res) => {
   try {
     console.log("1", req.body);
