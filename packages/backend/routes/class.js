@@ -26,4 +26,15 @@ router.get("/schedule", async (req, res) => {
   }
 });
 
+router.get("/className", async (req, res) => {
+  try {
+    const className = await Class.find({ _id: req.query.id });
+    // console.log(schedule);
+    res.status(201).send(className);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: "Internal Server Error" });
+  }
+});
+
 module.exports = router;

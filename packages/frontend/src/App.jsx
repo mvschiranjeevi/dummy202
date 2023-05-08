@@ -17,16 +17,20 @@ import Freetrail from "./components/freeTrail";
 import CheckIn from "./components/Checkin";
 import Class from "./components/Classschedule";
 import MyClasses from "./components/MyClasses";
-import MyEquipments from "./components/MyEquipments"
+import MyEquipments from "./components/MyEquipments";
 import MyEquipment from "./components/MyEquipment";
 import MyActivities from "./components/MyActivities";
 import Schedule from "./components/Class";
 import Myanalytics from "./components/Myanalytics";
+import Schedules from "./components/schedule";
+import Location from "./components/location";
+import Members from "./components/members";
+import ClassAnalytics from "./components/ClassAnalytics";
 
 function App() {
   const getEquipmentId = (equipment) => {
     console.log(equipment.id);
-  }
+  };
   return (
     <div className="App">
       <Navbar></Navbar>
@@ -45,13 +49,19 @@ function App() {
         <Route path="/membership" element={<Membership />} />
         <Route path="/checkin" element={<CheckIn />} />
         <Route path="/class" element={<Class />} />
-        <Route path="/myclasses" element={<MyClasses/>}/>
+        <Route path="/myclasses" element={<MyClasses />} />
         {/* <Route path="/myequipments" render={(props) => <MyEquipments myProp={getEquipmentId} />} /> */}
-        <Route path="/myequipments" element ={<MyEquipments/>}/>
-        <Route path="/myequipment/:id" element ={<MyEquipment/>}/>
-        <Route path="/myactivities" element ={<MyActivities/>}/>
+        <Route path="/myequipments" element={<MyEquipments />} />
+        <Route path="/myequipment/:id" element={<MyEquipment />} />
+        <Route path="/myactivities" element={<MyActivities />} />
+        <Route path="/location" element={<Location />} />
+        <Route path="/members" element={<Members />} />
+        <Route path="/classAnalytics" element={<ClassAnalytics />} />
+
         <Route path="/schedule/:id" element={<Schedule />} />
         <Route path="/myanalytics" element={<Myanalytics />} />
+        <Route path="/schedules/:id" element={<Schedules />} />
+
         {/* <Route path="/schedule/" element={<Schedule />} /> */}
       </Routes>
 

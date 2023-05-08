@@ -28,7 +28,16 @@ router.post("/", async (req, res) => {
     res.status(500).send({ message: "Internal Server Error" });
   }
 });
-
+router.get("/memberName", async (req, res) => {
+  try {
+    const memberName = await User.find({ _id: req.query.id });
+    // console.log(schedule);
+    res.status(201).send(memberName);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: "Internal Server Error" });
+  }
+});
 const validate = (data) => {
   const schema = Joi.object({
     email: Joi.string().email().required().label("Email"),

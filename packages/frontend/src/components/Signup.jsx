@@ -72,7 +72,7 @@ export default function Signup() {
       const url = "http://localhost:8080/api/users";
       const { data: res } = await axios.post(url, {
         ...data,
-        isEmployee: true,
+        isEmployee: false,
       });
       navigate("/employeehome");
       // console.log(res.message);
@@ -172,7 +172,7 @@ export default function Signup() {
               ADD NEW MEMBER
             </Heading>
             <p>All Fields are Mandatory</p>
-            <Box my={4} textAlign="center" maxWidth={700} padding={10}>
+            <Box my={4} textAlign="center" padding={10}>
               <form onSubmit={handleSubmit}>
                 {error && <ErrorMessage message={error} />}
                 <HStack paddingBottom={5}>

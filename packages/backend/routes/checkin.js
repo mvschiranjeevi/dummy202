@@ -8,34 +8,60 @@ router.post("/", async (req, res) => {
     // const { error } = validate(req.body);
     // if (error)
     //   return res.status(400).send({ message: error.details[0].message });
+    console.log("**", req.body[0]);
 
-    const checkinDetails = await Checkin.findOne({
-      date: req.body.date,
-      userId: req.body.userId,
-    });
-
-    // console.log(req.body.date);
-
-    if (checkinDetails) {
-      await new Checkin({
-        ...req.body,
-        _id: checkinDetails._id,
-        userId: req.body.userId,
-        checkinTime: req.body.checkinTime,
-        checkoutTime: req.body.checkoutTime,
-        date: req.body.date,
-        locationId: req.body.locationId,
-      }).save();
-    } else {
-      await new Checkin({
-        ...req.body,
-        userId: req.body.userId,
-        checkinTime: req.body.checkinTime,
-        checkoutTime: req.body.checkoutTime,
-        date: req.body.date,
-        locationId: req.body.locationId,
-      }).save();
+    for (const index in req.body) {
+      console.log(req.body[index]._id);
+      const checkinDetails = await Checkin.findOne({
+        date: req.body[index].date,
+        userId: req.body[index].userId,
+        isCompleted: false,
+      });
+      console.log("))", checkinDetails);
+      if (checkinDetails == null) {
+        console.log("----JI");
+        await new Checkin(req.body[index]).save();
+      } else {
+        console.log(checkinDetails._id);
+        await Checkin.updateOne(
+          { _id: checkinDetails._id },
+          {
+            ...req.body[index],
+            checkinTime: checkinDetails.checkinTime,
+            locationId: checkinDetails.locationId,
+          }
+        );
+      }
+      // console.log(req.body[index].userId);
     }
+
+    // const checkinDetails = await Checkin.findOne({
+    //   date: req.body.date,
+    //   userId: req.body.userId,
+    // });
+
+    // // console.log(req.body.date);
+
+    // if (checkinDetails) {
+    //   await new Checkin({
+    //     ...req.body,
+    //     _id: checkinDetails._id,
+    //     userId: req.body.userId,
+    //     checkinTime: req.body.checkinTime,
+    //     checkoutTime: req.body.checkoutTime,
+    //     date: req.body.date,
+    //     locationId: req.body.locationId,
+    //   }).save();
+    // } else {
+    //   await new Checkin({
+    //     ...req.body,
+    //     userId: req.body.userId,
+    //     checkinTime: req.body.checkinTime,
+    //     checkoutTime: req.body.checkoutTime,
+    //     date: req.body.date,
+    //     locationId: req.body.locationId,
+    //   }).save();
+    // }
 
     res.status(201).send({ message: "Checked In/Out Successfully" });
     // if (user)
@@ -55,13 +81,18 @@ router.post("/", async (req, res) => {
 });
 router.get("/", async (req, res) => {
   try {
-    const date = req.body.date;
-    const userId = req.body.userId;
-    const info = await Checkin.findOne({ userId: userId, date: date })
+    const date = req.query.date;
+    const userId = req.query.userId;
+    console.log(date);
+    let info = await Checkin.findOne({ userId: userId, date: date })
       .limit(1)
       .sort({ $natural: -1 });
 
-    // console.log(info);
+    console.log(info);
+    if (info == null) {
+      info = {};
+      info["userId"] = userId;
+    }
     res.status(201).send({ data: info, message: "Success" });
   } catch (error) {
     console.log(error);
