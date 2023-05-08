@@ -12,6 +12,8 @@ var locationRoutes = require("./routes/location");
 var checkinRoutes = require("./routes/checkin");
 var classRoutes = require("./routes/class");
 var scheduleRoutes = require("./routes/userschedule");
+var equipmentRoutes = require("./routes/equipment")
+var activityRoutes = require("./routes/activity")
 
 // var app = express();
 
@@ -79,6 +81,9 @@ app.use("/api/location", locationRoutes);
 app.use("/api/checkin", checkinRoutes);
 app.use("/api/class", classRoutes);
 app.use("/api/schedule", scheduleRoutes);
+app.use("/api/equipment", equipmentRoutes);
+app.use("/api/activity", activityRoutes);
+
 
 const port = 8080;
 app.listen(port, console.log(`Listening on port ${port}...`));

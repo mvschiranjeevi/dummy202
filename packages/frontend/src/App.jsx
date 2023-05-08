@@ -23,6 +23,9 @@ import MyActivities from "./components/MyActivities";
 import Schedule from "./components/Class";
 
 function App() {
+  const getEquipmentId = (equipment) => {
+    console.log(equipment.id);
+  }
   return (
     <div className="App">
       <Navbar></Navbar>
@@ -42,8 +45,9 @@ function App() {
         <Route path="/checkin" element={<CheckIn />} />
         <Route path="/class" element={<Class />} />
         <Route path="/myclasses" element={<MyClasses/>}/>
+        {/* <Route path="/myequipments" render={(props) => <MyEquipments myProp={getEquipmentId} />} /> */}
         <Route path="/myequipments" element ={<MyEquipments/>}/>
-        <Route path="/myequipment" element ={<MyEquipment/>}/>
+        <Route path="/myequipment/:id" element ={<MyEquipment/>}/>
         <Route path="/myactivities" element ={<MyActivities/>}/>
         <Route path="/schedule/:id" element={<Schedule />} />
         {/* <Route path="/schedule/" element={<Schedule />} /> */}

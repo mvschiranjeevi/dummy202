@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState , useEffect} from "react"
 import {
   Box,
   Flex,
@@ -10,32 +10,16 @@ import {
 } from "@chakra-ui/react";
 
 import {Link} from 'react-router-dom';
+import axios from "axios"
 
-const equipments = [
-  {
-    id: "001",
-    name: "Treadmill",
-    image:
-      "https://cdn.shopify.com/s/files/1/0046/8752/8024/products/precor-trm-243-treadmill_4a16b4ff-4a28-47ef-8b60-9c5984de7d3d_5000x.jpg?v=1677791634",
-    available: true,
-  },
-  {
-    id: "002",
-    name: "Weight Lifting Set",
-    image:
-      "https://www.360fitnesssuperstore.com/cdn/shop/products/Warrior_Elite_Squat_Rack_1_1512x.jpg?v=1629813880",
-    available: false,
-  },
-  {
-    id: "003",
-    name: "Elliptical",
-    image:
-      "https://pushpedalpull.com/media/catalog/product/cache/d754d4fc72500c48b852725c7157ce6d/e/f/efx_815_2_2.png",
-    available: true,
-  },
-];
+
+
 
 const EquipmentCard = ({ equipment }) => {
+
+
+  // write backend code to get equpment list
+
     return (
         <Box>
       <Flex
@@ -63,7 +47,7 @@ const EquipmentCard = ({ equipment }) => {
               fontWeight="bold"
               color="gray.500"
             >
-              #{equipment.id}
+              #{equipment._id.substr(-4)}
             </Text>
           </Box>
   
@@ -72,7 +56,7 @@ const EquipmentCard = ({ equipment }) => {
           </Box>
   
           <Box mt="2">
-            <Link to="/myequipment">
+            <Link to={`/myequipment/${equipment._id}`}>
               <Button
                 colorScheme="blue"
                 size="sm"
@@ -91,9 +75,30 @@ const EquipmentCard = ({ equipment }) => {
   };
   
 
-const MyEquipments = () => {
+const MyEquipments = (props) => {
   const [selectedEquipmentId, setSelectedEquipmentId] = useState(null);
 
+  const [equipments, setEquipments] = useState([]);
+
+  const getEquipments = async () => {
+    const url = "http://localhost:8080/api/equipment";
+    const data  = await axios.get(url);
+    console.log(data.data);
+    setEquipments(data.data);
+    console.log(equipments)
+  };
+  
+  useEffect(() => {
+    getEquipments();
+  }, []);
+
+
+
+  const handleClick = (equipment) => {
+    setSelectedEquipmentId(equipment.id);
+    props.getEquipmentId(equipment);
+   
+  }
   return (
     <Box my={20}>
     <Flex direction="column" alignItems="center" p="5">
@@ -106,7 +111,7 @@ const MyEquipments = () => {
           <EquipmentCard
             key={equipment.id}
             equipment={equipment}
-            onClick={() => setSelectedEquipmentId(equipment.id)}
+            onClick={(equipment) => {handleClick}}
           />
         ))}
       </Stack>

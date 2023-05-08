@@ -13,30 +13,91 @@ import {
     useToast
   } from "@chakra-ui/react";
   
-import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { useState,useEffect } from "react";
 import { Link } from 'react-router-dom';
- 
+import axios from "axios"
+
  const MyEquipment = () => {
-    const [startDate, setStartDate] = useState("");
     const [startTime, setStartTime] = useState("");
+    const [endTime, setEndTime] = useState("");
+
     const [date, setDate] = useState("");
     const toast = useToast();
+    const [equipment, setEquipment] = useState([]);
     
-    const equipment = {
-        id: "001",
-        name: "Treadmill",
-        image:
-          "https://cdn.shopify.com/s/files/1/0046/8752/8024/products/precor-trm-243-treadmill_4a16b4ff-4a28-47ef-8b60-9c5984de7d3d_5000x.jpg?v=1677791634",
-        available: true,
-    }
+    const equipmentId  = useParams();
 
-    const handleSubmit = (event) => {
+
+    //write backend code to get equipment details based on its
+    const getEquipment = async () => {
+      const url = "http://localhost:8080/api/equipment"
+      const data  = await axios.get(url);
+      const allEquipments = data.data;
+      const requiredEquipment = allEquipments.find(item => item._id === equipmentId.id);
+      // console.log('---->',requiredEquipment.name);
+      setEquipment(requiredEquipment);
+    };
+
+    useEffect(() => {
+      getEquipment();
+    }, []);
+
+    // const equipment = {
+    //     id: "001",
+    //     name: "Treadmill",
+    //     image:
+    //       "https://cdn.shopify.com/s/files/1/0046/8752/8024/products/precor-trm-243-treadmill_4a16b4ff-4a28-47ef-8b60-9c5984de7d3d_5000x.jpg?v=1677791634",
+    //     available: true,
+    // }
+
+    const handleSubmit = async (event) => {
+      try {
+        const url = "http://localhost:8080/api/activity";
+        let token = localStorage.getItem("token");
+        token = token ? JSON.parse(localStorage.getItem("token")).data._id : undefined;
+        const ob = {
+          userId: token,
+          equipmentId: equipmentId.id,
+          startTime: startTime,
+          endTime: endTime,
+          date: date 
+        }
+        console.log("--->"+ob.userId);
+        console.log("--->"+ob.equipmentId);
+        console.log("--->"+ob.startTime);
+        console.log("--->"+ob.endTime);
+        console.log("--->"+ob.date);
+
+          const res = await axios.post(url, ob);
+        const resp = res.data;
+        console.log(res.data);
+        if (resp.data === null) {
+          // setCheckin(true);
+        } else {
+          // setCheckin(false);
+        }
+        // navigate("/employeehome");
+        // console.log(res.message);
+      } catch (error) {
+        if (
+          error.response &&
+          error.response.status >= 400 &&
+          error.response.status <= 500
+        ) {
+          setError(error.response.data.message);
+        }
+      }
+
+  
+      console.log("Form Submitted!");
+      console.log(startTime,endTime,date,equipment);
         if (!equipment.available){
             alert("Equipment is Not Available!!");
             return;
         }
       event.preventDefault();
-      if (!startDate || !startTime || !date) {
+      if ( !startTime || !date) {
         toast({
           title: "Form Incomplete",
           description: "Please fill all the fields",
@@ -47,7 +108,6 @@ import { Link } from 'react-router-dom';
         return;
       }
       const data = {
-        startDate: startDate,
         startTime: startTime,
         date: date
       };
@@ -59,7 +119,6 @@ import { Link } from 'react-router-dom';
         duration: 3000,
         isClosable: true
       });
-      setStartDate("");
       setStartTime("");
       setDate("");
 
@@ -76,7 +135,7 @@ import { Link } from 'react-router-dom';
               flexDir={{ base: "column", md: "row" }}
             >
               <Image
-                src="https://cdn.shopify.com/s/files/1/0046/8752/8024/products/precor-trm-243-treadmill_4a16b4ff-4a28-47ef-8b60-9c5984de7d3d_5000x.jpg?v=1677791634"
+                src={equipment.image}
                 alt="Card image"
                 mr={{ base: 0, md: 4 }} boxSize={"400px"}
               />
@@ -97,7 +156,7 @@ import { Link } from 'react-router-dom';
                     fontWeight="bold"
                     color="gray.500"
                   >
-                    #{equipment.id}
+                    #{(equipmentId.id.substr(-4))}
                   </Text>
                 </Box>
           
@@ -109,27 +168,28 @@ import { Link } from 'react-router-dom';
                 <Box mt="4">
                   <form onSubmit={handleSubmit}>
                     <Stack spacing={4}>
-                      <FormControl id="start-date">
-                        <FormLabel>Start Date</FormLabel>
-                        <Input
-                          type="date"
-                          value={startDate}
-                          onChange={(event) => setStartDate(event.target.value)}
-                        />
-                        <FormHelperText>Enter the start date</FormHelperText>
-                      </FormControl>
           
-                      <FormControl id="start-time">
+                      <FormControl id="start-time" isRequired>
                         <FormLabel>Start Time</FormLabel>
-                        <Input
+                        <Input 
+                        
                           type="time"
                           value={startTime}
                           onChange={(event) => setStartTime(event.target.value)}
                         />
                         <FormHelperText>Enter the start time</FormHelperText>
                       </FormControl>
+                      <FormControl id="end-time" isRequired>
+                        <FormLabel>End Time</FormLabel>
+                        <Input
+                          type="time"
+                          value={endTime}
+                          onChange={(event) => setEndTime(event.target.value)}
+                        />
+                        <FormHelperText>Enter the end time</FormHelperText>
+                      </FormControl>
           
-                      <FormControl id="date">
+                      <FormControl id="date" isRequired>
                         <FormLabel>Date</FormLabel>
                         <Input
                           type="date"
