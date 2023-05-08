@@ -1,41 +1,87 @@
 import { HStack, Heading, Stack, Button, Image, Box } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
-import { BsFillCalendarCheckFill } from "react-icons/bs";
+import { BsFillCalendarCheckFill, BsWrenchAdjustableCircleFill } from "react-icons/bs";
 import { Table, Tbody, Td, Th, Thead, Tr, Text } from "@chakra-ui/react";
 import { color } from "framer-motion";
 import axios from 'axios';
 
 function MyClasses() {
 
-  const [classes, setClasses] = useState([]);
-
+  const [locationMap, setLocationMap] = useState({});
+  const [schedules, setSchedules] = useState([]);
+  const [classMap, setClassMap] = useState({});
   let currentUserId = localStorage.getItem("token");
   currentUserId = currentUserId ? JSON.parse(localStorage.getItem("token")).data._id : undefined;
-  console.log(currentUserId);
+
+  const getLocation = async () => {
+    const url = "http://localhost:8080/api/location";
+    const { data } = await axios.get(url);
+    data.map((item)=>{
+      locationMap[item._id] = item.location
+    });
+    setLocationMap(locationMap);
+  };
+
 
   const getClass = async () => {
     const url = "http://localhost:8080/api/class";
     const { data } = await axios.get(url);
-    console.log(data);
-    const expandClass = data.map((el, i) => ({
-      id: el._id,
-      name: el.name,
-      startDate: el.startDate,
-      endDate: el.endDate,
-      color: el.color,
-      description: el.description,
-      schedule: el.schedule,
-      image: el.image,
-      day:"Monday"
-    }));
-    console.log(expandClass);
-    // setData(members);
-    // console.log(data);
-    setClasses(expandClass);
+
+    data.map((item)=>{
+      console.log(item);
+      classMap[item._id] = item.name
+    });
+    console.log(classMap);
+    setClassMap(classMap);
   };
 
+
+  const getSchedule = async () => {
+    let currentUserId = localStorage.getItem("token");
+    currentUserId = currentUserId ? JSON.parse(localStorage.getItem("token")).data._id : undefined;
+    console.log('***',currentUserId)
+    const url = "http://localhost:8080/api/schedule/all/?userId=" + currentUserId;
+    const { data } = await axios.get(url);
+
+    const activeSchedules = data.filter((d) => !d.isDeleted)
+    const filteredSchedulesMap = []
+    activeSchedules.forEach((schedule) => {
+      // const temp = []
+      schedule.schedule.forEach((dayTime) => {
+        const firstIndex = dayTime.indexOf(" ")
+        filteredSchedulesMap.push({name: classMap[schedule.classId],location:locationMap[schedule.locationId], day: dayTime.substring(0, firstIndex), time: dayTime.substring(firstIndex+1)})
+      })
+    })
+    console.log(filteredSchedulesMap)
+    setSchedules(filteredSchedulesMap)
+    // data.map((item)=>{
+      // console.log(item);
+      // if (item.isDeleted == false){
+        // item['day'] = "Monday";
+        // item['className'] = classMap[item.classId]
+        // activeSchedules.push(item)
+
+      // }
+    // });
+    // console.log("------>",activeSchedules);
+    // setSchedules(activeSchedules);
+
+  };
+  const getDayTime = (dayString) => {
+    let day = dayString.split(" ")[0];
+    let time = dayString.split(" ")[1]
+    return [day,time];
+  }
+  
+  
+
+ 
   useEffect(() => {
     getClass();
+    getLocation();
+    getSchedule();
+
+
   }, []);
 
 
@@ -118,7 +164,7 @@ function MyClasses() {
 
   return (
     <Box my={20}>
-      <Heading as="h2" size="lg" mb={4}>
+      <Heading as="h2" size="lg" mb={4} marginLeft={"40%"}>
         Gym Class Schedule
       </Heading>
       <Table>
@@ -128,7 +174,7 @@ function MyClasses() {
               <Td backgroundColor={"orange.200"} color={"black"}>
                 {day}
               </Td>
-              {classes
+              {schedules
                 .filter((c) => c.day === day)
                 .map((c) => (
                   <Td>
@@ -141,12 +187,11 @@ function MyClasses() {
                     >
                       <Text width="8rem"> {c.time}</Text>
                       <Stack width="10rem">
-                        <Text>{c.name}</Text>
+                        <Text>{c.className}</Text>
                         <Text fontSize="sm" color="gray.500">
                           {c.location}
                         </Text>
                       </Stack>
-                      <Image src={c.image} alt={c.name} boxSize="100px" />
                     </HStack>
                   </Td>
                 ))}

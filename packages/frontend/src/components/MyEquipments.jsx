@@ -85,7 +85,7 @@ const MyEquipments = (props) => {
     const data  = await axios.get(url);
     console.log(data.data);
     setEquipments(data.data);
-    console.log(equipments)
+    console.log(equipments);
   };
   
   useEffect(() => {
