@@ -40,7 +40,7 @@ function Navbar() {
           )}
           {token && (
             <li>
-              <a href="/">Analytics Dashboard</a>
+              <a href="/myanalytics">Analytics Dashboard</a>
             </li>
           )}
           {!token && (

@@ -1946,6 +1946,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@kurkle/color@npm:^0.3.0":
+  version: 0.3.2
+  resolution: "@kurkle/color@npm:0.3.2"
+  checksum: bef13d01bbc1cac34e0168d0c56f80142dad15c56c10d5490c09350ff81b5897ef32f8bf2f76745d6f63f5b4644b8321f279dee005551cc178f24b600c1f8944
+  languageName: node
+  linkType: hard
+
 "@mapbox/node-pre-gyp@npm:^1.0.10":
   version: 1.0.10
   resolution: "@mapbox/node-pre-gyp@npm:1.0.10"
@@ -2676,6 +2683,15 @@ __metadata:
   version: 1.2.1
   resolution: "character-parser@npm:1.2.1"
   checksum: 20b3866b2a2de757900eb2602ca209d9ed44701a42c66c5f3484e877db1472b88f3710abb05f78b37516a23287f949f3712d6ded124a639e20f0659c656895f3
+  languageName: node
+  linkType: hard
+
+"chart.js@npm:^4.3.0":
+  version: 4.3.0
+  resolution: "chart.js@npm:4.3.0"
+  dependencies:
+    "@kurkle/color": "npm:^0.3.0"
+  checksum: d35cd053d92ecd80461210d89abd59ac494523ebdae01875432bb69de756f8c1becaff2bfcc38848c9ce3ea8408a5fb2e78c2a8647a29cf15a55267666a38897
   languageName: node
   linkType: hard
 
@@ -4828,6 +4844,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-chartjs-2@npm:^5.2.0":
+  version: 5.2.0
+  resolution: "react-chartjs-2@npm:5.2.0"
+  peerDependencies:
+    chart.js: ^4.1.1
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 2ac69c3be5b254e59179e3c211b28d12b7b58b391bccea8e2a13271fd7638b267ff190cd3b01ad026d192d7873a4b6e60be39e730cec6738b0816374cdbb5d9e
+  languageName: node
+  linkType: hard
+
 "react-clientside-effect@npm:^1.2.6":
   version: 1.2.6
   resolution: "react-clientside-effect@npm:1.2.6"
@@ -5116,6 +5142,7 @@ __metadata:
     "@chakra-ui/vue": "npm:^0.13.1"
     "@emotion/react": "npm:^11.10.6"
     "@emotion/styled": "npm:^11.10.6"
+    chart.js: "npm:^4.3.0"
     cors: "npm:^2.8.5"
     express-validator: "npm:^6.15.0"
     framer-motion: "npm:^10.12.4"
@@ -5124,6 +5151,7 @@ __metadata:
     lodash: "npm:^4.17.21"
     moment: "npm:^2.29.4"
     nodemon: "npm:^2.0.22"
+    react-chartjs-2: "npm:^5.2.0"
     react-dom: "npm:^18.2.0"
     react-icons: "npm:^4.8.0"
     react-router-dom: "npm:^6.10.0"

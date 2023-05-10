@@ -21,6 +21,7 @@ import MyEquipments from "./components/MyEquipments"
 import MyEquipment from "./components/MyEquipment";
 import MyActivities from "./components/MyActivities";
 import Schedule from "./components/Class";
+import Myanalytics from "./components/Myanalytics";
 
 function App() {
   const getEquipmentId = (equipment) => {
@@ -50,6 +51,7 @@ function App() {
         <Route path="/myequipment/:id" element ={<MyEquipment/>}/>
         <Route path="/myactivities" element ={<MyActivities/>}/>
         <Route path="/schedule/:id" element={<Schedule />} />
+        <Route path="/myanalytics" element={<Myanalytics />} />
         {/* <Route path="/schedule/" element={<Schedule />} /> */}
       </Routes>
 
