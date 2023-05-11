@@ -20,6 +20,10 @@ const activitySchema = new mongoose.Schema({
   date: {
     type: String,
     required: true
+  },
+  locationId: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: false
   }
 });
 

@@ -1,115 +1,143 @@
-import { useState, useEffect } from 'react';
-import { Flex,Image,Box, Button, Heading, List, ListItem, Select, Text,Badge } from '@chakra-ui/react';
-import axios from "axios"
+import { useState, useEffect } from "react";
+import {
+  Flex,
+  Image,
+  Box,
+  Button,
+  Heading,
+  List,
+  ListItem,
+  Select,
+  Text,
+  Badge,
+} from "@chakra-ui/react";
+import axios from "axios";
 
 function MyActivities() {
-  // const [equipmentMap, setEquipmentMap] = useState({});
   const [equipments, setEquipments] = useState([]);
-  const [activities, setActivities] = useState([
-    // { name: 'Activity 1', startTime: '1 hour', date: '2023-05-01',image: "./gym1.png" },
-    // { name: 'Activity 3', startTime: '30 minutes', date: '2023-04-03',image:"./gym1.png" },
-    // { name: 'Activity 2', startTime: '45 minutes', date: '2023-04-02',image:"./gym1.png" },
-    // { name: 'Activity 4', startTime: '1.5 hours', date: '2023-04-30' ,image:"./gym1.png"},
-    // { name: 'Activity 5', startTime: '1 hour', date: '2023-04-28'    ,image:"./gym1.png"  },
-    // { name: 'Activity 6', startTime: '45 minutes', date: '2023-04-26',image:"./gym1.png" },
-    // { name: 'Activity 7', startTime: '1 hour', date: '2023-03-30'    ,image:"./gym1.png" },
-    // { name: 'Activity 8', startTime: '45 minutes', date: '2023-03-25',image:"./gym1.png"    },
-    // { name: 'Activity 9', startTime: '1 hour', date: '2023-03-15'    ,image:"./gym1.png"  },
-  ]);
-  const [selectedFilter, setSelectedFilter] = useState('lastWeek');
+  const [activities, setActivities] = useState([]);
+  const [updatedActivities, setUpdatedActivities] = useState([]);
+  const [selectedFilter, setSelectedFilter] = useState("lastWeek");
 
+  // const [equipmentMap, setEquipmentMap] = useState({});
   const getEquipments = async () => {
     const url = "http://localhost:8080/api/equipment";
-    const data  = await axios.get(url);
-    setEquipments(data.data);
+    const data = await axios.get(url);
+    let eqMap = data.data;
+    let tmp = {};
+    eqMap.map((eq) => {
+      tmp[eq._id] = eq;
+    });
+    setEquipments(eqMap);
+    return tmp;
   };
 
-  const getActivities = async () => {
+  const getActivities = async (equipmentMap) => {
     const url = "http://localhost:8080/api/activity";
-    const data  = await axios.get(url);
-    const activityObjectList = data.data;
+    const activities = await axios.get(url);
+    const activityObjectList = activities.data;
     let currentUserId = localStorage.getItem("token");
-    currentUserId = currentUserId ? JSON.parse(localStorage.getItem("token")).data._id : undefined;
-    let userActivity = activityObjectList.filter((obj) => obj.userId === currentUserId);
+    currentUserId = currentUserId
+      ? JSON.parse(localStorage.getItem("token")).data._id
+      : undefined;
+    let userActivity = activityObjectList.filter(
+      (obj) => obj.userId === currentUserId
+    );
     let a = [];
-    userActivity.map((item)=>{
-      equipments.map((eq)=>{
-        if (item.equipmentId === eq._id){
-          // console.log("----->",eq);
-          // item = {equipmentName:eq.name, ...item};
-          item['equipmentName'] = eq.name;
-          item['equipmentImage'] = eq.image
-        }
-        a.push(item);
-      });
+    userActivity.map((item) => {
+      item["equipmentName"] = equipmentMap[item.equipmentId].name;
+      item["equipmentImage"] = equipmentMap[item.equipmentId].image;
+      a.push(item);
     });
+    console.log("------>", a);
     setActivities(a);
-    };
-  
-  useEffect(() => {
-    getActivities();
-    getEquipments();
-  }, []);
+    handleFilterChange({target: {value: 'lastWeek'}}, a)
+  };
 
-
-  // Get the filtered activities based on the selected time period
-  const filteredActivities = activities.filter((activity) => {
-    const activityDate = new Date((activity.date));
-    const currentDate = new Date();
-    if (selectedFilter === 'lastWeek') {
-      const lastWeekDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - 7);
-      return activityDate >= lastWeekDate;
-    } else if (selectedFilter === 'lastMonth') {
-      const lastMonthDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, currentDate.getDate());
-      return activityDate >= lastMonthDate;
-    } else if (selectedFilter === 'last6Months') {
-      const last6MonthsDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 6, currentDate.getDate());
-      return activityDate >= last6MonthsDate;
-    } else {
-      return true; // show all activities if no filter is selected
-    }
-  });
-
-  function handleFilterChange(event) {
+  function handleFilterChange(event, newActivities) {
+    newActivities = newActivities ?? activities
     setSelectedFilter(event.target.value);
+    // setFiltererdActivities
+    // Get the filtered activities based on the selected time period
+    const filteredActivities = newActivities.filter((activity) => {
+      const activityDate = new Date(activity.date);
+      const currentDate = new Date();
+      if (event.target.value === "lastWeek") {
+        const lastWeekDate = new Date(
+          currentDate.getFullYear(),
+          currentDate.getMonth(),
+          currentDate.getDate() - 7
+        );
+        return activityDate >= lastWeekDate;
+      } else if (event.target.value === "lastMonth") {
+        const lastMonthDate = new Date(
+          currentDate.getFullYear(),
+          currentDate.getMonth() - 1,
+          currentDate.getDate()
+        );
+        return activityDate >= lastMonthDate;
+      } else if (event.target.value === "last6Months") {
+        const last6MonthsDate = new Date(
+          currentDate.getFullYear(),
+          currentDate.getMonth() - 6,
+          currentDate.getDate()
+        );
+        return activityDate >= last6MonthsDate;
+      } else {
+        return true; // show all activities if no filter is selected
+      }
+    });
+    setUpdatedActivities(filteredActivities);
   }
 
+  useEffect(() => {
+    getEquipments().then((equipmentMap) => {
+      console.log(equipmentMap);
+      getActivities(equipmentMap);
+    });
+  }, []);
+
   return (
-        <Box p={4} my={10}>
-        <Heading as="h1" mb={4}>My Gym Activities</Heading>
-        <Select value={selectedFilter} onChange={handleFilterChange} mb={4}>
-            <option value="lastWeek">Last Week</option>
-            <option value="lastMonth">Last Month</option>
-            <option value="last6Months">Last 6 Months</option>
-            <option value="all">All Activities</option>
-        </Select>
-        {filteredActivities.length > 0 ? (
-            <List spacing={3} justifyContent="center" alignContent="center">
-            {filteredActivities.map((activity, index) => (
-                <ListItem key={index} display="flex">
-<Box width="100%" rounded="lg" bg="gray.100"  >
-  <Flex align="center">
-    <Image src={activity.equipmentImage} boxSize={"100px"} mr={4} borderRadius="lg" />
-    <Box>
-    <Heading as="h1" mb={4}>{activity.equipmentName} </Heading>
-      <Text>{activity.startTime} to {activity.endTime}</Text>
-      <Text>{activity.date}</Text>
+    <Box p={4} my={10}>
+      <Heading as="h1" mb={4}>
+        My Gym Activities
+      </Heading>
+      <Select value={selectedFilter} onChange={(e) => handleFilterChange(e, undefined)} mb={4}>
+        <option value="lastWeek">Last Week</option>
+        <option value="lastMonth">Last Month</option>
+        <option value="last6Months">Last 6 Months</option>
+        <option value="all">All Activities</option>
+      </Select>
+      {updatedActivities.length ? (
+        <List spacing={3} justifyContent="center" alignContent="center">
+          {updatedActivities.sort((a, b) => new Date(b.date) - new Date(a.date)).map((activity, index) => (
+            <ListItem key={index} display="flex">
+              <Box width="100%" rounded="lg" bg="gray.100">
+                <Flex align="center">
+                  <Image
+                    src={activity.equipmentImage}
+                    boxSize={"100px"}
+                    mr={4}
+                    borderRadius="lg"
+                  />
+                  <Box>
+                    <Heading as="h1" mb={4}>
+                      {activity.equipmentName}{" "}
+                    </Heading>
+                    <Text>
+                      {activity.startTime} to {activity.endTime}
+                    </Text>
+                    <Text>{activity.date}</Text>
+                  </Box>
+                </Flex>
+              </Box>
+            </ListItem>
+          ))}
+        </List>
+      ) : (
+        <Text>No activities found.</Text>
+      )}
     </Box>
-  </Flex>
-</Box>
-
-
-
-
-                </ListItem>
-            ))}
-            </List>
-        ) : (
-            <Text>No activities found.</Text>
-        )}
-        </Box>
-
-
   );
 }
 export default MyActivities;
