@@ -26,6 +26,9 @@ import Schedules from "./components/schedule";
 import Location from "./components/location";
 import Members from "./components/members";
 import ClassAnalytics from "./components/ClassAnalytics";
+import ClassAnalyticsSub from "./components/ClassAnalyticSub";
+
+import ClassValues from "./components/classvalues";
 
 function App() {
   const getEquipmentId = (equipment) => {
@@ -57,6 +60,9 @@ function App() {
         <Route path="/location" element={<Location />} />
         <Route path="/members" element={<Members />} />
         <Route path="/classAnalytics" element={<ClassAnalytics />} />
+        <Route path="/classAnalyticsSub" element={<ClassAnalyticsSub />} />
+
+        <Route path="/classvalues" element={<ClassValues />} />
 
         <Route path="/schedule/:id" element={<Schedule />} />
         <Route path="/myanalytics" element={<Myanalytics />} />
