@@ -19,11 +19,30 @@ import {
   TableContainer,
   Spinner,
   Link,
+  Input,
+  FormControl,
 } from "@chakra-ui/react";
 import axios from "axios";
 
 function ClassAnalytics() {
   const [schedules, setSchedules] = useState([]);
+  const labels = Utils.months({ count: 7 });
+  const config = {
+    type: "line",
+    data: data,
+  };
+  const datavalue = {
+    labels: labels,
+    datasets: [
+      {
+        label: "My First Dataset",
+        data: [65, 59, 80, 81, 56, 55, 40],
+        fill: false,
+        borderColor: "rgb(75, 192, 192)",
+        tension: 0.1,
+      },
+    ],
+  };
   let token = localStorage.getItem("token");
   token = token
     ? JSON.parse(localStorage.getItem("token")).data.isEmployee
@@ -108,7 +127,7 @@ function ClassAnalytics() {
             <>
               <HStack justify={"Center"} paddingBottom={10}>
                 <Heading textAlign="center" fontStyle={"italic"}>
-                  Members
+                  Analytics
                 </Heading>
                 <Heading
                   textAlign="center"
@@ -116,51 +135,24 @@ function ClassAnalytics() {
                   color={"orange"}
                   fontWeight={"bold"}
                 >
-                  Class Schedules
+                  Class
                 </Heading>
               </HStack>
-              {/* <Stack alignItems="flex-start" width={"full"} paddingLeft={90}> */}
-              {allmem.map((users) => (
-                <HStack spacing={10}>
-                  <Link to="/">
-                    <Text
-                      as="b"
-                      fontSize={"2xl"}
-                      paddingLeft={100}
-                      color="orange"
-                    >
-                      {users.userId}
-                    </Text>
-                  </Link>
-
-                  <TableContainer>
-                    <Table variant="simple">
-                      <Thead>
-                        <Tr>
-                          <Th>Class Name</Th>
-                          <Th>From Date</Th>
-                          <Th>To Date</Th>
-                          <Th>Deleted Registration</Th>
-                          {/* <Th>Location</Th> */}
-                        </Tr>
-                      </Thead>
-                      <Tbody>
-                        {getUnique(data, users.userName).map((member) => (
-                          <Tr>
-                            <Td>{member.className}</Td>
-                            <Td>{member.fromDate}</Td>
-                            <Td>{member.toDate}</Td>
-                            <Td textAlign="center">
-                              {JSON.stringify(!member.isDeleted)}
-                            </Td>
-                            {/* <Td>{member.location}</Td> */}
-                          </Tr>
-                        ))}
-                      </Tbody>
-                    </Table>
-                  </TableContainer>
+              <form>
+                <HStack>
+                  <FormControl isRequired>
+                    <Input type="date"></Input>
+                  </FormControl>
+                  <FormControl isRequired>
+                    <Input type="date"></Input>
+                  </FormControl>
+                  <FormControl isRequired>
+                    <Button type="submit" colorScheme="orange">
+                      Submit
+                    </Button>
+                  </FormControl>
                 </HStack>
-              ))}
+              </form>
             </>
           </Stack>
         </Flex>

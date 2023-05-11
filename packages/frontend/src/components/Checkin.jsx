@@ -44,6 +44,7 @@ function CheckIn() {
   const [checkin, setCheckin] = useState({});
   const [checkInfo, setCheckInfo] = useState([]);
   const [checkbutton, setCheckbutton] = useState(false);
+  const [locationNames, setLocastionNames] = useState({});
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...checkin, [input.name]: input.value });
@@ -86,32 +87,37 @@ function CheckIn() {
 
   const [refresh, setRefresh] = useState(true);
 
-  const getLocationNames = async (locationId) => {
-    const url =
-      "http://localhost:8080/api/location/getName?classId=" + locationId;
-    const { data } = await axios.get(url);
-    console.log("---", data[0].location);
-    return data[0].location;
-  };
+  // const getLocationNames = async (locationId) => {
+  //   const url =
+  //     "http://localhost:8080/api/location/getName?classId=" + locationId;
+  //   const { data } = await axios.get(url);
+  //   console.log("---", data[0].location);
+  //   return data[0].location;
+  // };
   //checkin info
 
-  const showLocation = async (userId) => {
-    const checko = checkInfo.find((info) => info.userId === userId);
-    return checko.locationId;
-    // const x = await Promise.all(getLocationNames(checko["locationId"]));
+  // const showLocation = async (userId) => {
+  //   const checko = checkInfo.find((info) => info.userId === userId);
+  //   return checko.locationId;
+  //   // const x = await Promise.all(getLocationNames(checko["locationId"]));
 
-    // console.log("ppo", x);
-    // return checko[0].lo;
-  };
+  //   // console.log("ppo", x);
+  //   // return checko[0].lo;
+  // };
 
   const showCheckInButton = (userId) => {
+    // console.log("userId", userId);
     const checkInData = checkInfo.find((info) => info.userId === userId);
+    console.log(checkInData, "Hello");
+    console.log(checkInfo, "Hellol");
+
     if (!checkInData) {
       return true;
     }
     if (checkInData["isCompleted"] == undefined) {
       return true;
     }
+    console.log(userId, checkInData["isCompleted"]);
     return !!checkInData["isCompleted"];
   };
 
@@ -121,7 +127,17 @@ function CheckIn() {
 
     const checkInfos = {};
     const promises = data.map(async (member) => {
-      url = `http://localhost:8080/api/checkin/?userId=${member.userId}&date=05/07/2023`;
+      // console.log(member, "ppp");
+      console.log(member, "ppp");
+      console.log(checkin, "ppppp");
+      url = `http://localhost:8080/api/checkin/date/?userId=${member.userId}`;
+      var datevalue = await axios.get(url);
+      console.log(datevalue, "kdkd");
+      datevalue = datevalue.data.data.date;
+      console.log(datevalue, "lkl");
+      var dateToday = "05/07/2023";
+      console.log(dateToday, "ppp");
+      url = `http://localhost:8080/api/checkin/?userId=${member.userId}&date=${datevalue}`;
       const res = await axios.get(url);
       const resp = res.data;
       return await resp.data;
@@ -172,20 +188,12 @@ function CheckIn() {
       const url = "http://localhost:8080/api/checkin";
       let payload = Object.values(checkin);
       payload = payload.filter((member) => !!member.userId);
-      console.log("**", payload);
+      console.log("176", payload);
       const res = await axios.post(url, payload);
-
       setRefresh(!refresh);
       const resp = res.data;
       console.log(res.data);
       getCheckin();
-      if (resp.data === null) {
-        // setCheckin(true);
-      } else {
-        // setCheckin(false);
-      }
-      // navigate("/employeehome");
-      // console.log(res.message);
     } catch (error) {
       if (
         error.response &&
@@ -223,6 +231,16 @@ function CheckIn() {
   //     phoneNumber: "2679164820",
   //   },
   // ];
+
+  // useEffect(() => {
+  //   checkInfo.forEach(async (user) => {
+  //     const locationName = await getLocationNames(user.locationId);
+  //     setLocastionNames((names) => ({
+  //       ...names,
+  //       [user.userId]: locationName,
+  //     }));
+  //   });
+  // }, [data]);
 
   const getInfo = (buttons) => {
     if (buttons == "checkIn") {
@@ -267,7 +285,6 @@ function CheckIn() {
               Members
             </Heading>
           </HStack>
-          {/* <Stack alignItems="flex-start" width={"full"} paddingLeft={90}> */}
           <HStack spacing={0} paddingBottom={5}>
             <Input
               placeholder="Enter Name"
@@ -296,6 +313,7 @@ function CheckIn() {
                   </Tr>
                 </Thead>
                 <Tbody>
+                  {console.log(data, "-ioioi")}
                   {data.map((member) => (
                     <Tr>
                       <Td>{member.firstName}</Td>
@@ -325,7 +343,7 @@ function CheckIn() {
                               });
                               setData(updateRequired);
                             }}
-                            isRequired={member.isRequired}
+                            // isRequired={member.isRequired}
                           >
                             <option value={""}></option>
                             {location.map((loc) => (
