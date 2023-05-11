@@ -31,9 +31,15 @@ function Navbar() {
               <img src={logo} alt=""></img>
             </a>
           </>
-        ) : (
+        ) : token && token != null ? (
           <>
             <a href="/employeehome" className="logo">
+              <img src={logo} alt=""></img>
+            </a>
+          </>
+        ) : (
+          <>
+            <a href="/MyClasses" className="logo">
               <img src={logo} alt=""></img>
             </a>
           </>
@@ -54,15 +60,10 @@ function Navbar() {
 
           {!token && token != null && (
             <li>
-              <a href="/class">My Class Schedule</a>
+              <a href="/MyClasses">My Class Schedule</a>
             </li>
           )}
-          {!token && token != null && (
-            <li>
-              <a href="/myanalytics">Analytics Dashboard</a>
-              <a href="/class">My Activities</a>
-            </li>
-          )}
+
           {!token && token != null && (
             <li>
               <a href="/class">Classes</a>
@@ -70,7 +71,7 @@ function Navbar() {
           )}
           {!token && token != null && (
             <li>
-              <a href="/class">Log Hours</a>
+              <a href="/MyEquipments">Log Hours</a>
             </li>
           )}
 
@@ -80,7 +81,11 @@ function Navbar() {
               <a href="/members">Members</a>
             </li>
           )}
-
+          {token && token != null && (
+            <li>
+              <a href="/myanalytics">Analytics Dashboard</a>
+            </li>
+          )}
           {/* For everyone */}
           {token == null && (
             <li>

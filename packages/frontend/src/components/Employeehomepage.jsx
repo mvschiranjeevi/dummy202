@@ -112,7 +112,7 @@ export default function EmployeeHome() {
                 </Card>
               </Link>
 
-              <Link>
+              <Link to="/Myanalytics">
                 <Card
                   w={450}
                   size={"lg"}
