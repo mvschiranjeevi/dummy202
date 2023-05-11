@@ -40,6 +40,16 @@ const Myanalytics = () => {
         console.log(lc);
         setLocationMap(lc);
     }
+    function getDaysOrder(){
+        let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        const today = new Date().getDay();
+        console.log("------->",today);
+        for(var idx=6; idx > today; idx--){
+            var el = days.pop();
+            days = [el, ...days]
+        }
+        return days
+    }
     // const [daybyweek, setDayByweek]=useState({"Sunday":0,"Monday":0, "Tuesday":0,"Wednesday":0,"Thursday":0,"Friday":0,"Saturday":0})
     // const getClass= async()=>{
     //     const url="http://localhost:8080/api/class";
@@ -118,11 +128,17 @@ const Myanalytics = () => {
             if (days <= 7 && days >=0){
                 let st = new Date(`2000-01-01T${item.startTime}:00`);
                 let et = new Date(`2000-01-01T${item.endTime}:00`);
-                if (item.name in tmp4){
-                    tmp4[equipmentmap[item.equipmentId]][daysOfWeek[(date.getDay())%7]] += 1;                     
+                console.log("|||||||---->",item,equipmentmap[item.equipmentId], tmp4);
+                if (equipmentmap[item.equipmentId] in tmp4){
+                    tmp4[equipmentmap[item.equipmentId]][daysOfWeek[(date.getDay()+1)%7]] += 1;                     
                 }else{
-                    tmp4[equipmentmap[item.equipmentId]] = {"Monday":0,"Tuesday":0,"Wednesday":0,"Thursday":0,"Friday":0,"Saturday":0,"Sunday":0};
-                    tmp4[equipmentmap[item.equipmentId]][daysOfWeek[(date.getDay())%7]] = 1;
+                    let tmp = {}
+                    let days = getDaysOrder();
+                    days.map((day)=>{
+                        tmp[day] = 0
+                    })
+                    tmp4[equipmentmap[item.equipmentId]] = tmp;
+                    tmp4[equipmentmap[item.equipmentId]][daysOfWeek[(date.getDay()+1)%7]] = 1;
                 }
             }
             console.log(tmp4);
@@ -174,12 +190,13 @@ const Myanalytics = () => {
         ],
       };
 
+        
     //   const LABELS = hoursbyweek.keys
     //   console.log(hoursbyweek);
       const gymHoursData = {
         // console.log(hoursbyweek.keys());
 
-        labels:  Object.keys(hoursbyweek),
+        labels:  getDaysOrder(),
         datasets: [
           {
             label: 'Hours spent in the gym',
@@ -214,8 +231,9 @@ const Myanalytics = () => {
       }
       console.log(putdata(activitiesByUsers));
 
+
       const data_ = {
-        labels: daysOfWeek,
+        labels: getDaysOrder(),
         datasets : putdata(activitiesByUsers)
         // datasets: [
         //   {
