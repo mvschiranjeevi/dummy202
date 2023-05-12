@@ -7,7 +7,7 @@
 // var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var authRoutes = require("./routes/auth");
-var freeRoutes = require("./routes/freeTrail");
+var freeRoutes = require("./routes/freetrail");
 var locationRoutes = require("./routes/location");
 var checkinRoutes = require("./routes/checkin");
 var classRoutes = require("./routes/class");

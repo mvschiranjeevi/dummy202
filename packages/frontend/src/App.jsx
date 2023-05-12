@@ -23,12 +23,12 @@ import MyActivities from "./components/MyActivities";
 import Schedule from "./components/Class";
 import Myanalytics from "./components/Myanalytics";
 import Schedules from "./components/schedule";
-import Location from "./components/location";
-import Members from "./components/members";
+import Location from "./components/Location";
+import Members from "./components/Members";
 import ClassAnalytics from "./components/ClassAnalytics";
 import ClassAnalyticsSub from "./components/ClassAnalyticSub";
 
-import ClassValues from "./components/classvalues";
+import ClassValues from "./components/ClassValues";
 
 function App() {
   const getEquipmentId = (equipment) => {
