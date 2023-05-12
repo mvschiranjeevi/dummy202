@@ -1,27 +1,15 @@
-import React, { useState , useEffect} from "react"
-import {
-  Box,
-  Flex,
-  Image,
-  Badge,
-  Text,
-  Button,
-  Stack,
-} from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
+import { Box, Flex, Image, Badge, Text, Button, Stack } from "@chakra-ui/react";
 
-import {Link} from 'react-router-dom';
-import axios from "axios"
-
-
-
+import { Link } from "react-router-dom";
+import axios from "axios";
+import { backendApi } from "../constants";
 
 const EquipmentCard = ({ equipment }) => {
-
-
   // write backend code to get equpment list
 
-    return (
-        <Box>
+  return (
+    <Box>
       <Flex
         borderWidth="1px"
         borderRadius="lg"
@@ -29,8 +17,13 @@ const EquipmentCard = ({ equipment }) => {
         alignItems="center"
         p="4"
       >
-        <Image src={equipment.image} alt={equipment.name} mr="4" boxSize={"200px"}/>
-  
+        <Image
+          src={equipment.image}
+          alt={equipment.name}
+          mr="4"
+          boxSize={"200px"}
+        />
+
         <Box>
           <Box d="flex" alignItems="baseline">
             <Badge
@@ -50,11 +43,11 @@ const EquipmentCard = ({ equipment }) => {
               #{equipment._id.substr(-4)}
             </Text>
           </Box>
-  
+
           <Box mt="1" fontWeight="semibold" as="h4" lineHeight="tight">
             {equipment.name}
           </Box>
-  
+
           <Box mt="2">
             <Link to={`/myequipment/${equipment._id}`}>
               <Button
@@ -65,15 +58,12 @@ const EquipmentCard = ({ equipment }) => {
                 Book
               </Button>
             </Link>
-
           </Box>
         </Box>
       </Flex>
-        </Box>
-
-    );
-  };
-  
+    </Box>
+  );
+};
 
 const MyEquipments = (props) => {
   const [selectedEquipmentId, setSelectedEquipmentId] = useState(null);
@@ -81,43 +71,39 @@ const MyEquipments = (props) => {
   const [equipments, setEquipments] = useState([]);
 
   const getEquipments = async () => {
-    const url = "http://3.22.95.113:8080/api/equipment";
-    const data  = await axios.get(url);
+    const url = `http://${backendApi}/api/equipment`;
+    const data = await axios.get(url);
     console.log(data.data);
     setEquipments(data.data);
     console.log(equipments);
   };
-  
+
   useEffect(() => {
     getEquipments();
   }, []);
 
-
-
   const handleClick = (equipment) => {
     setSelectedEquipmentId(equipment.id);
     props.getEquipmentId(equipment);
-   
-  }
+  };
   return (
     <Box my={20}>
-    <Flex direction="column" alignItems="center" p="5">
-      <h1>
-        Gym Equipments
-      </h1>
+      <Flex direction="column" alignItems="center" p="5">
+        <h1>Gym Equipments</h1>
 
-      <Stack spacing="4">
-        {equipments.map((equipment) => (
-          <EquipmentCard
-            key={equipment.id}
-            equipment={equipment}
-            onClick={(equipment) => {handleClick}}
-          />
-        ))}
-      </Stack>
-    </Flex>
+        <Stack spacing="4">
+          {equipments.map((equipment) => (
+            <EquipmentCard
+              key={equipment.id}
+              equipment={equipment}
+              onClick={(equipment) => {
+                handleClick;
+              }}
+            />
+          ))}
+        </Stack>
+      </Flex>
     </Box>
-
   );
 };
 

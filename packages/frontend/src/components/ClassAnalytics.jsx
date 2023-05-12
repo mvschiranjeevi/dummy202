@@ -21,6 +21,7 @@ import {
   Link,
 } from "@chakra-ui/react";
 import axios from "axios";
+import { backendApi } from "../constants";
 
 function ClassAnalytics() {
   const [schedules, setSchedules] = useState([]);
@@ -38,17 +39,17 @@ function ClassAnalytics() {
     return output;
   };
   const getClassName = async (classId) => {
-    const url = "http://3.22.95.113:8080/api/class/className?id=" + classId;
+    const url = `http://${backendApi}/api/class/className?id=` + classId;
     const { data } = await axios.get(url);
     return data[0].name;
   };
   const getMemberName = async (memberId) => {
-    const url = "http://3.22.95.113:8080/api/auth/memberName?id=" + memberId;
+    const url = `http://${backendApi}/api/auth/memberName?id=` + memberId;
     const { data } = await axios.get(url);
     return data[0].firstName + " " + data[0].lastName;
   };
   const getData = async () => {
-    const url = "http://3.22.95.113:8080/api/schedule/prev";
+    const url = `http://${backendApi}/api/schedule/prev`;
     const { data } = await axios.get(url);
 
     const allClasses = data.map(async (el) => ({

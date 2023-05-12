@@ -2,6 +2,7 @@ import { HStack, Heading, Stack, Button, Image, Box } from "@chakra-ui/react";
 import { BsFillCalendarCheckFill } from "react-icons/bs";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { backendApi } from "../constants";
 
 import axios from "axios";
 
@@ -19,7 +20,7 @@ function Location() {
   const [classes, setClasses] = useState([]);
 
   const getClass = async () => {
-    const url = "http://3.22.95.113:8080/api/location";
+    const url = `http://${backendApi}/api/location`;
     const { data } = await axios.get(url);
     console.log(data);
     const expandClass = data.map((el, i) => ({

@@ -27,6 +27,7 @@ import {
 // import { Button } from "react-scroll";
 import ErrorMessage from "./ErrorMessage";
 import SuccessMessage from "./Success";
+import { backendApi } from "../constants";
 
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -37,7 +38,7 @@ function Members() {
     : null;
   const [data, setData] = useState([]);
   const getData = async () => {
-    const url = "http://3.22.95.113:8080/api/users";
+    const url = `http://${backendApi}/api/users`;
     const { data } = await axios.get(url);
     console.log(data);
     const members = data.data.map((el) => ({
@@ -68,7 +69,7 @@ function Members() {
   const [location, setLocation] = useState([]);
 
   const getLocation = async () => {
-    const url = "http://3.22.95.113:8080/api/location";
+    const url = `http://${backendApi}/api/location`;
     const { data } = await axios.get(url);
     console.log(data);
     setLocation(data);

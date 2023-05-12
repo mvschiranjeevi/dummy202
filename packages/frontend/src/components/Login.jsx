@@ -28,6 +28,7 @@ import ErrorMessage from "./ErrorMessage";
 import { color } from "framer-motion";
 import { MdArrowForwardIos } from "react-icons/md";
 import axios from "axios";
+import { backendApi } from "../constants";
 
 export default function Login() {
   let token = localStorage.getItem("token");
@@ -70,7 +71,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "http://3.22.95.113:8080/api/auth";
+      const url = `http://${backendApi}/api/auth`;
       const result = await axios.post(url, data);
       localStorage.setItem("token", JSON.stringify(result.data));
 

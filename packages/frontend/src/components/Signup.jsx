@@ -34,6 +34,7 @@ import {
 } from "react-icons/bs";
 import { BiTimer, BiMobileAlt, BiTaskX } from "react-icons/bi";
 import { TiPencil } from "react-icons/ti";
+import { backendApi } from "../constants";
 
 export default function Signup() {
   const [selectedMember, setSelectedMember] = useState([""]);
@@ -69,7 +70,7 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "http://3.22.95.113:8080/api/users";
+      const url = `http://${backendApi}/api/users`;
       const { data: res } = await axios.post(url, {
         ...data,
         isEmployee: false,

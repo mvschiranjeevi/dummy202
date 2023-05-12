@@ -26,6 +26,7 @@ import {
 // import { Button } from "react-scroll";
 import ErrorMessage from "./ErrorMessage";
 import SuccessMessage from "./Success";
+import { backendApi } from "../constants";
 
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -52,7 +53,7 @@ function CheckIn() {
 
   const [data, setData] = useState([]);
   const getData = async () => {
-    const url = "http://3.22.95.113:8080/api/users";
+    const url = `http://${backendApi}/api/users`;
     const { data } = await axios.get(url);
     console.log(data);
     const members = data.data.map((el) => ({
@@ -122,22 +123,21 @@ function CheckIn() {
   };
 
   const getCheckin = async () => {
-    let url =
-      "http://3.22.95.113:8080/api/checkin/?userId=64555b8b8648824c963e1707&date=05/07/2023";
+    let url = `http://${backendApi}/api/checkin/?userId=64555b8b8648824c963e1707&date=05/07/2023`;
 
     const checkInfos = {};
     const promises = data.map(async (member) => {
       // console.log(member, "ppp");
       console.log(member, "ppp");
       console.log(checkin, "ppppp");
-      url = `http://3.22.95.113:8080/api/checkin/date/?userId=${member.userId}`;
+      url = `http://${backendApi}/api/checkin/date/?userId=${member.userId}`;
       var datevalue = await axios.get(url);
       console.log(datevalue, "kdkd");
       datevalue = datevalue.data.data.date;
       console.log(datevalue, "lkl");
       var dateToday = "05/07/2023";
       console.log(dateToday, "ppp");
-      url = `http://3.22.95.113:8080/api/checkin/?userId=${member.userId}&date=${datevalue}`;
+      url = `http://${backendApi}/api/checkin/?userId=${member.userId}&date=${datevalue}`;
       const res = await axios.get(url);
       const resp = res.data;
       return await resp.data;
@@ -165,7 +165,7 @@ function CheckIn() {
   const [location, setLocation] = useState([]);
 
   const getLocation = async () => {
-    const url = "http://3.22.95.113:8080/api/location";
+    const url = `http://${backendApi}/api/location`;
     const { data } = await axios.get(url);
     console.log(data);
     setLocation(data);
@@ -185,7 +185,7 @@ function CheckIn() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "http://3.22.95.113:8080/api/checkin";
+      const url = `http://${backendApi}/api/checkin`;
       let payload = Object.values(checkin);
       payload = payload.filter((member) => !!member.userId);
       console.log("176", payload);

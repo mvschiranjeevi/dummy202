@@ -12,6 +12,7 @@ import {
   Badge,
 } from "@chakra-ui/react";
 import axios from "axios";
+import { backendApi } from "../constants";
 
 function MyActivities() {
   const [equipments, setEquipments] = useState([]);
@@ -21,7 +22,7 @@ function MyActivities() {
 
   // const [equipmentMap, setEquipmentMap] = useState({});
   const getEquipments = async () => {
-    const url = "http://3.22.95.113:8080/api/equipment";
+    const url = `http://${backendApi}/api/equipment`;
     const data = await axios.get(url);
     let eqMap = data.data;
     let tmp = {};
@@ -33,7 +34,7 @@ function MyActivities() {
   };
 
   const getActivities = async (equipmentMap) => {
-    const url = "http://3.22.95.113:8080/api/activity";
+    const url = `http://${backendApi}/api/activity`;
     const activities = await axios.get(url);
     const activityObjectList = activities.data;
     let currentUserId = localStorage.getItem("token");
@@ -51,11 +52,11 @@ function MyActivities() {
     });
     console.log("------>", a);
     setActivities(a);
-    handleFilterChange({target: {value: 'lastWeek'}}, a)
+    handleFilterChange({ target: { value: "lastWeek" } }, a);
   };
 
   function handleFilterChange(event, newActivities) {
-    newActivities = newActivities ?? activities
+    newActivities = newActivities ?? activities;
     setSelectedFilter(event.target.value);
     // setFiltererdActivities
     // Get the filtered activities based on the selected time period
@@ -102,7 +103,11 @@ function MyActivities() {
       <Heading as="h1" mb={4}>
         My Gym Activities
       </Heading>
-      <Select value={selectedFilter} onChange={(e) => handleFilterChange(e, undefined)} mb={4}>
+      <Select
+        value={selectedFilter}
+        onChange={(e) => handleFilterChange(e, undefined)}
+        mb={4}
+      >
         <option value="lastWeek">Last Week</option>
         <option value="lastMonth">Last Month</option>
         <option value="last6Months">Last 6 Months</option>
@@ -110,29 +115,31 @@ function MyActivities() {
       </Select>
       {updatedActivities.length ? (
         <List spacing={3} justifyContent="center" alignContent="center">
-          {updatedActivities.sort((a, b) => new Date(b.date) - new Date(a.date)).map((activity, index) => (
-            <ListItem key={index} display="flex">
-              <Box width="100%" rounded="lg" bg="gray.100">
-                <Flex align="center">
-                  <Image
-                    src={activity.equipmentImage}
-                    boxSize={"100px"}
-                    mr={4}
-                    borderRadius="lg"
-                  />
-                  <Box>
-                    <Heading as="h1" mb={4}>
-                      {activity.equipmentName}{" "}
-                    </Heading>
-                    <Text>
-                      {activity.startTime} to {activity.endTime}
-                    </Text>
-                    <Text>{activity.date}</Text>
-                  </Box>
-                </Flex>
-              </Box>
-            </ListItem>
-          ))}
+          {updatedActivities
+            .sort((a, b) => new Date(b.date) - new Date(a.date))
+            .map((activity, index) => (
+              <ListItem key={index} display="flex">
+                <Box width="100%" rounded="lg" bg="gray.100">
+                  <Flex align="center">
+                    <Image
+                      src={activity.equipmentImage}
+                      boxSize={"100px"}
+                      mr={4}
+                      borderRadius="lg"
+                    />
+                    <Box>
+                      <Heading as="h1" mb={4}>
+                        {activity.equipmentName}{" "}
+                      </Heading>
+                      <Text>
+                        {activity.startTime} to {activity.endTime}
+                      </Text>
+                      <Text>{activity.date}</Text>
+                    </Box>
+                  </Flex>
+                </Box>
+              </ListItem>
+            ))}
         </List>
       ) : (
         <Text>No activities found.</Text>

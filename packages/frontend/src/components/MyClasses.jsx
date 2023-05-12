@@ -1,89 +1,92 @@
 import { HStack, Heading, Stack, Button, Image, Box } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
-import { BsFillCalendarCheckFill, BsWrenchAdjustableCircleFill } from "react-icons/bs";
+import {
+  BsFillCalendarCheckFill,
+  BsWrenchAdjustableCircleFill,
+} from "react-icons/bs";
 import { Table, Tbody, Td, Th, Thead, Tr, Text } from "@chakra-ui/react";
-import { color } from "framer-motion";
-import axios from 'axios';
+import axios from "axios";
+import { backendApi } from "../constants";
 
 function MyClasses() {
-
   const [locationMap, setLocationMap] = useState({});
   const [schedules, setSchedules] = useState([]);
   const [classMap, setClassMap] = useState({});
   let currentUserId = localStorage.getItem("token");
-  currentUserId = currentUserId ? JSON.parse(localStorage.getItem("token")).data._id : undefined;
+  currentUserId = currentUserId
+    ? JSON.parse(localStorage.getItem("token")).data._id
+    : undefined;
 
   const getLocation = async () => {
-    const url = "http://3.22.95.113:8080/api/location";
+    const url = `http://${backendApi}/api/location`;
     const { data } = await axios.get(url);
-    data.map((item)=>{
-      locationMap[item._id] = item.location
+    data.map((item) => {
+      locationMap[item._id] = item.location;
     });
     setLocationMap(locationMap);
   };
 
-
   const getClass = async () => {
-    const url = "http://3.22.95.113:8080/api/class";
+    const url = `http://${backendApi}/api/class`;
     const { data } = await axios.get(url);
 
-    data.map((item)=>{
+    data.map((item) => {
       console.log(item);
-      classMap[item._id] = item.name
+      classMap[item._id] = item.name;
     });
     console.log(classMap);
     setClassMap(classMap);
   };
 
-
   const getSchedule = async () => {
     let currentUserId = localStorage.getItem("token");
-    currentUserId = currentUserId ? JSON.parse(localStorage.getItem("token")).data._id : undefined;
-    console.log('***',currentUserId)
-    const url = "http://3.22.95.113:8080/api/schedule/all/?userId=" + currentUserId;
+    currentUserId = currentUserId
+      ? JSON.parse(localStorage.getItem("token")).data._id
+      : undefined;
+    console.log("***", currentUserId);
+    const url =
+      `http://${backendApi}/api/schedule/all/?userId=` + currentUserId;
     const { data } = await axios.get(url);
 
-    const activeSchedules = data.filter((d) => !d.isDeleted)
-    const filteredSchedulesMap = []
+    const activeSchedules = data.filter((d) => !d.isDeleted);
+    const filteredSchedulesMap = [];
     activeSchedules.forEach((schedule) => {
       // const temp = []
       schedule.schedule.forEach((dayTime) => {
-        const firstIndex = dayTime.indexOf(" ")
-        filteredSchedulesMap.push({name: classMap[schedule.classId],location:locationMap[schedule.locationId], day: dayTime.substring(0, firstIndex), time: dayTime.substring(firstIndex+1)})
-      })
-    })
-    console.log(filteredSchedulesMap)
-    setSchedules(filteredSchedulesMap)
+        const firstIndex = dayTime.indexOf(" ");
+        filteredSchedulesMap.push({
+          name: classMap[schedule.classId],
+          location: locationMap[schedule.locationId],
+          day: dayTime.substring(0, firstIndex),
+          time: dayTime.substring(firstIndex + 1),
+        });
+      });
+    });
+    console.log(filteredSchedulesMap);
+    setSchedules(filteredSchedulesMap);
     // data.map((item)=>{
-      // console.log(item);
-      // if (item.isDeleted == false){
-        // item['day'] = "Monday";
-        // item['className'] = classMap[item.classId]
-        // activeSchedules.push(item)
+    // console.log(item);
+    // if (item.isDeleted == false){
+    // item['day'] = "Monday";
+    // item['className'] = classMap[item.classId]
+    // activeSchedules.push(item)
 
-      // }
+    // }
     // });
     // console.log("------>",activeSchedules);
     // setSchedules(activeSchedules);
-
   };
   const getDayTime = (dayString) => {
     let day = dayString.split(" ")[0];
-    let time = dayString.split(" ")[1]
-    return [day,time];
-  }
-  
-  
+    let time = dayString.split(" ")[1];
+    return [day, time];
+  };
 
- 
   useEffect(() => {
     getClass();
     getLocation();
     getSchedule();
-
-
   }, []);
-
 
   const days = [
     "Monday",

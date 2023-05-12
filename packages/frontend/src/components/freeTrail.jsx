@@ -27,6 +27,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { userLogin } from "../services/mockApi";
 import ErrorMessage from "./ErrorMessage";
 import SuccessMessage from "./Success";
+import { backendApi } from "../constants";
 
 import {
   BsFillCalendar2EventFill,
@@ -75,7 +76,7 @@ export default function Freetrail() {
     try {
       setSuccess("");
       setError("");
-      const url = "http://3.22.95.113:8080/api/freeTrail";
+      const url = `http://${backendApi}/api/freeTrail`;
       const { data: res } = await axios.post(url, {
         ...data,
       });

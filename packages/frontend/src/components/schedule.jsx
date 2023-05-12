@@ -24,6 +24,7 @@ import {
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { backendApi } from "../constants";
 
 import { BsFillCalendarCheckFill } from "react-icons/bs";
 const images = {
@@ -47,7 +48,7 @@ function Schedule() {
   //   const memberId = JSON.parse(localStorage.getItem("token"));
   //   const memberIds = memberId.data._id;
   const routeParams = useParams();
-  const uri = "http://3.22.95.113:8080/api/class/schedule/?id=" + routeParams.id;
+  const uri = `http://${backendApi}/api/class/schedule/?id=` + routeParams.id;
 
   const [classes, setClasses] = useState([]);
   const [schedule, setSchedule] = useState([]);
