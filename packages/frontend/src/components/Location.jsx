@@ -8,7 +8,7 @@ import axios from "axios";
 
 const images = {
   "San Jose": "/gym8.jpg",
-  "San Dieago": "/gym9.jpg",
+  "San Diego": "/gym9.jpg",
   "San Fransisco": "/gym10.jpg",
   "Las Vegas": "/gym11.jpg",
 };

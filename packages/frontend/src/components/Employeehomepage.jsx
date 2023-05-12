@@ -16,7 +16,6 @@ import { color } from "framer-motion";
 import { useState } from "react";
 import { MdArrowForwardIos } from "react-icons/md";
 import { Link } from "react-router-dom";
-// import { PseudoBox } from "@chakra-ui/vue";
 
 export default function EmployeeHome() {
   let token = localStorage.getItem("token");

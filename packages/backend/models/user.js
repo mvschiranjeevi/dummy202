@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   phoneNumber: { type: Number, required: true },
-  location: { type: String, required: true },
+  location: { type: mongoose.Schema.Types.ObjectId, required: true },
   isEmployee: { type: Boolean, required: true },
   membershipId: { type: Number, required: true },
 });
@@ -30,7 +30,7 @@ const validate = (data) => {
     email: Joi.string().email().required().label("Email"),
     password: passwordComplexity().required().label("Password"),
     phoneNumber: Joi.number().required().label("Phone Number"),
-    location: Joi.string().optional().label("Location"),
+    location: Joi.string().required().label("Location"),
     isEmployee: Joi.boolean().required().label("Is Employee"),
     membershipId: Joi.number().required().label("Membership Id"),
   });

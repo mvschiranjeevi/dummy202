@@ -23,7 +23,7 @@ import {
   Input,
   Select,
 } from "@chakra-ui/react";
-// import { Button } from "react-scroll";
+
 import ErrorMessage from "./ErrorMessage";
 import SuccessMessage from "./Success";
 import { backendApi } from "../constants";
@@ -107,7 +107,6 @@ function CheckIn() {
   // };
 
   const showCheckInButton = (userId) => {
-    // console.log("userId", userId);
     const checkInData = checkInfo.find((info) => info.userId === userId);
     console.log(checkInData, "Hello");
     console.log(checkInfo, "Hellol");
@@ -127,7 +126,6 @@ function CheckIn() {
 
     const checkInfos = {};
     const promises = data.map(async (member) => {
-      // console.log(member, "ppp");
       console.log(member, "ppp");
       console.log(checkin, "ppppp");
       url = `http://${backendApi}/api/checkin/date/?userId=${member.userId}`;
@@ -142,21 +140,7 @@ function CheckIn() {
       const resp = res.data;
       return await resp.data;
     });
-    console.log("***", await Promise.all(promises));
     setCheckInfo(await Promise.all(promises));
-    // const res = await axios.get(url);
-    // const resp = res.data;
-    // console.log(resp.data === null);
-    // if (resp.data === null) {
-    //   setCheckinfo(true);
-    // } else if (resp.data.isCompleted) {
-    //   setCheckinfo(true);
-    // } else {
-    //   setCheckinfo(false);
-    // }
-
-    // console.log(members);
-    // setData(members);
   };
   useEffect(() => {
     getCheckin();
@@ -182,15 +166,19 @@ function CheckIn() {
     });
     return result?.location ?? "Unknown Location";
   };
+
+  const [buttonVal, setButtonVal] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const url = `http://${backendApi}/api/checkin`;
       let payload = Object.values(checkin);
       payload = payload.filter((member) => !!member.userId);
-      console.log("176", payload);
+      // console.log("176", payload);
       const res = await axios.post(url, payload);
       setRefresh(!refresh);
+      setButtonVal(true);
       const resp = res.data;
       console.log(res.data);
       getCheckin();
@@ -204,60 +192,40 @@ function CheckIn() {
       }
     }
   };
-  // const result = data.items.map((el) => ({
-  //   firstName: el.firstName,
-  //   lastName: el.lastName,
-  //   email: el.email,
-  //   phoneNumber: el.phoneNumber,
-  // }));
 
-  // const members = [
-  //   {
-  //     firstName: "Chiranjeevi",
-  //     lastName: "Medam",
-  //     email: "mvschiranjeevi@gmail.com",
-  //     phoneNumber: "2679164820",
-  //   },
-  //   {
-  //     firstName: "John",
-  //     lastName: "Gash",
-  //     email: "gash@gmail.com",
-  //     phoneNumber: "2679164820",
-  //   },
-  //   {
-  //     firstName: "Steph",
-  //     lastName: "Curry",
-  //     email: "curry@gmail.com",
-  //     phoneNumber: "2679164820",
-  //   },
-  // ];
+  const getLocationNames = async (locationId) => {
+    const url =
+      "http://localhost:8080/api/location/getName?classId=" + locationId;
+    const { data } = await axios.get(url);
+    console.log("---", data[0].location);
+    return data[0].location;
+  };
 
-  // useEffect(() => {
-  //   checkInfo.forEach(async (user) => {
-  //     const locationName = await getLocationNames(user.locationId);
-  //     setLocastionNames((names) => ({
-  //       ...names,
-  //       [user.userId]: locationName,
-  //     }));
-  //   });
-  // }, [data]);
+  useEffect(() => {
+    checkInfo.forEach(async (user) => {
+      const locationName = await getLocationNames(user.locationId);
+      setLocastionNames((names) => ({
+        ...names,
+        [user.userId]: locationName,
+      }));
+    });
+  }, [checkInfo]);
 
   const getInfo = (buttons) => {
     if (buttons == "checkIn") {
-      return "User Checked In";
+      return "User Checked In/Checked Out Successfully";
     } else {
-      return "User Checked Out";
+      return "User Checked In/Checked Out Successfully";
     }
   };
   return (
     <Flex
       width="full"
-      // height="120vh"
       align="center"
       justifyContent="center"
       paddingTop={150}
-      paddingLeft={150}
-      paddingRight={150}
+      paddingLeft={50}
+      paddingRight={50}
       paddingBottom={50}
     >
       <Stack
@@ -285,18 +253,7 @@ function CheckIn() {
               Members
             </Heading>
           </HStack>
-          <HStack spacing={0} paddingBottom={5}>
-            <Input
-              placeholder="Enter Name"
-              onClick={(e) => setSearch(e.target.value)}
-            ></Input>
-            <Button onClick={() => console.log(search)}>Search</Button>
-          </HStack>
-          {true ? (
-            <SuccessMessage message={getInfo(button)} />
-          ) : (
-            <ErrorMessage message={"User Already Checked-In Today"} />
-          )}
+          {buttonVal ? <SuccessMessage message={getInfo(button)} /> : <></>}
           <form onSubmit={handleSubmit}>
             <TableContainer>
               <Table variant="simple">
@@ -307,22 +264,21 @@ function CheckIn() {
                     <Th>Email</Th>
                     <Th isNumeric>Phone Number</Th>
                     <Th>Location</Th>
-
                     <Th></Th>
                     <Th></Th>
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {console.log(data, "-ioioi")}
                   {data.map((member) => (
                     <Tr>
-                      <Td>{member.firstName}</Td>
-                      <Td>{member.lastName}</Td>
-                      <Td>{member.email}</Td>
-                      <Td>{member.phoneNumber}</Td>
+                      <Td size="sm">{member.firstName}</Td>
+                      <Td size="sm">{member.lastName}</Td>
+                      <Td size="sm">{member.email}</Td>
+                      <Td size="sm">{member.phoneNumber}</Td>
                       <Td>
                         {showCheckInButton(member.userId) && (
                           <Select
+                            w="10rem"
                             value={checkin[member.userId].locationId}
                             onChange={(e) => {
                               let memberCheckin = checkin[member.userId];
@@ -343,7 +299,6 @@ function CheckIn() {
                               });
                               setData(updateRequired);
                             }}
-                            // isRequired={member.isRequired}
                           >
                             <option value={""}></option>
                             {location.map((loc) => (
@@ -351,11 +306,13 @@ function CheckIn() {
                             ))}
                           </Select>
                         )}
-                        {!showCheckInButton(member.userId) && <Text>hi</Text>}
+                        {!showCheckInButton(member.userId) && (
+                          <Text>{locationNames[member.userId]}</Text>
+                        )}
                       </Td>
-                      {console.log("**", showCheckInButton(member.userId))}
+                      {/* {console.log("**", showCheckInButton(member.userId))} */}
                       {showCheckInButton(member.userId) && (
-                        <Td>
+                        <Td width={"80%"}>
                           <Button
                             colorScheme="orange"
                             size="sm"
@@ -429,13 +386,6 @@ function CheckIn() {
                     </Tr>
                   ))}
                 </Tbody>
-                {/* <Tfoot>
-                <Tr>
-                  <Th>To convert</Th>
-                  <Th>into</Th>
-                  <Th isNumeric>multiply by</Th>
-                </Tr>
-              </Tfoot> */}
               </Table>
             </TableContainer>
             {checkbutton && (

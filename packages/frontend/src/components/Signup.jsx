@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import _ from "lodash";
 
 import {
@@ -21,6 +21,7 @@ import {
   Center,
   Stack,
   CardFooter,
+  Select,
 } from "@chakra-ui/react";
 import axios from "axios";
 import "./RegistrationForm.css";
@@ -57,13 +58,20 @@ export default function Signup() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  // const membershipData = (variantId) => {
-  //   if (data.membershipId === variantId) {
-  //     setData({ ...data, membershipId: member[variantId].id });
-  //   } else {
-  //     setData({ ...data, membershipId: "" });
-  //   }
-  // };
+  const [location, setLocation] = useState([]);
+  const [locvalue, setLocalvalue] = React.useState(null);
+  //   console.log(locvalue);
+
+  const getLocation = async () => {
+    const url = "http://localhost:8080/api/location";
+    const { data } = await axios.get(url);
+    // console.log(data, "djdj");
+    setLocation(data);
+  };
+
+  useEffect(() => {
+    getLocation();
+  }, []);
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
@@ -123,8 +131,8 @@ export default function Signup() {
       align="center"
       justifyContent="center"
       paddingTop={150}
-      paddingLeft={150}
-      paddingRight={150}
+      paddingLeft={100}
+      paddingRight={100}
       paddingBottom={50}
     >
       <Stack
@@ -250,7 +258,24 @@ export default function Signup() {
                     />
                   </FormControl>
                   <FormControl isRequired>
-                    <Input
+                    <Select
+                      placeholder="Location"
+                      size="lg"
+                      isRequired
+                      value={location._id}
+                      onChange={(e) => {
+                        setData({
+                          ...data,
+                          location: e.target.value,
+                        });
+                      }}
+                    >
+                      {/* <option value={""}></option> */}
+                      {location.map((loc) => (
+                        <option value={loc._id}>{loc.location}</option>
+                      ))}
+                    </Select>
+                    {/* <Input
                       type="text"
                       placeholder="Location"
                       name="location"
@@ -258,7 +283,7 @@ export default function Signup() {
                       value={data.location}
                       required
                       size="lg"
-                    />
+                    /> */}
                   </FormControl>
                 </HStack>
 

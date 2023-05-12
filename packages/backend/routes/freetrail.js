@@ -26,7 +26,7 @@ router.post("/", async (req, res) => {
     await new FreeTrail({ ...req.body }).save();
     res
       .status(201)
-      .send({ message: "User Registered to free trail successfully" });
+      .send({ message: "User registered to free trail successfully" });
   } catch (error) {
     console.log(error);
     res.status(500).send({ message: "Internal Server Error" });

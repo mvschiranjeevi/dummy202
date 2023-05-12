@@ -190,7 +190,7 @@ function MyClasses() {
                     >
                       <Text width="8rem"> {c.time}</Text>
                       <Stack width="10rem">
-                        <Text>{c.className}</Text>
+                        <Text>{c.name}</Text>
                         <Text fontSize="sm" color="gray.500">
                           {c.location}
                         </Text>

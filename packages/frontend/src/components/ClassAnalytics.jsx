@@ -46,7 +46,7 @@ function ClassAnalytics() {
   const getMemberName = async (memberId) => {
     const url = `http://${backendApi}/api/auth/memberName?id=` + memberId;
     const { data } = await axios.get(url);
-    return data[0].firstName + " " + data[0].lastName;
+    return data[0].firstName;
   };
   const getData = async () => {
     const url = `http://${backendApi}/api/schedule/prev`;
@@ -90,9 +90,7 @@ function ClassAnalytics() {
           // height="120vh"
           align="center"
           justifyContent="center"
-          paddingTop={150}
-          paddingLeft={150}
-          paddingRight={150}
+          paddingTop={100}
           paddingBottom={50}
         >
           <Stack
@@ -106,7 +104,7 @@ function ClassAnalytics() {
             borderColor="white"
             alignItems="center"
           >
-            <>
+            <Stack width={"full"}>
               <HStack justify={"Center"} paddingBottom={10}>
                 <Heading textAlign="center" fontStyle={"italic"}>
                   Members
@@ -120,9 +118,8 @@ function ClassAnalytics() {
                   Class Schedules
                 </Heading>
               </HStack>
-              {/* <Stack alignItems="flex-start" width={"full"} paddingLeft={90}> */}
               {allmem.map((users) => (
-                <HStack spacing={10}>
+                <HStack spacing={10} width={"full"}>
                   <Link to="/">
                     <Text
                       as="b"
@@ -162,7 +159,7 @@ function ClassAnalytics() {
                   </TableContainer>
                 </HStack>
               ))}
-            </>
+            </Stack>
           </Stack>
         </Flex>
       ) : (

@@ -8,8 +8,7 @@ const freeTrailSchema = new mongoose.Schema({
   lastName: { type: String, required: true },
   email: { type: String, required: true },
   phoneNumber: { type: Number, required: true },
-  location: { type: String, required: true },
-  // membershipId: { type: Number, required: true },
+  location: { type: mongoose.Schema.Types.ObjectId, required: true },
 });
 
 const FreeTrail = mongoose.model("freeTrail", freeTrailSchema);
@@ -20,7 +19,7 @@ const validate = (data) => {
     lastName: Joi.string().required().label("Last Name"),
     email: Joi.string().email().required().label("Email"),
     phoneNumber: Joi.number().required().label("Phone Number"),
-    location: Joi.string().optional().label("Location"),
+    location: Joi.string().label("Location"),
     // membershipId: Joi.number().required().label("Membership Id"),
   });
   return schema.validate(data);

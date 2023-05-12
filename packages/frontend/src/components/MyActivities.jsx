@@ -10,11 +10,18 @@ import {
   Select,
   Text,
   Badge,
+  HStack,
+  Stack,
+  Spinner,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { backendApi } from "../constants";
 
 function MyActivities() {
+  let token = localStorage.getItem("token");
+  token = token
+    ? JSON.parse(localStorage.getItem("token")).data.isEmployee
+    : null;
   const [equipments, setEquipments] = useState([]);
   const [activities, setActivities] = useState([]);
   const [updatedActivities, setUpdatedActivities] = useState([]);
@@ -99,52 +106,102 @@ function MyActivities() {
   }, []);
 
   return (
-    <Box p={4} my={10}>
-      <Heading as="h1" mb={4}>
-        My Gym Activities
-      </Heading>
-      <Select
-        value={selectedFilter}
-        onChange={(e) => handleFilterChange(e, undefined)}
-        mb={4}
-      >
-        <option value="lastWeek">Last Week</option>
-        <option value="lastMonth">Last Month</option>
-        <option value="last6Months">Last 6 Months</option>
-        <option value="all">All Activities</option>
-      </Select>
-      {updatedActivities.length ? (
-        <List spacing={3} justifyContent="center" alignContent="center">
-          {updatedActivities
-            .sort((a, b) => new Date(b.date) - new Date(a.date))
-            .map((activity, index) => (
-              <ListItem key={index} display="flex">
-                <Box width="100%" rounded="lg" bg="gray.100">
-                  <Flex align="center">
-                    <Image
-                      src={activity.equipmentImage}
-                      boxSize={"100px"}
-                      mr={4}
-                      borderRadius="lg"
-                    />
-                    <Box>
-                      <Heading as="h1" mb={4}>
-                        {activity.equipmentName}{" "}
-                      </Heading>
-                      <Text>
-                        {activity.startTime} to {activity.endTime}
-                      </Text>
-                      <Text>{activity.date}</Text>
-                    </Box>
-                  </Flex>
-                </Box>
-              </ListItem>
-            ))}
-        </List>
+    <>
+      {token != null && !token ? (
+        <Flex
+          width="full"
+          // height="120vh"
+          align="center"
+          justifyContent="center"
+          paddingTop={100}
+          paddingLeft={100}
+          paddingRight={100}
+          paddingBottom={50}
+        >
+          <Stack
+            // p={8}
+            width="full"
+            // height="full"
+            borderWidth={2}
+            borderRadius={15}
+            boxShadow="2xl"
+            border="2px"
+            borderColor="white"
+            alignItems="center"
+          >
+            <Stack width={"full"} padding={10}>
+              <Heading mb={4} paddingTop={5} align="center" color={"orange"}>
+                My Gym Activities
+              </Heading>
+              <Select
+                value={selectedFilter}
+                onChange={(e) => handleFilterChange(e, undefined)}
+                mb={4}
+                paddingBottom={5}
+              >
+                <option value="lastWeek">Last Week</option>
+                <option value="lastMonth">Last Month</option>
+                <option value="last6Months">Last 6 Months</option>
+                <option value="all">All Activities</option>
+              </Select>
+              {updatedActivities.length ? (
+                <List spacing={3} justifyContent="center" alignContent="center">
+                  {updatedActivities
+                    .sort((a, b) => new Date(b.date) - new Date(a.date))
+                    .map((activity, index) => (
+                      <ListItem key={index} display="flex">
+                        <Box
+                          width="full"
+                          rounded="lg"
+                          bg="#f2f2f"
+                          padding={5}
+                          border={"1px"}
+                          borderColor={"black"}
+                        >
+                          <Flex align="center">
+                            <Image
+                              src={activity.equipmentImage}
+                              boxSize={"100px"}
+                              mr={4}
+                              borderRadius="lg"
+                            />
+                            <Box>
+                              <Heading as="h1" mb={4} color="orange">
+                                {activity.equipmentName}{" "}
+                              </Heading>
+                              <HStack>
+                                <Text>
+                                  {activity.startTime} to {activity.endTime}
+                                </Text>
+                                <Text>- {activity.date}</Text>
+                              </HStack>
+                            </Box>
+                          </Flex>
+                        </Box>
+                      </ListItem>
+                    ))}
+                </List>
+              ) : (
+                <Text>No activities found.</Text>
+              )}
+
+              {/* <ClassAnalytics></ClassAnalytics> */}
+            </Stack>
+          </Stack>
+        </Flex>
       ) : (
-        <Text>No activities found.</Text>
+        <Stack
+          height="40rem"
+          padding={100}
+          width={"full"}
+          justify={"center"}
+          align="center"
+        >
+          <Spinner />
+          <Text>This Page is only accessed by members</Text>
+        </Stack>
       )}
-    </Box>
+    </>
   );
 }
 export default MyActivities;

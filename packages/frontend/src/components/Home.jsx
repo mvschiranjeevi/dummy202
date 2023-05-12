@@ -12,28 +12,6 @@ const Home = () => {
   token = token
     ? JSON.parse(localStorage.getItem("token")).data.isEmployee
     : null;
-  // const [posts, setPosts] = useState([]);
-
-  // useEffect(() => {
-  //   PostService.getAllPublicPosts().then(
-  //     (response) => {
-  //       setPosts(response.data);
-  //     },
-  //     (error) => {
-  //       console.log(error);
-  //     }
-  //   );
-  // }, []);
-
-  // return (
-  //   <div>
-  //     <h3>
-  //       {posts.map((post, index) => (
-  //         <div key={index}>{post.content}</div>
-  //       ))}
-  //     </h3>
-  //   </div>
-  // );
 
   return (
     <>

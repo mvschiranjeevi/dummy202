@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import _ from "lodash";
 import {
   Flex,
@@ -21,6 +21,7 @@ import {
   Stack,
   CardFooter,
   VStack,
+  Select,
 } from "@chakra-ui/react";
 import "./RegistrationForm.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -46,18 +47,22 @@ export default function Freetrail() {
 
   var date = current.toISOString().substring(0, 10);
   var endDate = end.toISOString().substring(0, 10);
-
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [phone, setPhone] = useState("");
-  // const [location, setLocation] = useState("");
-  // const [firstname, setFirstname] = useState("");
-  // const [lastname, setLastname] = useState("");
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [location, setLocation] = useState([]);
+
+  const getLocation = async () => {
+    const url = "http://localhost:8080/api/location";
+    const { data } = await axios.get(url);
+    setLocation(data);
+  };
+
+  useEffect(() => {
+    getLocation();
+  }, []);
 
   const [data, setData] = useState({
     firstName: "",
@@ -82,13 +87,11 @@ export default function Freetrail() {
       });
       setSuccess(res.message);
       setData({
-        data: {
-          firstName: "",
-          lastName: "",
-          email: "",
-          phoneNumber: "",
-          location: "",
-        },
+        firstName: "",
+        lastName: "",
+        email: "",
+        phoneNumber: "",
+        location: "",
       });
       // console.log(res.message);
     } catch (error) {
@@ -101,26 +104,6 @@ export default function Freetrail() {
       }
     }
   };
-
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-
-  //   setIsLoading(true);
-
-  //   try {
-  //     // await userLogin({ email, password });
-  //     setPage(false);
-  //     setIsLoggedIn(true);
-  //     setIsLoading(false);
-  //     setShowPassword(false);
-  //   } catch (error) {
-  //     setError("Invalid username or password");
-  //     setIsLoading(false);
-  //     setEmail("");
-  //     setPassword("");
-  //     setShowPassword(false);
-  //   }
-  // };
 
   const handlePasswordVisibility = () => setShowPassword(!showPassword);
 
@@ -166,7 +149,7 @@ export default function Freetrail() {
               fontFamily={"sans-serif"}
               textAlign="center"
             >
-              Register Free Trail
+              Register Free Trial
             </Heading>
             <HStack justify={"Center"}>
               <Text
@@ -175,7 +158,7 @@ export default function Freetrail() {
                 color={"orange"}
                 fontWeight={"bold"}
               >
-                Free Trail will be valid
+                Free Trial will be valid
               </Text>
               <Text textAlign="center" fontStyle={"italic"}>
                 only for one month Per Person
@@ -189,10 +172,10 @@ export default function Freetrail() {
                 color={"orange"}
                 fontWeight={"bold"}
               >
-                Trail Start Date : {date}
+                Trial Start Date : {date}
               </Text>
               <Text textAlign="center" fontStyle={"italic"}>
-                Trail End Date : {endDate}
+                Trial End Date : {endDate}
               </Text>
             </VStack>
             <Box my={4} textAlign="center" maxWidth={700} padding={10}>
@@ -258,7 +241,24 @@ export default function Freetrail() {
                     />
                   </FormControl>
                   <FormControl isRequired>
-                    <Input
+                    <Select
+                      placeholder="Location"
+                      size="lg"
+                      isRequired
+                      value={location._id}
+                      onChange={(e) => {
+                        setData({
+                          ...data,
+                          location: e.target.value,
+                        });
+                      }}
+                    >
+                      {/* <option value={""}></option> */}
+                      {location.map((loc) => (
+                        <option value={loc._id}>{loc.location}</option>
+                      ))}
+                    </Select>
+                    {/* <Input
                       type="text"
                       placeholder="Location"
                       name="location"
@@ -266,10 +266,7 @@ export default function Freetrail() {
                       value={data.location}
                       required
                       size="lg"
-                      // onChange={(event) =>
-                      //   setLocation(event.currentTarget.value)
-                      // }
-                    />
+                    /> */}
                   </FormControl>
                 </HStack>
                 <Stack alignItems="flex-end">

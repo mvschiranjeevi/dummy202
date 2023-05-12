@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Box,
   Flex,
@@ -11,6 +12,9 @@ import {
   Input,
   Stack,
   useToast,
+  HStack,
+  Select,
+  Spinner,
 } from "@chakra-ui/react";
 
 import { useParams } from "react-router-dom";
@@ -19,11 +23,25 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { backendApi } from "../constants";
 
+import ErrorMessage from "./ErrorMessage";
+
 const MyEquipment = () => {
+  let token = localStorage.getItem("token");
+  token = token
+    ? JSON.parse(localStorage.getItem("token")).data.isEmployee
+    : undefined;
+
+  var tokens = token
+    ? JSON.parse(localStorage.getItem("token")).data
+    : undefined;
+
+  console.log(JSON.parse(localStorage.getItem("token")).data._id, "----");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
 
   const [date, setDate] = useState("");
+  const [loc, setLoc] = useState("");
+
   const toast = useToast();
   const [equipment, setEquipment] = useState([]);
 
@@ -37,53 +55,85 @@ const MyEquipment = () => {
     const requiredEquipment = allEquipments.find(
       (item) => item._id === equipmentId.id
     );
-    // console.log('---->',requiredEquipment.name);
     setEquipment(requiredEquipment);
   };
 
   useEffect(() => {
     getEquipment();
   }, []);
+  const [location, setLocation] = useState([]);
+  const [locvalue, setLocalvalue] = React.useState(null);
+  //   console.log(locvalue);
 
-  // const equipment = {
-  //     id: "001",
-  //     name: "Treadmill",
-  //     image:
-  //       "https://cdn.shopify.com/s/files/1/0046/8752/8024/products/precor-trm-243-treadmill_4a16b4ff-4a28-47ef-8b60-9c5984de7d3d_5000x.jpg?v=1677791634",
-  //     available: true,
-  // }
+  const getLocation = async () => {
+    const url = "http://localhost:8080/api/location";
+    const { data } = await axios.get(url);
+    // console.log(data, "djdj");
+    setLocation(data);
+  };
 
+  useEffect(() => {
+    getLocation();
+  }, []);
+  const [error, setError] = useState(false);
   const handleSubmit = async (event) => {
     try {
+      event.preventDefault();
+
+      // console.log(startTime, endTime, "jjjjjj");
+
+      var split1 = startTime.split(":");
+      var split2 = endTime.split(":");
+
+      if (split1[0] > split2[0]) {
+        setError(true);
+        return;
+
+        console.log(error, "popo");
+      } else if (split1[1] > split2[1]) {
+        setError(true);
+        return;
+      }
+
       const url = `http://${backendApi}/api/activity`;
-      let token = localStorage.getItem("token");
-      token = token
-        ? JSON.parse(localStorage.getItem("token")).data._id
-        : undefined;
+
       const ob = {
-        userId: token,
+        userId: JSON.parse(localStorage.getItem("token")).data._id,
         equipmentId: equipmentId.id,
         startTime: startTime,
         endTime: endTime,
         date: date,
+        locationId: loc,
       };
-      console.log("--->" + ob.userId);
-      console.log("--->" + ob.equipmentId);
-      console.log("--->" + ob.startTime);
-      console.log("--->" + ob.endTime);
-      console.log("--->" + ob.date);
+      // console.log("--->" + ob.userId);
+      // console.log("--->" + ob.equipmentId);
+      // console.log("--->" + ob.startTime);
+      // console.log("--->" + ob.endTime);
+      // console.log("--->" + ob.date);
+      // console.log("--->" + ob.locationId);
 
       const res = await axios.post(url, ob);
       const resp = res.data;
+      const data = {
+        startTime: startTime,
+        date: date,
+      };
+      // console.log("Data:", data);
+      toast({
+        title: "Card submitted",
+        description: "Your card has been submitted",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      });
+      setStartTime("");
+      setEndTime("");
+      setDate("");
+      setLoc("");
+      setError(false);
       console.log(res.data);
-      if (resp.data === null) {
-        // setCheckin(true);
-      } else {
-        // setCheckin(false);
-      }
-      // navigate("/employeehome");
-      // console.log(res.message);
     } catch (error) {
+      // console.log("ooo");
       if (
         error.response &&
         error.response.status >= 400 &&
@@ -93,124 +143,176 @@ const MyEquipment = () => {
       }
     }
 
-    console.log("Form Submitted!");
-    console.log(startTime, endTime, date, equipment);
-    if (!equipment.available) {
-      alert("Equipment is Not Available!!");
-      return;
-    }
-    event.preventDefault();
-    if (!startTime || !date) {
-      toast({
-        title: "Form Incomplete",
-        description: "Please fill all the fields",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
-      return;
-    }
-    const data = {
-      startTime: startTime,
-      date: date,
-    };
-    console.log("Data:", data);
-    toast({
-      title: "Card submitted",
-      description: "Your card has been submitted",
-      status: "success",
-      duration: 3000,
-      isClosable: true,
-    });
-    setStartTime("");
-    setDate("");
+    // if (!equipment.available) {
+    //   alert("Equipment is Not Available!!");
+    //   return;
+    // }
+    // if (!startTime || !date) {
+    //   toast({
+    //     title: "Form Incomplete",
+    //     description: "Please fill all the fields",
+    //     status: "error",
+    //     duration: 3000,
+    //     isClosable: true,
+    //   });
+    //   return;
+    // }
   };
   return (
-    <Flex
-      my={20}
-      justifyContent="center"
-      alignItems="center"
-      borderWidth="1px"
-      borderRadius="lg"
-      overflow="hidden"
-      p="4"
-      flexDir={{ base: "column", md: "row" }}
-    >
-      <Image
-        src={equipment.image}
-        alt="Card image"
-        mr={{ base: 0, md: 4 }}
-        boxSize={"400px"}
-      />
-
-      <Box mt={{ base: 4, md: 0 }}>
-        <Box d="flex" alignItems="baseline">
-          <Badge
-            borderRadius="full"
-            px="2"
-            colorScheme={equipment.available ? "green" : "red"}
-            mr="2"
+    <>
+      {token != null && !token ? (
+        <Flex
+          my={20}
+          justifyContent="center"
+          alignItems="center"
+          // borderWidth="1px"
+          // borderRadius="lg"
+          overflow="hidden"
+          // p="4"
+          flexDir={{ base: "column", md: "row" }}
+        >
+          <Stack
+            p={8}
+            width="full"
+            height="full"
+            borderWidth={2}
+            borderRadius={15}
+            boxShadow="2xl"
+            border="2px"
+            borderColor="white"
+            alignItems="center"
           >
-            {equipment.available ? "Available" : "Unavailable"}
-          </Badge>
-          <Text
-            textTransform="uppercase"
-            fontSize="sm"
-            fontWeight="bold"
-            color="gray.500"
-          >
-            #{equipmentId.id.substr(-4)}
-          </Text>
-        </Box>
+            <HStack>
+              <Image
+                src={equipment.image}
+                alt="Card image"
+                mr={{ base: 0, md: 4 }}
+                boxSize={"400px"}
+              />
 
-        <Box mt="1" fontWeight="semibold" as="h4" lineHeight="tight">
-          {equipment.name}
-        </Box>
+              <Box mt={{ base: 4, md: 0 }}>
+                {error && (
+                  <ErrorMessage
+                    message={"From Time cannot be greater than To Time"}
+                  ></ErrorMessage>
+                )}
+                <Box
+                  mt="1"
+                  fontWeight="semibold"
+                  as="h4"
+                  lineHeight="tight"
+                  paddingBottom={3}
+                  color="orange"
+                >
+                  <Text fontWeight={"bold"} fontSize={"2xl"}>
+                    {equipment.name}
+                  </Text>
+                </Box>
+                <Box d="flex" alignItems="baseline">
+                  <HStack>
+                    <Badge
+                      borderRadius="full"
+                      px="2"
+                      colorScheme={equipment.available ? "green" : "red"}
+                      mr="2"
+                    >
+                      {equipment.available ? "Available" : "Unavailable"}
+                    </Badge>
+                    <Text
+                      textTransform="uppercase"
+                      fontSize="sm"
+                      fontWeight="bold"
+                      color="gray.500"
+                    >
+                      #{equipmentId.id.substr(-4)}
+                    </Text>
+                  </HStack>
+                </Box>
 
-        <Box mt="4">
-          <form onSubmit={handleSubmit}>
-            <Stack spacing={4}>
-              <FormControl id="start-time" isRequired>
-                <FormLabel>Start Time</FormLabel>
-                <Input
-                  type="time"
-                  value={startTime}
-                  onChange={(event) => setStartTime(event.target.value)}
-                />
-                <FormHelperText>Enter the start time</FormHelperText>
-              </FormControl>
-              <FormControl id="end-time" isRequired>
-                <FormLabel>End Time</FormLabel>
-                <Input
-                  type="time"
-                  value={endTime}
-                  onChange={(event) => setEndTime(event.target.value)}
-                />
-                <FormHelperText>Enter the end time</FormHelperText>
-              </FormControl>
+                <Box mt="4">
+                  <form onSubmit={handleSubmit}>
+                    <Stack spacing={4}>
+                      <FormControl id="start-time" isRequired>
+                        <FormLabel>Start Time</FormLabel>
+                        <Input
+                          type="time"
+                          value={startTime}
+                          onChange={(event) => setStartTime(event.target.value)}
+                        />
+                        <FormHelperText>Enter the start time</FormHelperText>
+                      </FormControl>
+                      <FormControl id="end-time" isRequired>
+                        <FormLabel>End Time</FormLabel>
+                        <Input
+                          type="time"
+                          value={endTime}
+                          onChange={(event) => setEndTime(event.target.value)}
+                        />
+                        <FormHelperText>Enter the end time</FormHelperText>
+                      </FormControl>
 
-              <FormControl id="date" isRequired>
-                <FormLabel>Date</FormLabel>
-                <Input
-                  type="date"
-                  value={date}
-                  onChange={(event) => setDate(event.target.value)}
-                />
-                <FormHelperText>Enter the date</FormHelperText>
-              </FormControl>
+                      <FormControl id="date" isRequired>
+                        <FormLabel>Date</FormLabel>
+                        <Input
+                          type="date"
+                          value={date}
+                          onChange={(event) => setDate(event.target.value)}
+                        />
+                        <FormHelperText>Enter the date</FormHelperText>
+                      </FormControl>
+                      <FormControl isRequired>
+                        <Select
+                          placeholder="Location"
+                          size="lg"
+                          isRequired
+                          value={location._id}
+                          onChange={(e) => {
+                            setLoc(e.target.value);
+                          }}
+                        >
+                          {/* <option value={""}></option> */}
+                          {location.map((loc) => (
+                            <option value={loc._id}>{loc.location}</option>
+                          ))}
+                        </Select>
+                        {/* <Input
+                      type="text"
+                      placeholder="Location"
+                      name="location"
+                      onChange={handleChange}
+                      value={data.location}
+                      required
+                      size="lg"
+                    /> */}
+                      </FormControl>
 
-              <Button
-                type="submit"
-                colorScheme={equipment.available ? "green" : "red"}
-                disabled={!equipment.available}
-              >
-                Submit
-              </Button>
-            </Stack>
-          </form>
-        </Box>
-      </Box>
-    </Flex>
+                      <Button
+                        type="submit"
+                        colorScheme={equipment.available ? "orange" : "red"}
+                        disabled={!equipment.available}
+                      >
+                        Submit
+                      </Button>
+                    </Stack>
+                  </form>
+                </Box>
+              </Box>
+            </HStack>
+          </Stack>
+        </Flex>
+      ) : (
+        <Stack
+          height="40rem"
+          padding={100}
+          width={"full"}
+          justify={"center"}
+          align="center"
+        >
+          <Spinner />
+          <Text>This Page is only accessed by members</Text>
+        </Stack>
+      )}
+    </>
   );
 };
 

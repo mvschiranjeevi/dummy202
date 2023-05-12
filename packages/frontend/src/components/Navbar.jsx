@@ -63,7 +63,11 @@ function Navbar() {
               <a href="/MyClasses">My Class Schedule</a>
             </li>
           )}
-
+          {!token && token != null && (
+            <li>
+              <a href="/MyActivities">My Activities</a>
+            </li>
+          )}
           {!token && token != null && (
             <li>
               <a href="/class">Classes</a>

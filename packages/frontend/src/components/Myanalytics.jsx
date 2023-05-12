@@ -1,10 +1,19 @@
-import { Button, Box, Heading } from "@chakra-ui/react";
+import {
+  Button,
+  Box,
+  Heading,
+  Spinner,
+  Stack,
+  Text,
+  Flex,
+} from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import { Bar } from "react-chartjs-2";
 import { Line } from "react-chartjs-2";
 import Chart from "chart.js/auto";
 import axios from "axios";
 import { backendApi } from "../constants";
+import ClassAnalytics from "./ClassAnalytics";
 
 import { Select } from "@chakra-ui/react";
 
@@ -21,6 +30,10 @@ function MyComponent(props) {
 }
 
 const Myanalytics = () => {
+  let token = localStorage.getItem("token");
+  token = token
+    ? JSON.parse(localStorage.getItem("token")).data.isEmployee
+    : undefined;
   const [activities, setActivities] = useState([]);
   const [hoursbyweek, setHoursByWeek] = useState({
     Sunday: 0,
@@ -339,37 +352,90 @@ const Myanalytics = () => {
   };
 
   return (
-    <Box padding={"5%"}>
-      <Heading as="h2" size="lg" mb={4} textAlign="center">
-        View analytics dashboard
-      </Heading>
-      <MyComponent locations={Object.values(locationMap)} />
-      <div style={{ display: "flex" }}>
-        <div style={{ width: "50%" }}>
-          <Heading as="h2" size="md" mb={4} textAlign="center">
-            User activity summarized by day/week/month
-          </Heading>
-          <Bar data={userActivityData} />
-        </div>
-        <div style={{ width: "50%", marginLeft: "4%" }}>
-          <Heading as="h2" size="md" mb={4} textAlign="center">
-            Classes and enrollment by day/week
-          </Heading>
+    <>
+      {token != null && token ? (
+        <Flex
+          // my={20}
+          justifyContent="center"
+          alignItems="center"
+          // borderWidth="1px"
+          // borderRadius="lg"
+          overflow="hidden"
+          // p="4"
+          flexDir={{ base: "column", md: "row" }}
+        >
+          <Stack
+            p={8}
+            width="full"
+            height="full"
+            borderWidth={2}
+            borderRadius={15}
+            boxShadow="2xl"
+            border="2px"
+            borderColor="white"
+            alignItems="center"
+          >
+            <Stack padding={"5%"} width={"full"}>
+              <Heading
+                as="h2"
+                size="lg"
+                mb={4}
+                textAlign="center"
+                color={"orange"}
+              >
+                View analytics dashboard
+              </Heading>
+              <Stack paddingBottom={10}>
+                <MyComponent locations={Object.values(locationMap)} />
+              </Stack>
 
-          <Line data={data_} />
-        </div>
-      </div>
+              <div style={{ display: "flex" }}>
+                <div style={{ width: "50%" }}>
+                  <Heading as="h2" size="md" mb={4} textAlign="center">
+                    User activity summarized by day/week/month
+                  </Heading>
+                  <Bar data={userActivityData} />
+                </div>
+                <div style={{ width: "50%", marginLeft: "4%" }}>
+                  <Heading as="h2" size="md" mb={4} textAlign="center">
+                    Classes and enrollment by day/week
+                  </Heading>
 
-      <div style={{ display: "flex", marginLeft: "7%" }}>
-        <div style={{ width: "100%" }}>
-          <Heading as="h2" size="md" mb={4} textAlign="center">
-            Hours spent in the gym by day/week/month
-          </Heading>
+                  <Line data={data_} />
+                </div>
+              </div>
 
-          <Line data={gymHoursData} />
-        </div>
-      </div>
-    </Box>
+              <div
+                style={{ display: "flex", marginLeft: "7%", paddingTop: "5%" }}
+              >
+                <div style={{ width: "100%" }}>
+                  <Heading as="h2" size="md" mb={4} textAlign="center">
+                    Hours spent in the gym by day/week/month
+                  </Heading>
+
+                  <Line data={gymHoursData} />
+                </div>
+              </div>
+
+              <div>
+                <ClassAnalytics></ClassAnalytics>
+              </div>
+            </Stack>
+          </Stack>
+        </Flex>
+      ) : (
+        <Stack
+          height="40rem"
+          padding={100}
+          width={"full"}
+          justify={"center"}
+          align="center"
+        >
+          <Spinner />
+          <Text>This Page is only accessed by members</Text>
+        </Stack>
+      )}
+    </>
   );
 };
 

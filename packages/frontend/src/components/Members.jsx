@@ -36,12 +36,20 @@ function Members() {
   token = token
     ? JSON.parse(localStorage.getItem("token")).data.isEmployee
     : null;
+
+  const getLocationNames = async (locationId) => {
+    const url =
+      "http://localhost:8080/api/location/getName?classId=" + locationId;
+    const { data } = await axios.get(url);
+    console.log("---", data[0].location);
+    return data[0].location;
+  };
   const [data, setData] = useState([]);
   const getData = async () => {
     const url = `http://${backendApi}/api/users`;
     const { data } = await axios.get(url);
     console.log(data);
-    const members = data.data.map((el) => ({
+    const members = data.data.map(async (el) => ({
       userId: el._id,
       firstName: el.firstName,
       lastName: el.lastName,
@@ -49,18 +57,19 @@ function Members() {
       phoneNumber: el.phoneNumber,
       isRequired: true,
       location: el.location,
+      locationName: await getLocationNames(el.location),
     }));
-    console.log(members);
-    setData(members);
+    console.log(await Promise.all(members));
+    setData(await Promise.all(members));
 
     // Create Chekin Object
-    const defaultCheckin = {
-      userId: "",
-      checkinTime: "",
-      checkoutTime: "",
-      date: { today },
-      locationId: "",
-    };
+    // const defaultCheckin = {
+    //   userId: "",
+    //   checkinTime: "",
+    //   checkoutTime: "",
+    //   date: { today },
+    //   locationId: "",
+    // };
   };
   useEffect(() => {
     getData();
@@ -133,7 +142,7 @@ function Members() {
                         <Td>{member.lastName}</Td>
                         <Td>{member.email}</Td>
                         <Td>{member.phoneNumber}</Td>
-                        <Td>{member.location}</Td>
+                        <Td>{member.locationName}</Td>
                       </Tr>
                     ))}
                   </Tbody>

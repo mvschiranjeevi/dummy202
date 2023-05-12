@@ -1,9 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { Box, Flex, Image, Badge, Text, Button, Stack } from "@chakra-ui/react";
+
+import { backendApi } from "../constants";
+import {
+  Box,
+  Flex,
+  Image,
+  Badge,
+  Text,
+  Button,
+  Stack,
+  HStack,
+  Heading,
+  Spinner,
+} from "@chakra-ui/react";
+import { BsFillCalendarCheckFill } from "react-icons/bs";
 
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { backendApi } from "../constants";
 
 const EquipmentCard = ({ equipment }) => {
   // write backend code to get equpment list
@@ -51,7 +64,7 @@ const EquipmentCard = ({ equipment }) => {
           <Box mt="2">
             <Link to={`/myequipment/${equipment._id}`}>
               <Button
-                colorScheme="blue"
+                colorScheme="orange"
                 size="sm"
                 disabled={!equipment.available}
               >
@@ -66,6 +79,14 @@ const EquipmentCard = ({ equipment }) => {
 };
 
 const MyEquipments = (props) => {
+  let token = localStorage.getItem("token");
+  token = token
+    ? JSON.parse(localStorage.getItem("token")).data.isEmployee
+    : null;
+
+  let tokens = token
+    ? JSON.parse(localStorage.getItem("token")).data._id
+    : null;
   const [selectedEquipmentId, setSelectedEquipmentId] = useState(null);
 
   const [equipments, setEquipments] = useState([]);
@@ -87,23 +108,96 @@ const MyEquipments = (props) => {
     props.getEquipmentId(equipment);
   };
   return (
-    <Box my={20}>
-      <Flex direction="column" alignItems="center" p="5">
-        <h1>Gym Equipments</h1>
+    <>
+      {token != null && !token ? (
+        <Stack spacing={0}>
+          <Stack
+            // padding={100}
+            bgImage="url(gym2.jpg)"
+            height={"35rem"}
+            bgSize={"cover"}
+            justify="center"
+            align="center"
+            backgroundPosition="center"
+          >
+            <Heading size="3xl" color="white">
+              Available Gym Equipment
+            </Heading>
+          </Stack>
 
-        <Stack spacing="4">
-          {equipments.map((equipment) => (
-            <EquipmentCard
-              key={equipment.id}
-              equipment={equipment}
-              onClick={(equipment) => {
-                handleClick;
-              }}
-            />
+          {equipments.map((variant, i) => (
+            <Stack
+              padding={100}
+              maxWidth="full"
+              bgColor={i % 2 == 0 ? "white" : "#f2f2f"}
+              borderWidth={1}
+              boxShadow="dark-lg"
+              border="1px"
+              borderColor={i % 2 == 0 ? "white" : "#f2f2f  "}
+            >
+              <Stack spacing={0}>
+                <HStack
+                  width="full"
+                  flexDirection={i % 2 == 0 ? "row" : "row-reverse"}
+                >
+                  <Box>
+                    <Heading color={"orange"}>{variant.name}</Heading>
+                    <HStack>
+                      <Stack padding={2}>
+                        <p> #{variant._id.substr(-4)}</p>
+                      </Stack>
+                      <Badge
+                        borderRadius="full"
+                        px="2"
+                        colorScheme={variant.available ? "green" : "red"}
+                        mr="2"
+                      >
+                        {variant.available ? "Available" : "Unavailable"}
+                      </Badge>
+                    </HStack>
+
+                    <p>{variant.description}</p>
+
+                    <p>
+                      A device moved by persons treading on steps set around the
+                      rim of a wide wheel or by animals walking on an endless
+                      belt
+                    </p>
+                    <Stack paddingTop={3}>
+                      {!token && token != null && (
+                        <Link
+                          to={`/myequipment/${variant._id}`}
+                          disabled={!variant.available}
+                        >
+                          <Button colorScheme="orange">Book</Button>
+                        </Link>
+                      )}
+                    </Stack>
+                  </Box>
+                  <Image
+                    src={variant.image}
+                    width="30rem"
+                    paddingLeft={i % 2 == 0 ? "5rem" : "0rem"}
+                    paddingRight={i % 2 == 0 ? "0rem" : "5rem"}
+                  ></Image>
+                </HStack>
+              </Stack>
+            </Stack>
           ))}
         </Stack>
-      </Flex>
-    </Box>
+      ) : (
+        <Stack
+          height="40rem"
+          padding={100}
+          width={"full"}
+          justify={"center"}
+          align="center"
+        >
+          <Spinner />
+          <Text>This Page is only accessed by members</Text>
+        </Stack>
+      )}
+    </>
   );
 };
 

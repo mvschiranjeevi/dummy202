@@ -78,7 +78,7 @@ export default function Login() {
       if (result.data.data.isEmployee === true) {
         window.location = "/employeehome";
       } else {
-        window.location = "/";
+        window.location = "/MyClasses";
       }
     } catch (error) {
       if (
@@ -109,9 +109,6 @@ export default function Login() {
               justifyContent="center"
               paddingTop={200}
               paddingBottom={100}
-              // bgImage="url(gym1.png)"
-              // backgroundColor="rgba(0, 0, 0, 0.5)"
-              // backgroundBlendMode="darken"
             >
               <Box
                 p={8}
@@ -158,19 +155,15 @@ export default function Login() {
                           <FormLabel>Password</FormLabel>
                           <InputGroup>
                             <Input
-                              type="password"
+                              // type="password"
                               placeholder="Password"
                               name="password"
                               onChange={handleChange}
                               value={data.password}
                               required
                               variant="filled"
-                              // type={showPassword ? "text" : "password"}
-                              // placeholder="*******"
+                              type={showPassword ? "text" : "password"}
                               size="lg"
-                              // onChange={(event) =>
-                              //   setPassword(event.currentTarget.value)
-                              // }
                             />
                             <InputRightElement width="3rem">
                               <Button
@@ -187,13 +180,7 @@ export default function Login() {
                             </InputRightElement>
                           </InputGroup>
                         </FormControl>
-                        <Button
-                          // variantColor="teal"
-                          bg="#ffa500"
-                          type="submit"
-                          width="full"
-                          mt={4}
-                        >
+                        <Button bg="#ffa500" type="submit" width="full" mt={4}>
                           {isLoading ? (
                             <CircularProgress
                               isIndeterminate
