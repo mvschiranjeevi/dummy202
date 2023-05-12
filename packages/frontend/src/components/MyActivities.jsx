@@ -63,6 +63,7 @@ function MyActivities() {
   };
 
   function handleFilterChange(event, newActivities) {
+    // console.log(event);
     newActivities = newActivities ?? activities;
     setSelectedFilter(event.target.value);
     // setFiltererdActivities
@@ -76,6 +77,7 @@ function MyActivities() {
           currentDate.getMonth(),
           currentDate.getDate() - 7
         );
+        console.log(lastWeekDate, "----", activityDate);
         return activityDate >= lastWeekDate;
       } else if (event.target.value === "lastMonth") {
         const lastMonthDate = new Date(

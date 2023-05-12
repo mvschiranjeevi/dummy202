@@ -20,7 +20,7 @@ router.post("/", async (req, res) => {
       } else {
         // console.log(checkinDetails._id);
         await Checkin.updateOne(
-          { _id: checkinDetails._id },
+          { _id: checkinDetails._id, isCompleted: false },
           {
             ...req.body[index],
             checkinTime: checkinDetails.checkinTime,

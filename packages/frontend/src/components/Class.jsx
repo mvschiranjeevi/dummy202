@@ -152,6 +152,8 @@ function Schedule() {
   }, [refresh]);
 
   const [error, setError] = useState("");
+  const [errorMes, setErrorMes] = useState("");
+
   const [dateerror, setDateerror] = useState(false);
 
   //   const navigate = useNavigate();
@@ -162,7 +164,6 @@ function Schedule() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(data);
       const url = `http://${backendApi}/api/schedule`;
       const from = data.fromDate.split("-");
       const to = data.toDate.split("-");
@@ -171,14 +172,34 @@ function Schedule() {
 
       if (from[0] > to[0]) {
         setDateerror(true);
+        setErrorMes("From Date Cannot Be Greater Than To Date");
         return;
       } else if (from[1] > to[1]) {
         // console.log(from[1], to[1]);
+        setErrorMes("From Date Cannot Be Greater Than To Date");
+
         setDateerror(true);
         return;
       } else if (from[1] == to[1] && from[2] > to[2]) {
         // console.log(from[2], to[2]);
+        setErrorMes("From Date Cannot Be Greater Than To Date");
+
         setDateerror(true);
+        return;
+      }
+      const d = new Date();
+
+      // console.log(today);
+      // console.log(fromDate, today);
+      var dd = String(d.getDate()).padStart(2, "0");
+      var mm = String(d.getMonth() + 1).padStart(2, "0");
+      var yyyy = d.getFullYear();
+
+      var today = yyyy + "-" + mm + "-" + dd;
+      // console.log(data);
+      if (data.fromDate < today) {
+        setDateerror(true);
+        setErrorMes("From Date Cannot Be In The Past");
         return;
       }
       const { data: res } = await axios.post(url, {
@@ -361,9 +382,7 @@ function Schedule() {
 
                   {dateerror && (
                     <Stack padding={2}>
-                      <ErrorMessage
-                        message={"From Date cannot be greater than To Date"}
-                      ></ErrorMessage>
+                      <ErrorMessage message={errorMes}></ErrorMessage>
                     </Stack>
                   )}
 

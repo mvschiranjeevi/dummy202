@@ -26,6 +26,14 @@ import { backendApi } from "../constants";
 import ErrorMessage from "./ErrorMessage";
 
 const MyEquipment = () => {
+  const d = new Date();
+
+  var dd = String(d.getDate()).padStart(2, "0");
+  var mm = String(d.getMonth() + 1).padStart(2, "0");
+  var yyyy = d.getFullYear();
+
+  var today = yyyy + "-" + mm + "-" + dd;
+  console.log(today, "lkl");
   let token = localStorage.getItem("token");
   token = token
     ? JSON.parse(localStorage.getItem("token")).data.isEmployee
@@ -44,6 +52,7 @@ const MyEquipment = () => {
 
   const toast = useToast();
   const [equipment, setEquipment] = useState([]);
+  const [ErrorMes, setErrorMes] = useState("");
 
   const equipmentId = useParams();
 
@@ -87,11 +96,20 @@ const MyEquipment = () => {
 
       if (split1[0] > split2[0]) {
         setError(true);
+        setErrorMes("From Time Cannot Be Greater Than To Time");
         return;
 
         console.log(error, "popo");
       } else if (split1[1] > split2[1]) {
         setError(true);
+        setErrorMes("From Time Cannot Be Greater Than To Time");
+        return;
+      }
+
+      if (date < today) {
+        setError(true);
+        setErrorMes("Date Cannot Be In The Past");
+
         return;
       }
 
@@ -191,11 +209,7 @@ const MyEquipment = () => {
               />
 
               <Box mt={{ base: 4, md: 0 }}>
-                {error && (
-                  <ErrorMessage
-                    message={"From Time cannot be greater than To Time"}
-                  ></ErrorMessage>
-                )}
+                {error && <ErrorMessage message={ErrorMes}></ErrorMessage>}
                 <Box
                   mt="1"
                   fontWeight="semibold"
