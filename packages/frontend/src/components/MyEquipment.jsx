@@ -31,7 +31,7 @@ import axios from "axios"
 
     //write backend code to get equipment details based on its
     const getEquipment = async () => {
-      const url = "http://3.136.112.20:8080/api/equipment"
+      const url = "http://3.22.95.113:8080/api/equipment"
       const data  = await axios.get(url);
       const allEquipments = data.data;
       const requiredEquipment = allEquipments.find(item => item._id === equipmentId.id);
@@ -53,7 +53,7 @@ import axios from "axios"
 
     const handleSubmit = async (event) => {
       try {
-        const url = "http://3.136.112.20:8080/api/activity";
+        const url = "http://3.22.95.113:8080/api/activity";
         let token = localStorage.getItem("token");
         token = token ? JSON.parse(localStorage.getItem("token")).data._id : undefined;
         const ob = {

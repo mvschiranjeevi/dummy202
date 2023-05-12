@@ -19,7 +19,7 @@ function Location() {
   const [classes, setClasses] = useState([]);
 
   const getClass = async () => {
-    const url = "http://3.136.112.20:8080/api/location";
+    const url = "http://3.22.95.113:8080/api/location";
     const { data } = await axios.get(url);
     console.log(data);
     const expandClass = data.map((el, i) => ({

@@ -14,7 +14,7 @@ function MyClasses() {
   currentUserId = currentUserId ? JSON.parse(localStorage.getItem("token")).data._id : undefined;
 
   const getLocation = async () => {
-    const url = "http://3.136.112.20:8080/api/location";
+    const url = "http://3.22.95.113:8080/api/location";
     const { data } = await axios.get(url);
     data.map((item)=>{
       locationMap[item._id] = item.location
@@ -24,7 +24,7 @@ function MyClasses() {
 
 
   const getClass = async () => {
-    const url = "http://3.136.112.20:8080/api/class";
+    const url = "http://3.22.95.113:8080/api/class";
     const { data } = await axios.get(url);
 
     data.map((item)=>{
@@ -40,7 +40,7 @@ function MyClasses() {
     let currentUserId = localStorage.getItem("token");
     currentUserId = currentUserId ? JSON.parse(localStorage.getItem("token")).data._id : undefined;
     console.log('***',currentUserId)
-    const url = "http://3.136.112.20:8080/api/schedule/all/?userId=" + currentUserId;
+    const url = "http://3.22.95.113:8080/api/schedule/all/?userId=" + currentUserId;
     const { data } = await axios.get(url);
 
     const activeSchedules = data.filter((d) => !d.isDeleted)

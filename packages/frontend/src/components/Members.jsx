@@ -37,7 +37,7 @@ function Members() {
     : null;
   const [data, setData] = useState([]);
   const getData = async () => {
-    const url = "http://3.136.112.20:8080/api/users";
+    const url = "http://3.22.95.113:8080/api/users";
     const { data } = await axios.get(url);
     console.log(data);
     const members = data.data.map((el) => ({
@@ -68,7 +68,7 @@ function Members() {
   const [location, setLocation] = useState([]);
 
   const getLocation = async () => {
-    const url = "http://3.136.112.20:8080/api/location";
+    const url = "http://3.22.95.113:8080/api/location";
     const { data } = await axios.get(url);
     console.log(data);
     setLocation(data);

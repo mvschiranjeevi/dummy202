@@ -81,7 +81,7 @@ const MyEquipments = (props) => {
   const [equipments, setEquipments] = useState([]);
 
   const getEquipments = async () => {
-    const url = "http://3.136.112.20:8080/api/equipment";
+    const url = "http://3.22.95.113:8080/api/equipment";
     const data  = await axios.get(url);
     console.log(data.data);
     setEquipments(data.data);

@@ -47,7 +47,7 @@ function Schedule() {
   //   const memberId = JSON.parse(localStorage.getItem("token"));
   //   const memberIds = memberId.data._id;
   const routeParams = useParams();
-  const uri = "http://3.136.112.20:8080/api/class/schedule/?id=" + routeParams.id;
+  const uri = "http://3.22.95.113:8080/api/class/schedule/?id=" + routeParams.id;
 
   const [classes, setClasses] = useState([]);
   const [schedule, setSchedule] = useState([]);
@@ -95,7 +95,7 @@ function Schedule() {
   //   console.log(locvalue);
 
   //   const getLocation = async () => {
-  //     const url = "http://3.136.112.20:8080/api/location";
+  //     const url = "http://3.22.95.113:8080/api/location";
   //     const { data } = await axios.get(url);
   //     // console.log(data);
   //     setLocation(data);
@@ -110,7 +110,7 @@ function Schedule() {
 
   //   const getSchedule = async () => {
   //     const url =
-  //       "http://3.136.112.20:8080/api/schedule?userId=" +
+  //       "http://3.22.95.113:8080/api/schedule?userId=" +
   //       memberIds +
   //       "&classId=" +
   //       routeParams.id;

@@ -70,7 +70,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "http://3.136.112.20:8080/api/auth";
+      const url = "http://3.22.95.113:8080/api/auth";
       const result = await axios.post(url, data);
       localStorage.setItem("token", JSON.stringify(result.data));
 
