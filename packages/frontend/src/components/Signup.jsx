@@ -63,7 +63,7 @@ export default function Signup() {
   //   console.log(locvalue);
 
   const getLocation = async () => {
-    const url = "http://localhost:8080/api/location";
+    const url = `http://${backendApi}/api/location`;
     const { data } = await axios.get(url);
     // console.log(data, "djdj");
     setLocation(data);

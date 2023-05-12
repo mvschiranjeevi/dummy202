@@ -195,7 +195,7 @@ function CheckIn() {
 
   const getLocationNames = async (locationId) => {
     const url =
-      "http://localhost:8080/api/location/getName?classId=" + locationId;
+      `http://${backendApi}/api/location/getName?classId=` + locationId;
     const { data } = await axios.get(url);
     console.log("---", data[0].location);
     return data[0].location;

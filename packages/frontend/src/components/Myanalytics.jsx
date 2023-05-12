@@ -7,6 +7,7 @@ import axios from "axios";
 
 import { Select } from "@chakra-ui/react";
 import ClassAnalytics from "./ClassAnalytics";
+import { backendApi } from "../constants";
 
 const Myanalytics = () => {
   const [activities, setActivities] = useState([]);
@@ -30,7 +31,7 @@ const Myanalytics = () => {
   const [reverseLocationMap, setReverseLocationMap] = useState({});
   const [selectedLocation, setSelectedLocation] = useState("");
   const getLocations = async () => {
-    const url = "http://localhost:8080/api/location";
+    const url = `http://${backendApi}/api/location`;
     let lc = await axios.get(url);
     lc = lc.data;
     lc.map((item) => {
@@ -80,7 +81,7 @@ const Myanalytics = () => {
   ];
 
   const getEquipments = async () => {
-    const url = "http://localhost:8080/api/equipment";
+    const url = `http://${backendApi}/api/equipment`;
     let eq = await axios.get(url);
     eq = eq.data;
     eq.map((item) => {
@@ -91,7 +92,7 @@ const Myanalytics = () => {
     setEquipmentmap(equipmentmap);
   };
   const getActivities = async (selectedLocation, reverseLocationMap) => {
-    const url = "http://localhost:8080/api/activity";
+    const url = `http://${backendApi}/api/activity`;
     const data = await axios.get(url);
     const activityObjectList = data.data;
     let currentUserId = localStorage.getItem("token");

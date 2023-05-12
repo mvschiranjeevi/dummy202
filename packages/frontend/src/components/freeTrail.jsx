@@ -55,7 +55,7 @@ export default function Freetrail() {
   const [location, setLocation] = useState([]);
 
   const getLocation = async () => {
-    const url = "http://localhost:8080/api/location";
+    const url = `http://${backendApi}/api/location`;
     const { data } = await axios.get(url);
     setLocation(data);
   };
