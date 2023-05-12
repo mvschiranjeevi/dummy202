@@ -53,7 +53,7 @@ function Schedule() {
   const memberId = JSON.parse(localStorage.getItem("token"));
   const memberIds = memberId.data._id;
   const routeParams = useParams();
-  const uri = "http://localhost:8080/api/class/schedule/?id=" + routeParams.id;
+  const uri = "http://3.136.112.20:8080/api/class/schedule/?id=" + routeParams.id;
 
   const [classes, setClasses] = useState([]);
   const [schedule, setSchedule] = useState([]);
@@ -101,7 +101,7 @@ function Schedule() {
   //   console.log(locvalue);
 
   const getLocation = async () => {
-    const url = "http://localhost:8080/api/location";
+    const url = "http://3.136.112.20:8080/api/location";
     const { data } = await axios.get(url);
     // console.log(data);
     setLocation(data);
@@ -116,7 +116,7 @@ function Schedule() {
 
   const getSchedule = async () => {
     const url =
-      "http://localhost:8080/api/schedule?userId=" +
+      "http://3.136.112.20:8080/api/schedule?userId=" +
       memberIds +
       "&classId=" +
       routeParams.id;
@@ -160,7 +160,7 @@ function Schedule() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "http://localhost:8080/api/schedule";
+      const url = "http://3.136.112.20:8080/api/schedule";
       const from = data.fromDate.split("-");
       const to = data.toDate.split("-");
       console.log(from);
@@ -197,7 +197,7 @@ function Schedule() {
   const deleteHandle = async (e) => {
     e.preventDefault();
     try {
-      const url = "http://localhost:8080/api/schedule/delete";
+      const url = "http://3.136.112.20:8080/api/schedule/delete";
       const { data: res } = await axios.post(url, {
         ...data,
       });
@@ -214,7 +214,7 @@ function Schedule() {
   };
   const getLocationName = async (locationId) => {
     const url =
-      "http://localhost:8080/api/location/getName?classId=" + locationId;
+      "http://3.136.112.20:8080/api/location/getName?classId=" + locationId;
     const { data } = await axios.get(url);
     return data[0].location;
   };

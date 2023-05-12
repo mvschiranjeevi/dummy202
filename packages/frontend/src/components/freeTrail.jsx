@@ -75,7 +75,7 @@ export default function Freetrail() {
     try {
       setSuccess("");
       setError("");
-      const url = "http://localhost:8080/api/freeTrail";
+      const url = "http://3.136.112.20:8080/api/freeTrail";
       const { data: res } = await axios.post(url, {
         ...data,
       });

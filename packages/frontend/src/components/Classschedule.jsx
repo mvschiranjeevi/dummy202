@@ -15,7 +15,7 @@ function Class() {
   const [classes, setClasses] = useState([]);
 
   const getClass = async () => {
-    const url = "http://localhost:8080/api/class";
+    const url = "http://3.136.112.20:8080/api/class";
     const { data } = await axios.get(url);
     console.log(data);
     const expandClass = data.map((el, i) => ({

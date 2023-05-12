@@ -38,17 +38,17 @@ function ClassAnalytics() {
     return output;
   };
   const getClassName = async (classId) => {
-    const url = "http://localhost:8080/api/class/className?id=" + classId;
+    const url = "http://3.136.112.20:8080/api/class/className?id=" + classId;
     const { data } = await axios.get(url);
     return data[0].name;
   };
   const getMemberName = async (memberId) => {
-    const url = "http://localhost:8080/api/auth/memberName?id=" + memberId;
+    const url = "http://3.136.112.20:8080/api/auth/memberName?id=" + memberId;
     const { data } = await axios.get(url);
     return data[0].firstName + " " + data[0].lastName;
   };
   const getData = async () => {
-    const url = "http://localhost:8080/api/schedule/prev";
+    const url = "http://3.136.112.20:8080/api/schedule/prev";
     const { data } = await axios.get(url);
 
     const allClasses = data.map(async (el) => ({

@@ -31,7 +31,7 @@ const Myanalytics = () => {
     const [equipmentmap, setEquipmentmap] = useState({});
     const [locationMap, setLocationMap] = useState({});
     const getLocations = async () => {
-        const url = "http://localhost:8080/api/location";
+        const url = "http://3.136.112.20:8080/api/location";
         let lc = await axios.get(url);
         lc = lc.data;
         lc.map((item)=>{
@@ -52,7 +52,7 @@ const Myanalytics = () => {
     }
     // const [daybyweek, setDayByweek]=useState({"Sunday":0,"Monday":0, "Tuesday":0,"Wednesday":0,"Thursday":0,"Friday":0,"Saturday":0})
     // const getClass= async()=>{
-    //     const url="http://localhost:8080/api/class";
+    //     const url="http://3.136.112.20:8080/api/class";
     //     const data  = await axios.get(url);
     //     const activityObjectList = data.data;
     //     let currentUserId = localStorage.getItem("token");
@@ -61,7 +61,7 @@ const Myanalytics = () => {
     const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
     const getEquipments=async()=>{
-        const url="http://localhost:8080/api/equipment";
+        const url="http://3.136.112.20:8080/api/equipment";
         let eq=await axios.get(url);
         eq = eq.data;
         eq.map((item)=>{
@@ -72,7 +72,7 @@ const Myanalytics = () => {
       setEquipmentmap(equipmentmap);
     }
     const getActivities = async () => {
-        const url = "http://localhost:8080/api/activity";
+        const url = "http://3.136.112.20:8080/api/activity";
         const data  = await axios.get(url);
         const activityObjectList = data.data;
         let currentUserId = localStorage.getItem("token");
