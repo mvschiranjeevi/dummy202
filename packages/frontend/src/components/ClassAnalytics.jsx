@@ -149,7 +149,7 @@ function ClassAnalytics() {
                             <Td>{member.fromDate}</Td>
                             <Td>{member.toDate}</Td>
                             <Td textAlign="center">
-                              {JSON.stringify(!member.isDeleted)}
+                              {JSON.stringify(member.isDeleted)}
                             </Td>
                             {/* <Td>{member.location}</Td> */}
                           </Tr>

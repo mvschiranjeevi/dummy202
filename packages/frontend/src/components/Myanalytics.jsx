@@ -1,39 +1,14 @@
-import {
-  Button,
-  Box,
-  Heading,
-  Spinner,
-  Stack,
-  Text,
-  Flex,
-} from "@chakra-ui/react";
+import { Button, Box, Heading } from "@chakra-ui/react";
 import React, { useState, useEffect } from "react";
 import { Bar } from "react-chartjs-2";
 import { Line } from "react-chartjs-2";
 import Chart from "chart.js/auto";
 import axios from "axios";
-import { backendApi } from "../constants";
-import ClassAnalytics from "./ClassAnalytics";
 
 import { Select } from "@chakra-ui/react";
-
-function MyComponent(props) {
-  const locations = props.locations;
-  console.log(locations);
-  return (
-    <Select size="sm" variant="filled" colorScheme="blue">
-      {locations.map((lc) => (
-        <option key={lc._id}>{lc.location}</option>
-      ))}
-    </Select>
-  );
-}
+import ClassAnalytics from "./ClassAnalytics";
 
 const Myanalytics = () => {
-  let token = localStorage.getItem("token");
-  token = token
-    ? JSON.parse(localStorage.getItem("token")).data.isEmployee
-    : undefined;
   const [activities, setActivities] = useState([]);
   const [hoursbyweek, setHoursByWeek] = useState({
     Sunday: 0,
@@ -52,15 +27,21 @@ const Myanalytics = () => {
   const [activitiesByUsers, setActivitiesByUsers] = useState({});
   const [equipmentmap, setEquipmentmap] = useState({});
   const [locationMap, setLocationMap] = useState({});
+  const [reverseLocationMap, setReverseLocationMap] = useState({});
+  const [selectedLocation, setSelectedLocation] = useState("");
   const getLocations = async () => {
-    const url = `http://${backendApi}/api/location`;
+    const url = "http://localhost:8080/api/location";
     let lc = await axios.get(url);
     lc = lc.data;
     lc.map((item) => {
       locationMap[item._id] = item.locations;
+      reverseLocationMap[item.location] = item._id;
     });
     console.log(lc);
+    setReverseLocationMap(reverseLocationMap);
+    console.log("Reverse Location Map: ", reverseLocationMap);
     setLocationMap(lc);
+    return { locationMap: lc, reverseLocationMap };
   };
   function getDaysOrder() {
     let days = [
@@ -82,7 +63,7 @@ const Myanalytics = () => {
   }
   // const [daybyweek, setDayByweek]=useState({"Sunday":0,"Monday":0, "Tuesday":0,"Wednesday":0,"Thursday":0,"Friday":0,"Saturday":0})
   // const getClass= async()=>{
-  //     const url="http://3.22.95.113:8080/api/class";
+  //     const url="http://localhost:8080/api/class";
   //     const data  = await axios.get(url);
   //     const activityObjectList = data.data;
   //     let currentUserId = localStorage.getItem("token");
@@ -99,7 +80,7 @@ const Myanalytics = () => {
   ];
 
   const getEquipments = async () => {
-    const url = `http://${backendApi}/api/equipment`;
+    const url = "http://localhost:8080/api/equipment";
     let eq = await axios.get(url);
     eq = eq.data;
     eq.map((item) => {
@@ -109,8 +90,8 @@ const Myanalytics = () => {
     console.log(equipmentmap);
     setEquipmentmap(equipmentmap);
   };
-  const getActivities = async () => {
-    const url = `http://${backendApi}/api/activity`;
+  const getActivities = async (selectedLocation, reverseLocationMap) => {
+    const url = "http://localhost:8080/api/activity";
     const data = await axios.get(url);
     const activityObjectList = data.data;
     let currentUserId = localStorage.getItem("token");
@@ -118,7 +99,7 @@ const Myanalytics = () => {
       ? JSON.parse(localStorage.getItem("token")).data._id
       : undefined;
     let userActivity = activityObjectList; //activityObjectList.filter((obj) => obj.userId === currentUserId);
-    console.log(userActivity);
+    console.log("***", userActivity);
     // const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
     let tmp3 = {
@@ -147,12 +128,18 @@ const Myanalytics = () => {
       const date = new Date(item.date);
       const difference = now.getTime() - date.getTime();
       const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-      if (days <= 1) {
-        tmp2["Last Day"] += 1;
-      } else if (days <= 7) {
-        tmp2["Last Week"] += 1;
-      } else if (days <= 30) {
-        tmp2["Last Month"] += 1;
+      console.log("****", reverseLocationMap, selectedLocation);
+      if (item.locationId == reverseLocationMap[selectedLocation]) {
+        if (days <= 1) {
+          tmp2["Last Day"] += 1;
+          tmp2["Last Week"] += 1;
+          tmp2["Last Month"] += 1;
+        } else if (days <= 7) {
+          tmp2["Last Week"] += 1;
+          tmp2["Last Month"] += 1;
+        } else if (days <= 30) {
+          tmp2["Last Month"] += 1;
+        }
       }
       console.log(tmp2);
     });
@@ -162,12 +149,17 @@ const Myanalytics = () => {
       const date = new Date(item.date);
       const difference = now.getTime() - date.getTime();
       const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-      if (days <= 7 && days >= 0) {
-        console.log(date.getDay());
-        let st = new Date(`2000-01-01T${item.startTime}:00`);
-        let et = new Date(`2000-01-01T${item.endTime}:00`);
-        tmp[daysOfWeek[(date.getDay() + 1) % 7]] +=
-          (et.getTime() - st.getTime()) / (1000 * 60 * 60);
+      if (item.locationId == reverseLocationMap[selectedLocation]) {
+        if (days <= 7 && days >= 0) {
+          console.log(date.getDay());
+          let st = new Date(`2000-01-01T${item.startTime}:00`);
+          let et = new Date(`2000-01-01T${item.endTime}:00`);
+          if (st > et) {
+            console.log("laude", item._id);
+          }
+          tmp[daysOfWeek[(date.getDay() + 1) % 7]] +=
+            (et.getTime() - st.getTime()) / (1000 * 60 * 60);
+        }
       }
     });
     console.log(tmp);
@@ -180,37 +172,46 @@ const Myanalytics = () => {
       const date = new Date(item.date);
       const difference = now.getTime() - date.getTime();
       const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-      if (days <= 7 && days >= 0) {
-        let st = new Date(`2000-01-01T${item.startTime}:00`);
-        let et = new Date(`2000-01-01T${item.endTime}:00`);
-        console.log("|||||||---->", item, equipmentmap[item.equipmentId], tmp4);
-        if (equipmentmap[item.equipmentId] in tmp4) {
-          tmp4[equipmentmap[item.equipmentId]][
-            daysOfWeek[(date.getDay() + 1) % 7]
-          ] += 1;
-        } else {
-          let tmp = {};
-          let days = getDaysOrder();
-          days.map((day) => {
-            tmp[day] = 0;
-          });
-          tmp4[equipmentmap[item.equipmentId]] = tmp;
-          tmp4[equipmentmap[item.equipmentId]][
-            daysOfWeek[(date.getDay() + 1) % 7]
-          ] = 1;
+      if (item.locationId == reverseLocationMap[selectedLocation]) {
+        if (days <= 7 && days >= 0) {
+          let st = new Date(`2000-01-01T${item.startTime}:00`);
+          let et = new Date(`2000-01-01T${item.endTime}:00`);
+          console.log(
+            "|||||||---->",
+            item,
+            equipmentmap[item.equipmentId],
+            tmp4
+          );
+          if (equipmentmap[item.equipmentId] in tmp4) {
+            tmp4[equipmentmap[item.equipmentId]][
+              daysOfWeek[(date.getDay() + 1) % 7]
+            ] += 1;
+          } else {
+            let tmp = {};
+            let days = getDaysOrder();
+            days.map((day) => {
+              tmp[day] = 0;
+            });
+            tmp4[equipmentmap[item.equipmentId]] = tmp;
+            tmp4[equipmentmap[item.equipmentId]][
+              daysOfWeek[(date.getDay() + 1) % 7]
+            ] = 1;
+          }
         }
       }
-      console.log(tmp4);
       setActivitiesByUsers(tmp4);
     });
   };
+  console.log("location map keys", Object.values(locationMap));
 
   // const gethoursbyweek()
 
   useEffect(() => {
     getEquipments();
-    getActivities();
-    getLocations();
+    getLocations().then(({ locationMap, reverseLocationMap }) => {
+      console.log("***", locationMap, reverseLocationMap);
+      getActivities("San Jose", reverseLocationMap);
+    });
   }, []);
   const userActivityData = {
     labels: Object.keys(visitorsbytime),
@@ -351,91 +352,69 @@ const Myanalytics = () => {
     ],
   };
 
+  const handleFilterChange = async (event) => {
+    console.log(
+      "Updated Location: ",
+      event.target.value,
+      reverseLocationMap[event.target.value]
+    );
+    setSelectedLocation(event.target.value);
+    await getActivities(event.target.value, reverseLocationMap);
+  };
+
+  function MyComponent(props) {
+    const locations = props.locations;
+    console.log("=====>", locations);
+    return (
+      <Select
+        size="sm"
+        variant="filled"
+        colorScheme="blue"
+        value={selectedLocation}
+        onChange={(e) => handleFilterChange(e)}
+      >
+        {locations.map((lc) => (
+          <option key={lc._id}>{lc.location}</option>
+        ))}
+      </Select>
+    );
+  }
   return (
-    <>
-      {token != null && token ? (
-        <Flex
-          // my={20}
-          justifyContent="center"
-          alignItems="center"
-          // borderWidth="1px"
-          // borderRadius="lg"
-          overflow="hidden"
-          // p="4"
-          flexDir={{ base: "column", md: "row" }}
-        >
-          <Stack
-            p={8}
-            width="full"
-            height="full"
-            borderWidth={2}
-            borderRadius={15}
-            boxShadow="2xl"
-            border="2px"
-            borderColor="white"
-            alignItems="center"
-          >
-            <Stack padding={"5%"} width={"full"}>
-              <Heading
-                as="h2"
-                size="lg"
-                mb={4}
-                textAlign="center"
-                color={"orange"}
-              >
-                View analytics dashboard
-              </Heading>
-              <Stack paddingBottom={10}>
-                <MyComponent locations={Object.values(locationMap)} />
-              </Stack>
+    <Box padding={"5%"}>
+      <Heading as="h2" size="lg" mb={4} textAlign="center">
+        View analytics dashboard {selectedLocation}
+      </Heading>
+      <MyComponent locations={Object.values(locationMap)} />
+      <div style={{ display: "flex" }}>
+        <div style={{ width: "50%" }}>
+          <Heading as="h2" size="md" mb={4} textAlign="center">
+            User activity summarized by day/week/month
+          </Heading>
+          <Bar data={userActivityData} />
+          {console.log("***", visitorsbytime)}
+        </div>
+        <div style={{ width: "50%", marginLeft: "4%" }}>
+          <Heading as="h2" size="md" mb={4} textAlign="center">
+            Classes and enrollment by day/week
+          </Heading>
 
-              <div style={{ display: "flex" }}>
-                <div style={{ width: "50%" }}>
-                  <Heading as="h2" size="md" mb={4} textAlign="center">
-                    User activity summarized by day/week/month
-                  </Heading>
-                  <Bar data={userActivityData} />
-                </div>
-                <div style={{ width: "50%", marginLeft: "4%" }}>
-                  <Heading as="h2" size="md" mb={4} textAlign="center">
-                    Classes and enrollment by day/week
-                  </Heading>
+          <Line data={data_} />
+        </div>
+      </div>
 
-                  <Line data={data_} />
-                </div>
-              </div>
+      <div style={{ display: "flex", marginLeft: "7%" }}>
+        <div style={{ width: "100%" }}>
+          <Heading as="h2" size="md" mb={4} textAlign="center">
+            Hours spent in the gym by day/week/month
+          </Heading>
 
-              <div
-                style={{ display: "flex", marginLeft: "7%", paddingTop: "5%" }}
-              >
-                <div style={{ width: "100%" }}>
-                  <Heading as="h2" size="md" mb={4} textAlign="center">
-                    Hours spent in the gym by day/week/month
-                  </Heading>
-
-                  <Line data={gymHoursData} />
-                </div>
-              </div>
-
-              <div>
-                <ClassAnalytics></ClassAnalytics>
-              </div>
-            </Stack>
-          </Stack>
-        </Flex>
-      ) : (
-        <Stack
-          height="40rem"
-          padding={100}
-          width={"full"}
-          justify={"center"}
-          align="center"
-        >
-          <Spinner />
-          <Text>This Page is only accessed by members</Text>
-        </Stack>
-      )}
-    </>
+          <Line data={gymHoursData} />
+        </div>
+      </div>
+      <div>
+        <ClassAnalytics></ClassAnalytics>
+      </div>
+    </Box>
   );
 };
 

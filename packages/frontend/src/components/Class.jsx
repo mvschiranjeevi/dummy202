@@ -105,7 +105,7 @@ function Schedule() {
   const getLocation = async () => {
     const url = `http://${backendApi}/api/location`;
     const { data } = await axios.get(url);
-    // console.log(data);
+    console.log(data);
     setLocation(data);
   };
 
@@ -162,7 +162,8 @@ function Schedule() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = `http://${backendApi}0/api/schedule`;
+      console.log(data);
+      const url = `http://${backendApi}/api/schedule`;
       const from = data.fromDate.split("-");
       const to = data.toDate.split("-");
       console.log(from);
