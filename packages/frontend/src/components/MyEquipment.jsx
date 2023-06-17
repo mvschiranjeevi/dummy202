@@ -58,7 +58,7 @@ const MyEquipment = () => {
 
   //write backend code to get equipment details based on its
   const getEquipment = async () => {
-    const url = `http://${backendApi}/api/equipment`;
+    const url = `${backendApi}/api/equipment`;
     const data = await axios.get(url);
     const allEquipments = data.data;
     const requiredEquipment = allEquipments.find(
@@ -75,7 +75,7 @@ const MyEquipment = () => {
   //   console.log(locvalue);
 
   const getLocation = async () => {
-    const url = `http://${backendApi}/api/location`;
+    const url = `${backendApi}/api/location`;
     const { data } = await axios.get(url);
     // console.log(data, "djdj");
     setLocation(data);
@@ -113,7 +113,7 @@ const MyEquipment = () => {
         return;
       }
 
-      const url = `http://${backendApi}/api/activity`;
+      const url = `${backendApi}/api/activity`;
 
       const ob = {
         userId: JSON.parse(localStorage.getItem("token")).data._id,

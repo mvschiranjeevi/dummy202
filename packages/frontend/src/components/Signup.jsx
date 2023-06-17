@@ -63,7 +63,7 @@ export default function Signup() {
   //   console.log(locvalue);
 
   const getLocation = async () => {
-    const url = `http://${backendApi}/api/location`;
+    const url = `${backendApi}/api/location`;
     const { data } = await axios.get(url);
     // console.log(data, "djdj");
     setLocation(data);
@@ -78,7 +78,7 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = `http://${backendApi}/api/users`;
+      const url = `${backendApi}/api/users`;
       const { data: res } = await axios.post(url, {
         ...data,
         isEmployee: false,

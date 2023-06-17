@@ -55,7 +55,7 @@ function Schedule() {
   const memberId = JSON.parse(localStorage.getItem("token"));
   const memberIds = memberId.data._id;
   const routeParams = useParams();
-  const uri = `http://${backendApi}/api/class/schedule/?id=` + routeParams.id;
+  const uri = `${backendApi}/api/class/schedule/?id=` + routeParams.id;
 
   const [classes, setClasses] = useState([]);
   const [schedule, setSchedule] = useState([]);
@@ -103,7 +103,7 @@ function Schedule() {
   //   console.log(locvalue);
 
   const getLocation = async () => {
-    const url = `http://${backendApi}/api/location`;
+    const url = `${backendApi}/api/location`;
     const { data } = await axios.get(url);
     console.log(data);
     setLocation(data);
@@ -118,7 +118,7 @@ function Schedule() {
 
   const getSchedule = async () => {
     const url =
-      `http://${backendApi}/api/schedule?userId=` +
+      `${backendApi}/api/schedule?userId=` +
       memberIds +
       "&classId=" +
       routeParams.id;
@@ -164,7 +164,7 @@ function Schedule() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = `http://${backendApi}/api/schedule`;
+      const url = `${backendApi}/api/schedule`;
       const from = data.fromDate.split("-");
       const to = data.toDate.split("-");
       console.log(from);
@@ -221,7 +221,7 @@ function Schedule() {
   const deleteHandle = async (e) => {
     e.preventDefault();
     try {
-      const url = `http://${backendApi}/api/schedule/delete`;
+      const url = `${backendApi}/api/schedule/delete`;
       const { data: res } = await axios.post(url, {
         ...data,
       });
@@ -238,7 +238,7 @@ function Schedule() {
   };
   const getLocationName = async (locationId) => {
     const url =
-      `http://${backendApi}/api/location/getName?classId=` + locationId;
+      `${backendApi}/api/location/getName?classId=` + locationId;
     const { data } = await axios.get(url);
     return data[0].location;
   };

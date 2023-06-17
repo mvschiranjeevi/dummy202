@@ -92,7 +92,7 @@ const MyEquipments = (props) => {
   const [equipments, setEquipments] = useState([]);
 
   const getEquipments = async () => {
-    const url = `http://${backendApi}/api/equipment`;
+    const url = `${backendApi}/api/equipment`;
     const data = await axios.get(url);
     console.log(data.data);
     setEquipments(data.data);

@@ -18,7 +18,7 @@ function MyClasses() {
     : undefined;
 
   const getLocation = async () => {
-    const url = `http://${backendApi}/api/location`;
+    const url = `${backendApi}/api/location`;
     const { data } = await axios.get(url);
     data.map((item) => {
       locationMap[item._id] = item.location;
@@ -27,7 +27,7 @@ function MyClasses() {
   };
 
   const getClass = async () => {
-    const url = `http://${backendApi}/api/class`;
+    const url = `${backendApi}/api/class`;
     const { data } = await axios.get(url);
 
     data.map((item) => {
@@ -45,7 +45,7 @@ function MyClasses() {
       : undefined;
     console.log("***", currentUserId);
     const url =
-      `http://${backendApi}/api/schedule/all/?userId=` + currentUserId;
+      `${backendApi}/api/schedule/all/?userId=` + currentUserId;
     const { data } = await axios.get(url);
 
     const activeSchedules = data.filter((d) => !d.isDeleted);

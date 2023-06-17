@@ -20,7 +20,7 @@ function Location() {
   const [classes, setClasses] = useState([]);
 
   const getClass = async () => {
-    const url = `http://${backendApi}/api/location`;
+    const url = `${backendApi}/api/location`;
     const { data } = await axios.get(url);
     console.log(data);
     const expandClass = data.map((el, i) => ({

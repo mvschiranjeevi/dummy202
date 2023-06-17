@@ -31,7 +31,7 @@ const Myanalytics = () => {
   const [reverseLocationMap, setReverseLocationMap] = useState({});
   const [selectedLocation, setSelectedLocation] = useState("");
   const getLocations = async () => {
-    const url = `http://${backendApi}/api/location`;
+    const url = `${backendApi}/api/location`;
     let lc = await axios.get(url);
     lc = lc.data;
     lc.map((item) => {
@@ -81,7 +81,7 @@ const Myanalytics = () => {
   ];
 
   const getEquipments = async () => {
-    const url = `http://${backendApi}/api/equipment`;
+    const url = `${backendApi}/api/equipment`;
     let eq = await axios.get(url);
     eq = eq.data;
     eq.map((item) => {
@@ -92,7 +92,7 @@ const Myanalytics = () => {
     setEquipmentmap(equipmentmap);
   };
   const getActivities = async (selectedLocation, reverseLocationMap) => {
-    const url = `http://${backendApi}/api/activity`;
+    const url = `${backendApi}/api/activity`;
     const data = await axios.get(url);
     const activityObjectList = data.data;
     let currentUserId = localStorage.getItem("token");

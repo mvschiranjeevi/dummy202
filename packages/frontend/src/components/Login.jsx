@@ -71,7 +71,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = `http://${backendApi}/api/auth`;
+      const url = `${backendApi}/api/auth`;
       const result = await axios.post(url, data);
       localStorage.setItem("token", JSON.stringify(result.data));
 
